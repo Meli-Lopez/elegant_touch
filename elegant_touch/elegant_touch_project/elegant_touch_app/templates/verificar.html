@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <!-- Head Section -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elegant Touch</title>
+  {% load static %}
+  <!--== Favicon ==-->
+  <link rel="shortcut icon" href="{% static 'img/favicon-32x32.png' %}" type="image/x-icon" />
+
+    <!--== Google Fonts ==-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!--== Bootstrap CSS ==-->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <!--== Ionicon CSS ==-->
+    <link href="{% static 'css/ionicons.min.css' %}" rel="stylesheet" />
+    <!--== Simple Line Icon CSS ==-->
+    <link href="{% static 'css/simple-line-icons.css' %}" rel="stylesheet" />
+    <!--== Line Icons CSS ==-->
+    <link href="{% static 'css/lineIcons.css' %}" rel="stylesheet" />
+    <!--== Font Awesome Icon CSS ==-->
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+    <!--== Animate CSS ==-->
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet" />
+    <!--== Swiper CSS ==-->
+    <link href="{% static 'css/swiper.min.css' %}" rel="stylesheet" />
+    <!--== Range Slider CSS ==-->
+    <link href="{% static 'css/range-slider.css' %}" rel="stylesheet" />
+    <!--== Fancybox Min CSS ==-->
+    <link href="{% static 'css/fancybox.min.css' %}" rel="stylesheet" />
+    <!--== Slicknav Min CSS ==-->
+    <link href="{% static 'css/slicknav.css' %}" rel="stylesheet" />
+    <!--== Owl Carousel Min CSS ==-->
+    <link href="{% static 'css/owlcarousel.min.css' %}" rel="stylesheet" />
+    <!--== Owl Theme Min CSS ==-->
+    <link href="{% static 'css/owltheme.min.css' %}" rel="stylesheet" />
+    <!--== Spacing CSS ==-->
+    <link href="{% static 'css/spacing.css' %}" rel="stylesheet" />
+
+    <!--== Main Style CSS ==-->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="{% static 'css/carrito.css' %}" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+  
+<body>
+
+  <!--== End Preloader Content ==-->
+
+  <!--== Start Header Wrapper ==-->
+  <header class="header-area header-default header-style">
+    <!--== Start Header Top ==-->
+    <div class="header-top">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 text-md-start text-center">
+            <p>Envíos a toda Colombia 100% seguros y garantizados</p>
+          </div>
+          <div class="col-md-6 text-md-end text-center mt-sm-15">
+            <div class="theme-setting">
+              <a class="dropdown-btn" href="#" role="button">
+                Ajustes
+                <i class="ion-ios-arrow-down"></i> 
+              </a>
+              <ul class="dropdown-content">
+                {% if user.is_authenticated %}
+                <li>
+                    <a href="{% url 'my_account' %}">Mi cuenta</a>
+                </li>
+                <li>
+                    <a href="{% url 'verificar' %}">Carrito</a>
+                </li>
+                <li>
+                    <a href="{% url 'logout' %}">Cerrar sesión</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url 'register' %}">Registrarse</a>
+                </li>
+                <li>
+                    <a href="{% url 'login' %}">Iniciar sesión</a>
+                </li>
+            {% endif %}
+        </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--== End Header Top ==-->
+
+     <!--== Start Header Bottom ==-->
+     <div class="header-bottom sticky-header hidden-md-down">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col col-12">
+            <div class="header-align align-default">
+              <div class="align-left">
+                <div class="header-logo-area">
+                  <a href="{% url 'index' %}"></a>
+                  <img class="logo-principal" src="{% static 'img/logo.png' %}" alt="Logo" />
+                  <img class="logo-light d-none" src="{% static 'img/logo-light.png' %}" alt="Logo" />
+                  </a>
+                </div>
+                <div class="header-navigation-area hidden-md-down">
+                  <ul class="main-menu nav position-relative">
+                    <li><a href="{% url 'index' %}">Inicio</a></li>
+                    <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
+                    <li class="has-submenu full-width"><a href="#">Tienda</a>
+                      <ul class="submenu-nav submenu-nav-mega submenu-nav-width">
+                        <li class="mega-menu-item"><a href="#/" class="mega-title">Maquillaje</a>
+                          <ul>
+                            <li><a href="{% url 'maquillaje_rostro' %}">Maquillaje de rostro</a></li>
+                            <li><a href="{% url 'maquillaje_ojos' %}">Maquillaje de ojos</a></li>
+                            <li><a href="{% url 'maquillaje_labios' %}">Maquillaje de labios</a></li>
+                            <li><a href="{% url 'maquillaje_anti_envejecimiento' %}">Maquillaje Anti-envejecimiento</a></li>
+                            <li><a href="{% url 'maquillaje_waterproof' %}">Maquillaje waterproof</a></li>
+                          </ul>
+                        </li>
+                        <li class="mega-menu-item"><a href="#/" class="mega-title">Cuidado de la Piel</a>
+                          <ul>
+                            <li><a href="{% url 'limpiadores_faciales' %}">Limpiadores faciales</a></li>
+                            <li><a href="{% url 'exfoliantes_hidratantes' %}">Exfoliantes y Hidratantes faciales</a></li>
+                            <li><a href="{% url 'serums_mascarillas' %}">Sérums y Mascarillas</a></li>
+                            <li><a href="{% url 'protectores_cremas' %}">Protectores y cremas</a></li>
+                          </ul>
+                        </li>
+                        <li class="mega-menu-item"><a href="#/" class="mega-title">Herramientas y Accesorios</a>
+                          <ul>
+                            <li><a href="{% url 'brochas_pinceles' %}">Brochas y Pinceles</a></li>
+                            <li><a href="{% url 'aplicadores' %}">Esponjas y Aplicadores</a></li>
+                            <li><a href="{% url 'otros_accesorios' %}">Otros Accesorios</a></li>
+                          </ul>
+                        </li>
+                        <li class="mega-menu-item"><a href="#/" class="mega-title">Páginas individuales</a>
+                          <ul>
+                            <li><a href="{% url 'carrito' %}">Carrito</a></li>
+                            <li><a href="{% url 'lista_de_deseos' %}">Lista de deseos</a></li>
+                            <li><a href="{% url 'my_account' %}">Mi cuenta</a></li>
+                            <li><a href="{% url 'login' %}">Acceso</a></li>
+                            <li><a href="{% url 'register' %}">Registro</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li><a href="{% url 'tips' %}">Tips</a></li>
+                    <li><a href="{% url 'contacto' %}">Contactanos</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="header-action-area float-start">
+                <div class="search-content-wrap">
+                  <button class="btn-search">
+                    <span class="icon icon-search icon-magnifier"></span>
+                  </button>
+                  <div class="btn-search-content">
+                    <form action="{% url 'buscar_productos' %}" method="get">
+                      <div class="form-input-item">
+                          <input type="text" name="query" placeholder="Introduzca su clave de búsqueda...">
+                          <button type="submit" class="btn-src">
+                              <i class="icon-magnifier"></i>
+                          </button>
+                          
+                          <div class="search-categorie">
+                              <select class="form-select" name="poscats">
+                                  <option selected value="Todas las categorias">Todas las categorías</option>
+                                  <option value="Maquillaje Ojos">Maquillaje Ojos</option>
+                                  <option value="Maquillaje Rostro">Maquillaje Rostro</option>
+                                  <option value="Maquillaje Labios">Maquillaje Labios</option>
+                                  <option value="Maquillaje Anti Envejecimiento">Maquillaje Anti-Envejecimiento</option>
+                                  <option value="Maquillaje Waterproof">Maquillaje Waterproof</option>
+                                  <option value="Limpiadores Faciales">Limpiadores Faciales</option>
+                                  <option value="Exfoliantes e Hidratantes">Exfoliantes e Hidratantes</option>
+                                  <option value="Serums y Mascarillas">Serums y Mascarillas</option>
+                                  <option value="Protectores y Cremas">Protectores y Cremas</option>
+                                  <option value="Brochas y Pinceles">Brochas y Pinceles</option>
+                                  <option value="Aplicadores">Aplicadores</option>
+                                  <option value="Otros Accesorios">Otros Accesorios</option>
+                              </select>
+                          </div>
+                      </div>
+                  </form>            
+                  </div>
+                </div>
+                        <div class="shop-button-group">
+                          <div class="shop-button-item">
+        
+                          </div>
+                          <div class="shop-button-item">
+                            <a class="shop-button" href="{% url 'lista_de_deseos' %}">
+                                <i class="icon-heart icon"></i>
+                                <sup class="shop-count">{{ conteo_lista_deseos }}</sup>
+                            </a>
+                        </div>
+
+    <!--== Start Responsive Header ==-->
+    <div class="responsive-header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-4">
+            <div class="header-item">
+              <button class="btn-menu" type="button"><i class="icon-menu"></i></button>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="header-item justify-content-center">
+              <div class="header-logo-area">
+                <a href="{% url 'index' %}"></a>
+                  <img class="logo-main" src="static/img/logo.png" alt="Logo" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="header-item justify-content-end">
+              <button class="btn-user" onclick="window.location.href='my-account.html'"><i class="icon-user"></i></button>
+              <button class="btn-cart" onclick="window.location.href='cart.html'"><i class="icon-bag"></i> <span class="item-count">2</span></button>
+            </div>
+          </div>
+    <!--== End Responsive Header ==-->
+  </header>
+  <!--== End Header Wrapper ==-->
+  
+  <main class="main-content">
+    <!--== Start Product Area Wrapper ==-->
+
+    <section class="product-area">
+      <div class="container" data-padding-top="20">
+        <h2 class="shopping-cart-title">Mi Carrito de Compras</h2>
+        <div class="shopping-cart-wrap">
+          <div class="row">
+            <div class="col-lg-8">
+             <br>
+              <div class="shopping-checkout-content">
+                <div class="checkout-accordion" id="accordionExample">
+                  
+                  <div class="checkout-accordion-item">
+                    <h2 class="heading" id="headingOne">
+                      <button class="heading-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <span class="step-number"></span>
+                     
+
+                  <table class="table cart-table">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Total</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if cart_items %}
+                            {% for item in cart_items %}
+                                <tr>
+                                    <td>
+                                        {% if item.product.imagenes.all %}
+                                            <img src="{{ item.product.imagenes.first.imagen.url }}" alt="{{ item.product.nombre_producto }}" class="img-fluid product-image" style="width: 100px; height: auto;">
+                                        {% else %}
+                                            <img src="{% static 'images/no-image.png' %}" alt="Imagen no disponible" class="img-fluid product-image">
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.product.nombre_producto }}</td>
+                                    <td>€{{ item.product.precio_producto }}</td>
+                                    <td>
+                                        <form method="POST" action="{% url 'actualizar_carrito' item.product.id %}">
+                                            {% csrf_token %}
+                                            <div class="input-group">
+                                                <button type="button" class="btn btn-decrement">-</button>
+                                                <input type="number" name="cantidad" value="{{ item.quantity }}" min="1" class="form-control cantidad-producto" required>
+                                                <button type="button" class="btn btn-increment">+</button>
+                                            </div>
+                                            <button type="submit" class="btn btn-update"></button>
+                                        </form>
+                                    </td>
+                                    <td>€{{ item.item_total }}</td>
+                                    <td>
+                                      <form method="POST" action="{% url 'eliminar_producto' item.product.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fas fa-trash"></i> 
+                                        </button>
+                                    </form>
+                                    
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6">No hay productos en el carrito.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+                
+        
+                    <h2 class="heading" id="headingTwo">
+
+                        <!-- Aquí puedes agregar texto o dejarlo vacío -->
+                      </button>
+                      
+                      
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                      <div class="checkout-accordion-body" data-margin-top="14">
+                        <div class="personal-addresses">
+                          <p class="p-text">La dirección seleccionada se utilizará tanto como su dirección personal (para la factura) como su dirección de envío..</p>
+                          <div class="delivery-address-form">
+                            <form action="#">
+                              <div class="form-group row">
+                                <label class="col-md-3" for="f_name">Nombre</label>
+                                <div class="col-md-6">
+                                  <input id="f_name" class="form-control" type="text">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-3" for="l_name">Apellido</label>
+                                <div class="col-md-6">
+                                  <input id="l_name" class="form-control" type="text">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-3" for="frm_company">Compañía</label>
+                                <div class="col-md-6">
+                                  <input id="frm_company" class="form-control" type="text">
+                                </div>
+                                <div class="col-md-3">
+                                  <span class="optional-label">Opcional</span>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-3" for="vat_number">Número de IVA</label>
+                                <div class="col-md-6">
+                                  <input id="vat_number" class="form-control" type="text">
+                                </div>
+                                <div class="col-md-3">
+                                  <span class="optional-label">Opcional</span>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-3" for="frm_address">Dirección</label>
+                                <div class="col-md-6">
+                                  <input id="frm_address" class="form-control" type="text">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-3" for="add_complement">Dirección completa</label>
+                                <div class="col-md-6">
+                                  <input id="add_complement" class="form-control" type="text">
+                                </div>
+                                <div class="col-md-3">
+                                  <span class="optional-label">Opcional</span>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-3" for="zip_code">Código postal</label>
+                                <div class="col-md-6">
+                                  <input id="zip_code" class="form-control" type="text">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-3" for="frm_city">Ciudad</label>
+                                <div class="col-md-6">
+                                  <input id="frm_city" class="form-control" type="text">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-3" for="frm_state">Estado</label>
+                                <div class="col-md-6">
+                                  <select id="frm_state" class="form-select form-control" aria-label="-- please choose --">
+                                    <option disabled selected>-- Por favor elige --</option>
+                                    <option value="1">Agrigento</option>
+                                    <option value="2">Alessandria</option>
+                                    <option value="3">Ancona</option>
+                                    <option value="4">Aosta</option>
+                                    <option value="5">Arezzo</option>
+                                    <option value="6">Ascoli Piceno</option>
+                                    <option value="7">Asti</option>
+                                    <option value="8">Avellino</option>
+                                    <option value="9">Bari</option>
+                                    <option value="10">Barletta-Andria-Trani</option>
+                                    <option value="11">Belluno</option>
+                                    <option value="12">Benevento</option>
+                                    <option value="13">Bergamo</option>
+                                    <option value="14">Biella</option>
+                                    <option value="15">Bologna</option>
+                                    <option value="16">Bolzano</option>
+                                    <option value="17">Brescia</option>
+                                    <option value="18">Brindisi</option>
+                                    <option value="19">Cagliari</option>
+                                    <option value="20">Caltanissetta</option>
+                                    <option value="21">Campobasso</option>
+                                    <option value="22">Carbonia-Iglesias</option>
+                                    <option value="23">Caserta</option>
+                                    <option value="24">Catania</option>
+                                    <option value="25">Catanzaro</option>
+                                    <option value="26">Chieti</option>
+                                    <option value="27">Como</option>
+                                    <option value="28">Cosenza</option>
+                                    <option value="29">Cremona</option>
+                                    <option value="30">Crotone</option>
+                                    <option value="31">Cuneo</option>
+                                    <option value="32">Enna</option>
+                                    <option value="33">Fermo</option>
+                                    <option value="34">Ferrara</option>
+                                    <option value="35">Firenze</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-3" for="frm_country">País</label>
+                                <div class="col-md-6">
+                                  <select id="frm_country" class="form-select form-control" aria-label="-- please choose --">
+                                    <option disabled selected>-- Por favor elige --</option>
+                                    <option value="1">Italia</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-3" for="frm-phone">Teléfono</label>
+                                <div class="col-md-6">
+                                  <input id="frm-phone" class="form-control" type="tel">
+                                </div>
+                                <div class="col-md-3">
+                                  <span class="optional-label">Opcional</span>
+                                </div>
+                              </div>
+                              <div class="form-group row mb-0">
+                                <div class="col-md-9">
+                                  <input name="use_same_address" id="use_same_address" type="checkbox">
+                                  <label class="pt-0" for="use_same_address">Utilice esta dirección también para la factura</label>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <div class="col-md-12 text-end">
+                                  <button type="submit" class="btn-submit">Continuar</button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="shopping-checkout-disabled">
+                  <h4 class="title"><span>3</span> Método de envío</h4>
+                </div>
+                <div class="shopping-checkout-disabled">
+                  <h4 class="title"><span>4</span> Pago</h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="shopping-cart-summary mt-md-70">
+                  <div class="cart-detailed-totals">
+                    <h3 class="shop-cart-title">Resumen de Compra</h3>
+                      <div class="separator"></div>
+                      <div class="card-block">
+                          <div class="card-block-item">
+                              <span class="label">Subtotal</span>
+                              <span class="value">Cop {{ subtotal }}</span>
+                          </div>
+                          <div class="card-block-item">
+                              <span class="label">Envio</span>
+                              <span class="value">Gratis</span>
+                          </div>
+                          <div class="separator"></div>
+                          <div class="card-block-item">
+                              <span class="label">Total </span>
+                              <span class="value">Cop {{ total }}</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <button type="submit" class="btn-submit custom-btn">Comprar Ahora</button>
+              <!-- Mover la sección de block-reassurance aquí -->
+              <div class="block-reassurance">
+                  <ul>
+                      <li>
+                          <img src="{% static 'img/shop/cart/verified-user.png' %}" alt="Has-Image">
+                          <span>Política de seguridad </span>
+                      </li>
+                      <li>
+                          <img src="{% static 'img/shop/cart/local-shipping.png' %}" alt="Has-Image">
+                          <span>Política de seguridad </span>
+                      </li>
+                      <li>
+                          <img src="{% static 'img/shop/cart/swap-horiz.png' %}" alt="Has-Image">
+                          <span>Política de devolución </span>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          
+       
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Product Area Wrapper ==-->
+
+    <!--== Start Contact Info Area Wrapper ==-->
+    <section class="bg-black-color">
+      <div class="container pt-35 pb-40">
+        <div class="row">
+          <div class="col-12">
+            <div class="contact-info contact-info-static">
+              <div class="row">
+                <div class="col-border col-12 col-md-4 col-sm-6 border-0">
+                  <div class="info-item">
+                    <div class="icon-box">
+                      <i class="icon las la-phone-volume"></i>
+                    </div>
+                    <p>+57-321-4341900 M-F 10AM-5PM</p>
+                  </div>
+                </div>
+                <div class="col-border col-12 col-md-4 col-sm-6 mt-xs-35">
+                  <div class="info-item">
+                    <div class="icon-box">
+                      <i class="icon las la-envelope"></i>
+                    </div>
+                    <p>eleganttouch@gmail.com</p>
+                  </div>
+                </div>
+                <div class="col-border col-12 col-md-4 col-sm-12 mt-sm-35">
+                  <div class="info-item">
+                    <div class="icon-box">
+                      <div class="social-icons">
+                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d"><i class="la la-facebook"></i></a>
+                        <a href="https://www.instagram.com/eleganttouch054/" target="_blank"><i class="la la-instagram"></i></a>
+                      </div>
+                    </div>
+                    <p>NUESTRAS REDES SOCIALES</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Contact Info Area Wrapper ==-->
+
+    <!--== Start Divider Area Wrapper ==-->
+    <section class="divider-area">
+      <div class="container pt-90 pt-lg-70 pb-lg-60">
+        <div class="row">
+          <div class="col-12">
+            <div class="divider-style-wrap">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="divider-content text-center">
+                    <h4 class="title hidden-sm-down">Conectémonos en las redes sociales</h4>
+                    <h4 class="title2 hidden-md-up collapsed" data-bs-toggle="collapse" data-bs-target="#dividerId-1">Conectémonos en las redes sociales</h4>
+                    <div id="dividerId-1" class="collapse">
+                      <div class="social-icons">
+                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d"><i class="la la-facebook"></i></a>
+                        <a href="https://www.instagram.com/eleganttouch054/" target="_blank"><i class="la la-instagram"></i></a>
+                      </div>
+                      <p class="mb-sm-25">Síguenos en tus plataformas favoritas. Mira los nuevos adelantos de lanzamiento, videos instructivos y comparte tus looks favoritos..</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="divider-content text-center">
+                    <h4 class="title hidden-sm-down" data-margin-bottom="32">Suscríbete al boletín informativo</h4>
+                    <h4 class="title2 hidden-md-up collapsed" data-bs-toggle="collapse" data-bs-target="#dividerId-2">Suscríbete al boletín informativo</h4>
+                    <div id="dividerId-2" class="collapse">
+                      <div class="newsletter-content-wrap">
+                        <div class="newsletter-form">
+                          <form>
+                            <input type="email" class="form-control" placeholder="Su dirección de correo electrónico">
+                            <button class="btn btn-submit" type="button">Ingresar</button>
+                          </form>
+                        </div>
+                      </div>
+                      <p>Puede darse de baja en cualquier momento. Para ello, consulte nuestra información de contacto en el aviso legal.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Divider Area Wrapper ==-->
+  </main>
+
+  <!--== Start Footer Area Wrapper ==-->
+  <footer class="footer-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <!--== Start Footer Widget Area ==-->
+          <div class="footer-widget-area pb-30">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="widget-item">
+                  <div class="about-widget">
+                    <div class="inner-content">
+                      <div class="footer-logo">
+                        <a href="{% url 'index' %}">
+                          <img class="logo-light" src="{% static 'img/logo-light.png' %}" alt="Logo" />
+                        </a>
+                      </div>
+       
+                    </div>
+                    <div class="widget-desc">
+                      <p>Somos un equipo de diseñadores y desarrolladores que creamos Magento, Prestashop, Opencart de alta calidad.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="widget-item">
+                  <div class="widget-menu-wrap">
+                    <ul class="nav-menu">
+                      <li><a href="{% url 'register' %}">Crear cuenta</a></li>
+                      <li><a href="{% url 'data_request' %}">Terminos y Condiciones</a></li>
+                      <li><a href="{% url 'contacto' %}">Contáctanos</a></li>
+                      <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+                      <li><a href="{% url 'my_account' %}">Mi Cuenta</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--== End Footer Widget Area ==-->
+        </div>
+      </div>
+    </div>
+    <!--== Start Footer Bottom Area ==-->
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <p class="copyright">Copyright © <i class="fa fa-heart-o"></i> por <a target="_blank" href="https://www.hasthemes.com">HasThemes.</a></p>
+          </div>
+          <div class="col-lg-6">
+            <div class="payment">
+              <img src="{% static 'img/photos/payment.png' %}" alt="Payment">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--== End Footer Bottom Area ==-->
+  </footer>
+  <!--== End Footer Area Wrapper ==-->
+
+  <!--== Scroll Top Button ==-->
+  <div id="scroll-to-top" class="scroll-to-top"><span class="ion-md-arrow-up"></span></div>
+
+  <!--== Start Side Menu ==-->
+  <aside class="off-canvas-wrapper">
+    <div class="off-canvas-inner">
+      <div class="off-canvas-overlay"></div>
+      <!-- Start Off Canvas Content Wrapper -->
+      <div class="off-canvas-content">
+        <!-- Off Canvas Header -->
+        <div class="off-canvas-header">
+          <div class="close-action">
+            <button class="btn-menu-close">Menu<i class="icon-arrow-left"></i></button>
+          </div>
+        </div>
+
+        <div class="off-canvas-item">
+          <!-- Start Mobile Menu Wrapper -->
+          <div class="res-mobile-menu menu-active-one">
+            <!-- Note Content Auto Generate By Jquery From Main Menu -->
+          </div>
+          <!-- End Mobile Menu Wrapper -->
+        </div>
+      </div>
+      <!-- End Off Canvas Content Wrapper -->
+    </div>
+  </aside>
+  <!--== End Side Menu ==-->
+
+  <div class="popup-product-overlay"></div>
+  <button class="popup-product-close"><i class="la la-close"></i></button>
+  <!--== End Popup Product  ==-->
+</div>
+
+<!--=======================Javascript============================-->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Función para actualizar el total del producto
+      function updateProductTotal(button) {
+          const row = button.closest('tr'); // Encuentra la fila del producto
+          const price = parseFloat(row.querySelector('td:nth-child(3)').textContent.replace('€', '')); // Obtiene el precio
+          const quantityInput = row.querySelector('.cantidad-producto'); // Obtiene el input de cantidad
+          const quantity = parseInt(quantityInput.value); // Convierte la cantidad a número
+  
+          const totalCell = row.querySelector('td:nth-child(5)'); // Encuentra la celda del total del producto
+          const itemTotal = (price * quantity).toFixed(2); // Calcula el total del producto
+          totalCell.textContent = '€' + itemTotal; // Actualiza la celda del total
+  
+          updateTotals(); // Actualiza subtotal y total general
+      }
+  
+      // Función para actualizar subtotal y total general
+      function updateTotals() {
+          let subtotal = 0;
+          document.querySelectorAll('.cart-table tbody tr').forEach(row => {
+              const itemTotal = parseFloat(row.querySelector('td:nth-child(5)').textContent.replace('€', ''));
+              subtotal += itemTotal;
+          });
+          
+          // Actualiza el subtotal
+          document.querySelector('.cart-totals h4:nth-of-type(1)').textContent = 'Subtotal: €' + subtotal.toFixed(2);
+          
+          // Actualiza el total (si aplica)
+          const total = subtotal; // Aquí puedes agregar más lógica si necesitas un total diferente
+          document.querySelector('.cart-totals h4:nth-of-type(2)').textContent = 'Total: €' + total.toFixed(2);
+      }
+  
+      // Incrementar cantidad
+      document.querySelectorAll('.btn-increment').forEach(button => {
+          button.addEventListener('click', function () {
+              const input = this.parentElement.querySelector('.cantidad-producto');
+              input.value = parseInt(input.value) + 1; // Incrementa la cantidad
+              updateProductTotal(this); // Actualiza el total del producto
+          });
+      });
+  
+      // Decrementar cantidad
+      document.querySelectorAll('.btn-decrement').forEach(button => {
+          button.addEventListener('click', function () {
+              const input = this.parentElement.querySelector('.cantidad-producto');
+              if (parseInt(input.value) > 1) {
+                  input.value = parseInt(input.value) - 1; // Decrementa la cantidad
+                  updateProductTotal(this); // Actualiza el total del producto
+              }
+          });
+      });
+  
+      // Inicializa los totales al cargar la página
+      updateTotals();
+  });
+  </script>
+  
+  
+<!--=== Modernizr Min Js ===-->
+<script src="{% static 'js/modernizr.js' %}"></script>
+<!--=== jQuery Min Js ===-->
+<script src="{% static 'js/jquery-main.js' %}"></script>
+<!--=== jQuery Migration Min Js ===-->
+<script src="{% static 'js/jquery-migrate.js' %}"></script>
+<!--=== Popper Min Js ===-->
+<script src="{% static 'js/popper.min.js' %}"></script>
+<!--=== Bootstrap Min Js ===-->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!--=== jQuery Appear Js ===-->
+<script src="{% static 'js/jquery.appear.js' %}"></script>
+<!--=== jQuery Swiper Min Js ===-->
+<script src="{% static 'js/swiper.min.js' %}"></script>
+<!--=== jQuery Fancy Box Min Js ===-->
+<script src="{% static 'js/fancybox.min.js' %}"></script>
+<!--=== jQuery Slick Nav Js ===-->
+<script src="{% static 'js/slicknav.js' %}"></script>
+<!--=== jQuery Waypoints Js ===-->
+<script src="{% static 'js/waypoints.js' %}"></script>
+<!--=== jQuery Owl Carousel Min Js ===-->
+<script src="{% static 'js/owlcarousel.min.js' %}"></script>
+<!--=== jQuery Match Height Min Js ===-->
+<script src="{% static 'js/jquery-match-height.min.js' %}"></script>
+<!--=== jQuery Zoom Min Js ===-->
+<script src="{% static 'js/jquery-zoom.min.js' %}"></script>
+<!--=== Countdown Js ===-->
+<script src="{% static 'js/countdown.js' %}"></script>
+
+<!--=== Custom Js ===-->
+<script src="{% static 'js/custom.js' %}"></script>
+
+</body>
+
+</html>

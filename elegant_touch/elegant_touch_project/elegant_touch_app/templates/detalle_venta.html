@@ -1,0 +1,13 @@
+
+
+{% block content %}
+  <h1>Detalles de la Venta #{{ venta.id }}</h1>
+  <ul>
+    <li><strong>Guía de Pedido:</strong> {{ venta.guia_pedido }}</li>
+    <li><strong>Fecha de Venta:</strong> {{ venta.fecha_venta }}</li>
+    <li><strong>Total de Venta:</strong> {{ venta.total_venta }}</li>
+    <li><strong>Estado de Venta:</strong> {{ venta.get_estado_venta_display }}</li>
+    <li><strong>Cliente:</strong> {{ venta.cliente.nombre }}</li>
+    <li><strong>Método de Pago:</strong> {{ venta.metodo_de_pago.nombre }}</li>
+  </ul>
+{% endblock %}

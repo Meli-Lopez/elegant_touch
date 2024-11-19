@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Elegant Touch</title>
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="{% static 'css/lista_productos.css' %}" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Panel de Control</h2>
+        <ul>
+            <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li>
+            <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+            <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
+            <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
+            <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
+            <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
+            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+        </ul>
+    </div> 
+    <section class="product-area">
+        <div class="content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="section-title text-center mb-3">
+                        <h1 class="title">Lista de Productos</h1>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <!-- Barra de búsqueda -->
+                        <div class="search-bar">
+                            <form method="get" action="{% url 'lista_productos' %}">
+                                <input type="text" name="q" placeholder="Buscar por nombre, categoría o subcategoría" value="{{ request.GET.q }}">
+                                <button type="submit" class="btn btn-custom">Buscar</button>
+                                <a href="{% url 'lista_productos' %}" class="btn btn-custom">Mostrar todos</a> <!-- Botón para mostrar todos los productos -->
+                            </form>
+                        </div>
+                        
+                        <a href="{% url 'producto_agregar' %}" class="btn btn-custom">
+                            <i class="fas fa-plus"></i> Añadir Producto
+                        </a>
+                    </div>
+
+                    <!-- Contenedor con desplazamiento para la tabla -->
+                    <div class="table-container">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Marca</th>
+                                    <th>Categoría</th>
+                                    <th>Subcategoría</th>
+                                    <th>Es nuevo</th>
+                                    <th>Destacado</th>
+                                    <th>Fecha de creación</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for producto in productos %}
+                                <tr>
+                                    <td>
+                                        {% if producto.imagenes.all %}
+                                            <img src="{{ producto.imagenes.first.imagen.url }}" alt="{{ producto.nombre_producto }}" class="product-image">
+                                        {% else %}
+                                            <img src="{% static 'imagenes/default-product.png' %}" alt="Sin imagen" class="product-image">
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ producto.nombre_producto }}</td>
+                                    <td>{{ producto.descripcion_producto }}</td>
+                                    <td>COP {{ producto.precio_producto }}</td>
+                                    <td>{{ producto.stock_producto }}</td>
+                                    <td>{{ producto.marca.nombre_marca }}</td>
+                                    <td>{{ producto.categoria.nombre }}</td>
+                                    <td>{{ producto.subcategoria.nombre }}</td>
+                                    <td>{% if producto.es_nuevo %}Sí{% else %}No{% endif %}</td>
+                                    <td>{% if producto.destacado %}Sí{% else %}No{% endif %}</td>
+                                    <td>{{ producto.fecha_creacion }}</td>
+                                    <td class="action-buttons">
+                                        <a href="{% url 'producto_editar' producto.id %}" class="text-warning" title="Editar producto">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'producto_eliminar' producto.id %}" class="text-danger" title="Eliminar producto">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+    <!-- Scripts de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

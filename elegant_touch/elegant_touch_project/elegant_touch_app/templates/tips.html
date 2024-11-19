@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <!-- Head Section -->
+<head>  
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elegant Touch</title>
+  {% load static %}
+  <!--== Favicon ==-->
+  <link rel="shortcut icon" href="{% static 'img/favicon-32x32.png' %}" type="image/x-icon" />
+
+    <!--== Google Fonts ==-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!--== Bootstrap CSS ==-->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <!--== Ionicon CSS ==-->
+    <link href="{% static 'css/ionicons.min.css' %}" rel="stylesheet" />
+    <!--== Simple Line Icon CSS ==-->
+    <link href="{% static 'css/simple-line-icons.css' %}" rel="stylesheet" />
+    <!--== Line Icons CSS ==-->
+    <link href="{% static 'css/lineIcons.css' %}" rel="stylesheet" />
+    <!--== Font Awesome Icon CSS ==-->
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+    <!--== Animate CSS ==-->
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet" />
+    <!--== Swiper CSS ==-->
+    <link href="{% static 'css/swiper.min.css' %}" rel="stylesheet" />
+    <!--== Range Slider CSS ==-->
+    <link href="{% static 'css/range-slider.css' %}" rel="stylesheet" />
+    <!--== Fancybox Min CSS ==-->
+    <link href="{% static 'css/fancybox.min.css' %}" rel="stylesheet" />
+    <!--== Slicknav Min CSS ==-->
+    <link href="{% static 'css/slicknav.css' %}" rel="stylesheet" />
+    <!--== Owl Carousel Min CSS ==-->
+    <link href="{% static 'css/owlcarousel.min.css' %}" rel="stylesheet" />
+    <!--== Owl Theme Min CSS ==-->
+    <link href="{% static 'css/owltheme.min.css' %}" rel="stylesheet" />
+    <!--== Spacing CSS ==-->
+    <link href="{% static 'css/spacing.css' %}" rel="stylesheet" />
+
+    <!--== Main Style CSS ==-->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/contacto.css' %}">
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+  <!--== Start Header Wrapper ==-->
+  <header class="header-area header-default header-style">
+    <!--== Start Header Top ==-->
+    <div class="header-top">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 text-md-end text-center mt-sm-15">
+            <div class="theme-setting">
+              <ul class="dropdown-content">
+              {% if user.is_authenticated %}
+                <li>
+                    <a href="{% url 'my_account' %}">Mi cuenta</a>
+                </li>
+                <li>
+                    <a href="{% url 'verificar' %}">Verificar</a>
+                </li>
+                <li>
+                    <a href="{% url 'logout' %}">Cerrar sesión</a>
+                </li>
+              {% else %}
+                <li>
+                    <a href="{% url 'register' %}">Registrarse</a>
+                </li>
+                <li>
+                    <a href="{% url 'login' %}">Iniciar sesión</a>
+                </li>
+              {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!--== Inicio Encabezado Inferior ==-->
+  <div class="header-bottom sticky-header hidden-md-down">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col col-12">
+          <div class="header-align align-default">
+            <div class="align-left">
+              <div class="header-logo-area">
+                <a href="{% url 'index' %}"></a>
+                <img class="logo-principal" src="{% static 'img/logo.png' %}" alt="Logo" />
+                <img class="logo-light d-none" src="{% static 'img/logo-light.png' %}" alt="Logo" />
+                </a>
+              </div>
+              <div class="header-navigation-area hidden-md-down">
+                <ul class="main-menu nav position-relative">
+                  <li><a href="{% url 'index' %}">Inicio</a></li>
+                  <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
+                  <li class="has-submenu full-width"><a href="#">Tienda</a>
+                    <ul class="submenu-nav submenu-nav-mega submenu-nav-width">
+                      <li class="mega-menu-item"><a href="#/" class="mega-title">Maquillaje</a>
+                        <ul>
+                          <li><a href="{% url 'maquillaje_rostro' %}">Maquillaje de rostro</a></li>
+                          <li><a href="{% url 'maquillaje_ojos' %}">Maquillaje de ojos</a></li>
+                          <li><a href="{% url 'maquillaje_labios' %}">Maquillaje de labios</a></li>
+                          <li><a href="{% url 'maquillaje_anti_envejecimiento' %}">Maquillaje Anti-envejecimiento</a></li>
+                          <li><a href="{% url 'maquillaje_waterproof' %}">Maquillaje waterproof</a></li>
+                        </ul>
+                      </li>
+                      <li class="mega-menu-item"><a href="#/" class="mega-title">Cuidado de la Piel</a>
+                        <ul>
+                          <li><a href="{% url 'limpiadores_faciales' %}">Limpiadores faciales</a></li>
+                          <li><a href="{% url 'exfoliantes_hidratantes' %}">Exfoliantes y Hidratantes faciales</a></li>
+                          <li><a href="{% url 'serums_mascarillas' %}">Sérums y Mascarillas</a></li>
+                          <li><a href="{% url 'protectores_cremas' %}">Protectores y cremas</a></li>
+                        </ul>
+                      </li>
+                      <li class="mega-menu-item"><a href="#/" class="mega-title">Herramientas y Accesorios</a>
+                        <ul>
+                          <li><a href="{% url 'brochas_pinceles' %}">Brochas y Pinceles</a></li>
+                          <li><a href="{% url 'aplicadores' %}">Esponjas y Aplicadores</a></li>
+                          <li><a href="{% url 'otros_accesorios' %}">Otros Accesorios</a></li>
+                        </ul>
+                      </li>
+                      <li class="mega-menu-item"><a href="#/" class="mega-title">Páginas individuales</a>
+                        <ul>
+                          <li><a href="{% url 'carrito' %}">Carrito</a></li>
+                          <li><a href="{% url 'verificar' %}">Verificar</a></li>
+                          <li><a href="{% url 'lista_de_deseos' %}">Lista de deseos</a></li>
+                          <li><a href="{% url 'my_account' %}">Mi cuenta</a></li>
+                          <li><a href="{% url 'login' %}">Acceso</a></li>
+                          <li><a href="{% url 'register' %}">Registro</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><a href="{% url 'tips' %}">Tips </a></li>
+                  <li><a href="{% url 'contacto' %}">Contactanos</a></li>
+                  {% if user.is_staff  %} 
+                      <li>    
+                        <li><a href="{% url 'index_admi' %}">Panel admin</a></li>
+
+                      </li>
+                    {% endif %}  
+                  </ul>
+                </div>
+              </div>
+              <div class="align-right">
+                {% if not user.is_authenticated or not user.is_staff %}
+                <div class="contact-link float-start">
+                  <div class="phone">
+                    <span>Llámanos:</span>
+                    <a href="tel:(+57) 3214341900">(+57) 3214341900</a>
+                  </div>
+                </div>
+            {% endif %}
+                <div class="header-action-area float-start">
+                  <div class="search-content-wrap">
+                  <div class="shop-button-group">
+                    <div class="shop-button-item">
+
+                  </a>
+                </div>
+                <div class="shop-button-item">
+                  <a class="shop-button" href="{% url 'lista_de_deseos' %}">
+                      <i class="icon-heart icon"></i>
+                      <sup class="shop-count">{{ conteo_lista_deseos }}</sup>
+                  </a>
+              </div>
+              <div class="shop-button-item">
+                <a class="shop-button" href="#">
+                    <i class="icon-bag icon"></i>
+                    <sup class="shop-count">{{ cart_items|length }}</sup> <!-- Contador dinámico de productos -->
+                    <span class="cart-total">Cop {{ cart_total|floatformat:2 }}</span> <!-- Precio total dinámico -->
+               </a>
+               <div class="popup-cart-content">
+                {% if cart_items %}
+                    <ul class="popup-product-list">
+                        {% for item in cart_items %}
+                            <li class="cart-item">
+                                    <!-- Muestra la imagen del producto -->
+                                    <img src="{{ item.product.imagenes.first.imagen.url|default:'url/de/imagen/por/defecto.png' }}" alt="{{ item.product.nombre_producto }}" class="img-fluid product-image">
+
+                                    <div class="item-right">
+                                      <!-- Nombre del producto -->
+                                      <span class="product-title">{{ item.product.nombre_producto }}</span>
+                                      
+                                      <!-- Cantidad del producto -->
+                                      <p class="product-quantity">Cantidad: {{ item.quantity }}</p>
+                                      
+                                      <!-- Precio unitario del producto -->
+                                      <p class="product-unit-price">Precio unitario: Cop {{ item.product.precio_producto|floatformat:2 }}</p>
+                                      
+                                      <!-- Total por este artículo -->
+                                      <p class="product-total-price">Total por artículo: Cop {{ item.item_total|floatformat:2 }}</p>
+                                    </div>
+                                  </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="price-content">
+                      <div class="cart-subtotals">
+                          <div class="products">
+                              <span class="label">Subtotal</span>
+                              <span class="value">Cop  {{ cart_total|floatformat:2 }}</span>
+                          </div>
+                          <div class="products">
+                              <span class="label">Envío</span>
+                              <span class="value">Gratis</span>
+                          </div>
+                      </div>
+                  
+                      <div class="cart-total">
+                          <span class="label">Total</span>
+                          <span class="value">Cop  {{ cart_total|floatformat:2 }}</span>
+                      </div>
+                  </div>
+                  <div class="checkout">
+                    <a href="{% url 'verificar' %}" class="btn-Checkout">Ver carrito</a> 
+              </div>
+                {% else %}
+                    <p>No hay productos en el carrito.</p>
+                {% endif %}
+            </div>
+        </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header {
+        background-color: #ffcccc;
+        padding: 10px;
+        text-align: center;
+    }
+    
+    h1, h2 {
+        color: #e75480; /* Color rosado */
+    }
+    
+    nav ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    nav ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+    
+    .cultures {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+        max-width: 800px; /* Limita el espacio horizontal */
+        margin: 0 auto;
+    }
+    
+    .culture-card {
+
+      width: 400px; /* Aumenta el ancho del contenedor */
+      height: 200px; /* Ajusta la altura del contenedor si deseas más consistencia */
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+      width: 300px; /* Aumentar el ancho del contenedor */
+      margin: 15px; /* Aumentar el margen entre los contenedores */
+      cursor: pointer;
+      transition: transform 0.2s; /* Añadir transición para un efecto más suave */
+    }
+    
+    .culture-card:hover {
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        transform: scale(1.05); /* Añadir efecto de zoom al pasar el mouse */
+    }
+    
+   
+  
+  .culture-card img {
+      width: 100%;
+      height: 200px; /* Reduce la altura para hacer que las imágenes sean más cortas */
+      object-fit: cover;
+  }
+  
+    
+    .details {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+    
+    .culture-row {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .culture-row:nth-child(1) .culture-card {
+      /* Se ajustó el ancho para la fila superior */
+    }
+    
+    .culture-row:nth-child(1) {
+      gap: 30px; /* Aumentar el espacio entre los 3 contenedores de la fila superior */
+    }
+    
+    .culture-row:nth-child(2) .culture-card {
+      /* Se ajustó el ancho para la fila inferior */
+    }
+    
+    .culture-row:nth-child(2) {
+      gap: 20px; /* Aumentar el espacio entre los 4 contenedores de la fila inferior */
+    }    
+</style>
+
+</head>
+<body>    
+
+  <main>
+    <section class="cultures">
+      <!-- Fila superior con 3 contenedores -->
+      <div class="culture-row">
+        <div class="culture-card" onclick="loadMakeup('Piel')">
+          <a href="{% url 'tips_maquillaje_piel' %}">
+            <img src="{% static 'img/tips/piel.png' %}" alt="piel">
+          </a>
+          <h4>Tips para la Piel</h4>
+        </div>
+        <div class="culture-card" onclick="loadMakeup('ojos')">
+          <a href="{% url 'tips_maquillaje_ojos' %}">
+            <img src="{% static 'img/tips/ojos.png' %}" alt="ojos">
+          </a>
+          <h4>Tips para los Ojos</h4>
+        </div>
+        <div class="culture-card" onclick="loadMakeup('Cejas')">
+          <a href="{% url 'tips_maquillaje_cejas' %}">
+            <img src="{% static 'img/tips/cejas.png' %}" alt="Cejas">
+          </a>
+          <h4>Tips para las Cejas</h4>
+        </div>
+      </div>
+  
+      <!-- Fila inferior con 3 contenedores -->
+      <div class="culture-row">
+        <div class="culture-card" onclick="loadMakeup('labios')">
+          <a href="{% url 'tips_labios' %}">
+            <img src="{% static 'img/tips/labios.png' %}" alt="labios">
+          </a>
+          <h4>Tips para los Labios</h4>
+        </div>
+        <div class="culture-card" onclick="loadMakeup('rubor_e_iluminador')">
+          <a href="{% url 'tips_rubor_iluminador' %}">
+            <img src="{% static 'img/tips/rubor_e_iluminador.png' %}" alt="rubor e iluminador">
+          </a>
+          <h4>Tips para el Rubor e Iluminador</h4>
+        </div>
+        <div class="culture-card" onclick="loadMakeup('Contorno')">
+          <a href="{% url 'tips_contorno' %}">
+            <img src="{% static 'img/tips/contorno.png' %}" alt="contorno">
+          </a>
+          <h4>Tips para el Contorno</h4>
+        </div>
+      </div>
+    </section>
+  </main>

@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+    color: #999999;
+}
+
+.main-content {
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.section-account-creation {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border: 1px solid #ec6b81; /* Añadido borde de color */
+}
+
+.container-padding-top-62 {
+    padding-top: 62px;
+    
+}
+
+        /* Títulos y encabezados */
+        .heading-create-account {
+            color: #333333;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            border-bottom: 2px solid #ec6b81;
+            padding-bottom: 10px;
+        }
+
+
+/* Formularios */
+.form-wrapper {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.form-register {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.form-register p {
+    margin-bottom: 20px;
+    
+}
+
+.form-register label {
+    font-size: px;
+    color: #444444;
+}
+
+.form-register input[type="text"],
+.form-register input[type="email"],
+.form-register input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 2px solid #dddddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.form-register input[type="text"]:focus,
+.form-register input[type="email"]:focus,
+.form-register input[type="password"]:focus {
+    border-color:#ec6b81;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Botones */
+.btn-register {
+    background-color: #ec6b81;
+    color: #ffffff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-register:hover {
+    background-color: #ec6b81;
+    transform: scale(1.05);
+}
+
+/* Enlace de inicio de sesión */
+.form-footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.btn-create-account {
+    color: #ec6b81;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.btn-create-account:hover {
+    color: #ec6b81;
+}
+

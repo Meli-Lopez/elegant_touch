@@ -1,0 +1,139 @@
+/*-------- General Styles --------*/
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /*-------- Main Content Container --------*/
+  .main-content {
+    padding: 20px;
+  }
+  
+  .login-title {
+    font-size: 28px; /* Tamaño de la fuente */
+    font-weight: bold; /* Fuente en negrita */
+    color: #333333; /* Color del texto */
+    margin-bottom: 20px; /* Espacio debajo del título */
+    text-align: center; /* Alineación centrada */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    text-transform: uppercase; /* Convertir texto a mayúsculas */
+    position: relative; /* Necesario para añadir pseudo-elementos */
+}
+
+/* Opcional: Línea decorativa debajo del título */
+.login-title::after {
+    content: '';
+    width: 50px; /* Ancho de la línea */
+    height: 3px; /* Grosor de la línea */
+    background-color: #ec6b81; /* Color de la línea */
+    display: block;
+    margin: 10px auto 0; /* Margen superior, centrado */
+    border-radius: 2px; /* Bordes redondeados */
+}
+  /*-------- Login Section --------*/
+  .login-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ec6b81; /* Añadido borde de color */
+  }
+  
+  /*-------- Login Container --------*/
+  .login-container {
+    padding-top: 20px;
+    
+  }
+  
+  /*-------- Login Title --------*/
+  .login-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+/*-------- Login Form --------*/
+.login-form {
+  display: flex;
+  flex-direction: column; /* Apila los campos verticalmente */
+  
+}
+
+.login-form input {
+  width: 100%; /* Asegúrate de que los campos ocupen todo el ancho */
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+  
+  /*-------- Login Button --------*/
+  .btn-login {
+    background-color: #ec6b81;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-login:hover {
+    background-color: #ec6b81;
+  }
+  
+  /*-------- Login Options --------*/
+  .login-options {
+    margin-top: 20px;
+  }
+  
+  .btn-forgot-password,
+  .btn-create-account {
+    color:  #ec6b81;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .btn-forgot-password:hover,
+  .btn-create-account:hover {
+    text-decoration: underline;
+    color:  #ec6b81;
+  }
+  
+  /*-------- Spacing Utility Classes --------*/
+  .mt-4 {
+    margin-top: 1.5rem;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  /*-------- Additional Custom Styles --------*/
+  /* Example: Style for input focus */
+  .login-form input:focus {
+    border-color:  #ec6b81;
+    outline: none;
+
+  }
+  
+  /* Style for error messages */
+  .form-error {
+    color: #ff0000;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  /* Style for success messages */
+  .form-success {
+    color: #28a745;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  

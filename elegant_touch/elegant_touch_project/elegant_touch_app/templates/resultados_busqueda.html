@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Estilo para el título principal */
+    .container h1 {
+        font-size: 2.5em;
+        font-weight: bold;
+        color:  #ec6b81;
+        text-align: center;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    
+    /* Estilo para el subtítulo de 'Resultados para' */
+    .search-results-subtitle {
+        font-size: 1.90em;
+        color: #888888;
+        text-align: center;
+        font-style: italic;
+        margin-bottom: 30px;
+    }
+</style>
+    <div class="container">
+        <h1>Resultados de Búsqueda</h1>
+
+        {% if query %}
+            <p>Resultados para: <strong>{{ query }}</strong></p>
+        {% endif %}
+
+        {% if resultados %}
+            <section class="product-area">
+                <div class="container">
+                    <div class="row">
+                        {% for producto in resultados %}
+                        <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                            <!--== Start Shop Item ==-->
+                            <div class="product-item">
+                                <div class="inner-content discount-product">
+                                    <div class="product-thumb">
+                                        <a href="#">
+                                            {% if producto.imagenes.all %}
+                                            <img src="{{ producto.imagenes.first.imagen.url }}" alt="{{ producto.nombre_producto }}" class="img-fluid product-image">
+                                            {% else %}
+                                            <img src="{% static 'images/no-image.png' %}" alt="Imagen no disponible" class="img-fluid product-image">
+                                            {% endif %}
+                                        </a>
+                                        <div class="product-action">
+                                            <div class="addto-wrap">
+                                                <a class="add-wishlist" href="{% url 'agregar_a_lista_deseos' producto.id %}" title="Añadir a la lista de deseos">
+                                                    <i class="icon-heart icon"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-desc text-center">
+                                        <div class="product-info">
+                                            <h4 class="title"><a href="#">{{ producto.nombre_producto }}</a></h4>
+                                            <p>{{ producto.descripcion_producto|truncatewords:20 }}</p>
+                                            <div class="star-content">
+                                                <i class="ion-md-star"></i>
+                                                <i class="ion-md-star"></i>
+                                                <i class="ion-md-star"></i>
+                                                <i class="ion-md-star"></i>
+                                                <i class="ion-md-star"></i>
+                                            </div>
+                                            <div class="prices">
+                                                <span class="price text-black">COP {{ producto.precio_producto }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-footer">
+                                            <form method="POST" action="{% url 'agregar_al_carrito' producto.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" style="
+                                                    display: flex; 
+                                                    align-items: center; 
+                                                    justify-content: space-between; 
+                                                    border: none; 
+                                                    background-color: #f17a87; 
+                                                    padding: 10px 20px;  
+                                                    border-radius: 40px; 
+                                                    color: white; 
+                                                    font-weight: bold; 
+                                                    font-size: 14px;  
+                                                    cursor: pointer;
+                                                    width: 200px;  
+                                                ">
+                                                    <span>Añadir al Carrito</span>
+                                                    <div style="
+                                                        background-color: white;
+                                                        border-radius: 50%;
+                                                        width: 35px; 
+                                                        height: 35px;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: center;
+                                                    ">
+                                                        <i class="icon-bag icon" style="color: black; font-size: 16px;"></i>
+                                                    </div>
+                                                </button>
+                                            </form>
+                                            <a class="btn-quick-view" 
+                                                href="javascript:;" 
+                                                title="Vista rápida"
+                                                data-id="{{ producto.id }}" 
+                                                data-nombre="{{ producto.nombre_producto }}"
+                                                data-descripcion="{{ producto.descripcion_producto }}"
+                                                data-precio="{{ producto.precio_producto }}"
+                                                data-imagen="{% if producto.imagenes.first %}{{ producto.imagenes.first.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                                                data-imagen-secundaria="{% if producto.imagenes.count > 1 %}{{ producto.imagenes.all.1.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                                                data-toggle="modal" 
+                                                data-target="#quickViewModal">Vista rápida</a> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--== End Shop Item ==-->
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        {% else %}
+            <p>No se encontraron productos que coincidan con la búsqueda.</p>
+        {% endif %}
+    </div>
+{% endblock %}

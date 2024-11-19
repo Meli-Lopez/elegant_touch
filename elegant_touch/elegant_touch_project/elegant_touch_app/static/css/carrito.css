@@ -1,0 +1,278 @@
+  /* General layout */
+  .main-content {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.shopping-cart-container {
+  display: flex;
+  justify-content: space-between; /* Para que ambos elementos ocupen su espacio sin solaparse */
+  align-items: flex-start; /* Alinea ambos en la parte superior */
+  gap: 20px; /* Espacio entre la tabla y el resumen */
+}
+
+.shopping-cart-title {
+    font-size: 24px; /* Mantiene el tamaño */
+    font-weight: bold; /* Mantiene el grosor */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #e91e63; /* Color rosado claro */
+    text-align:center;  }
+
+.product-area .container {
+    max-width: 100%;
+    padding: 0;
+}
+
+.shop-cart-title {
+  font-size: 18px; /* Tamaño de fuente */
+  font-weight: 700; /* Grosor de la fuente */
+  text-align: center; /* Centrado del texto */
+  color:#e91e63; /* Color oscuro para el texto */
+  letter-spacing: 1px; /* Espaciado entre letras */
+  text-transform: uppercase; /* Convierte el texto en mayúsculas */
+  padding-bottom: 10px; /* Espaciado inferior interno */
+
+}
+
+
+.shopping-cart-wrap {
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.cart-table {
+  width: 100%; /* Ajusta el ancho de la tabla */
+    border-collapse: collapse;
+}
+
+.cart-table th, .cart-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-table th {
+    font-weight: bold;
+    font-size: 15px; /* Mantiene el tamaño */
+    color: #ec6b81; /* Color rosado claro */
+    text-transform: uppercase;
+}
+
+.cart-table td img.product-image {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.cart-table td {
+    font-size: 13px; /* Mantiene el tamaño */
+    color: #333;
+}
+
+
+.btn {
+    background-color: #6d1614;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.btn-decrement, .btn-increment {
+    border-radius: 4px;
+    padding: 5px;
+}
+
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+
+.shopping-cart-summary .separator {
+    border-top: 1px solid #eee;
+    margin: 15px 0;
+}
+
+.cart-detailed-totals .label {
+    font-size: 16px; /* Mantiene el tamaño */
+    color: #333;
+}
+
+.cart-detailed-totals .value {
+    font-size: 16px; /* Mantiene el tamaño */
+    color: #333;
+    font-weight: bold;
+}
+
+/* Form buttons */
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-group input {
+  width: 50px; /* Ajustado el ancho del input a 20px para que sea más pequeño */
+  padding: 3px; /* Ajustado el padding para que se vea mejor en un input más pequeño */
+  font-size: 14px; /* Tamaño de la letra del input más pequeño */
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.btn {
+    background-color: #ec6b81;;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.btn-decrement, .btn-increment {
+    background-color: #ec6b81;
+    color: #fff;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 14px; /* Reducido el tamaño de los botones */
+}
+.btn-decrement:hover, .btn-increment:hover {
+  background-color: #ec6b81; /* Rosa más oscuro para hover */
+}
+
+.btn-update {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #ffb3c1; /* Color rosado claro */
+    font-size: 14px; /* Mantiene el tamaño */
+    margin-left: 10px;
+    text-decoration: underline;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+
+/* Totals section */
+.shopping-cart-summary {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.shopping-cart-summary .separator {
+    border-top: 1px solid #eee;
+    margin: 15px 0;
+}
+
+.cart-detailed-totals .label {
+    font-size: 16px; /* Mantiene el tamaño */
+    color: #333;
+}
+
+.cart-detailed-totals .value {
+    font-size: 16px; /* Mantiene el tamaño */
+    color: #333;
+    font-weight: bold;
+}
+
+.block-reassurance {
+    margin-top: 30px;
+}
+
+.block-reassurance ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.block-reassurance ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.block-reassurance ul li img {
+    margin-right: 10px;
+}
+
+.block-reassurance ul li span {
+    font-size: 14px; /* Mantiene el tamaño */
+    color: #555;
+}
+/* Estilos para el formulario de dirección */
+.form-control {
+    border: 1px solid #dcdcdc;
+    padding: 8px;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+.form-control:focus {
+  border-color: #ec6b81; /* Rosa */
+  box-shadow: 0 0 5px rgba(236, 107, 129, 0.5); /* Sombra rosa */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.optional-label {
+  color: #999;
+  font-size: 12px;
+  margin-left: 5px;
+}
+/* Resumen de compra */
+.shopping-cart-summary {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.cart-detailed-totals {
+  margin-top: 20px;
+}
+
+.cart-detailed-totals .label {
+  font-weight: bold;
+  color: #333;
+}
+.cart-detailed-totals .value {
+font-weight: bold;
+color: #ec6b81; /* Rosa */
+}
+
+.separator {
+border-bottom: 1px solid #ddd;
+margin: 15px 0;
+}
+
+.custom-btn {
+background-color: #ec6b81; /* Color de fondo */
+color: white; /* Color del texto */
+border: none; /* Sin bordes */
+padding: 10px 20px; /* Espaciado interno */
+cursor: pointer; /* Cursor al pasar sobre el botón */
+transition: background-color 0.3s ease; /* Transición al cambiar de color */
+border-radius: 12px; /* Bordes redondeados */
+display: block; /* Para que el botón ocupe el ancho completo */
+margin: 20px auto; /* Centrado del botón */
+text-align: center; /* Centrado del texto */
+}
+
+.custom-btn:hover {
+background-color: #d75970; /* Color al hacer hover */
+}
+
+
+ 

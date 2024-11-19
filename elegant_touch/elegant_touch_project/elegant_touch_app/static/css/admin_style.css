@@ -1,0 +1,30 @@
+/* Estilos para la barra de navegación */
+nav ul {
+    display: flex;
+    justify-content: space-around;
+}
+
+nav ul li a {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Estilos para el banner principal */
+section {
+    font-family: Arial, sans-serif;
+    font-size: 2em;
+}
+
+section h2 {
+    margin: 0;
+    font-weight: bold;
+}
+
+section h3 {
+    font-weight: 300;
+}
+
+button {
+    margin-top: 20px;
+}

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #ff69b4; /* Rosado pastel */
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            color: #fff;
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 12px 0;
+            border-bottom: 1px solid #FFC0CB; /* Un tono más claro de rosado */
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .header .user-info img {
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .header .user-info p {
+            margin: 0;
+        }
+        .dashboard-cards {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            margin-bottom: 10px;
+            color: #d63384; /* Color rosado */
+        }
+        .chart {
+            height: 150px;
+            background-color: #ffc0cb; /* Fondo rosado claro */
+            border-radius: 5px;
+        }
+        .progress-bar {
+            background-color: #d63384; /* Barra de progreso rosada */
+        }
+        .btn-upgrade {
+            background-color: #d63384; /* Botón rosado */
+            color: white;
+        }
+        /* Estilos para el formulario */
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        
+        form .form-group label {
+            color: #d63384; /* Color rosado */
+            font-weight: bold;
+        }
+        
+        form .form-group input, form .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+            transition: border-color 0.3s ease-in-out;
+        }
+        
+        form .form-group input:focus {
+            border-color: #d63384; /* Borde rosado al hacer foco */
+        }
+        
+        /* Contenedor para centrar los botones */
+        .form-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        form .btn-success {
+            background-color: #ff69b4; /* Color rosa pastel */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            margin-right: 10px;
+        }
+        
+        form .btn-success:hover {
+            background-color: #d63384; /* Cambiar a un rosa más oscuro al pasar el mouse */
+        }
+        
+        /* Estilo para el botón Cancelar */
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        /* Alinear los botones al centro */
+        .form-buttons button {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        h1 {
+            font-size: 2.5rem; /* Tamaño de fuente grande */
+            color: #d5006d; /* Color rosa fuerte */
+            text-align: center; /* Centrar el texto */
+            border-bottom: 2px solid #ff69b4; /* Borde inferior rosa */
+            padding-bottom: 10px; /* Espaciado en la parte inferior */
+            margin-top: 20px; /* Margen superior */
+            margin-bottom: 20px; /* Margen inferior */
+            text-transform: uppercase; /* Texto en mayúsculas */
+            font-family: 'Cambria', Cochin, Georgia, Times, 'Times New Roman', serif; /* Fuente serif */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <h2>Panel de Control</h2>
+        <ul>
+            <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li>
+            <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+            <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
+            <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
+            <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
+            <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
+            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+        </ul>
+    </div>                      
+
+    <div class="content">
+        <h1>Editar Proveedor</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="nombre_proveedor">Nombre</label>
+                {{ form.nombre_proveedor|safe }}
+            </div>
+            <div class="form-group">
+                <label for="apellido_proveedor">Apellido</label>
+                {{ form.apellido_proveedor|safe }}
+            </div>
+            <div class="form-group">
+                <label for="telefono_proveedor">Teléfono</label>
+                {{ form.telefono_proveedor|safe }}
+            </div>
+            <div class="form-group">
+                <label for="correo_proveedor">Correo</label>
+                {{ form.correo_proveedor|safe }}
+            </div>
+            <div class="form-group">
+                <label for="marca">Marca</label>
+                {{ form.marca|safe }}
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-success">Actualizar Proveedor</button>
+                <a href="{% url 'lista_proveedores' %}" class="btn btn-secondary">Cancelar</a>
+            </div>            
+        </form>
+    </div>
+</body>
+</html>

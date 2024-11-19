@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Elegant Touch</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <style>
+        h1 {
+            font-size: 2.5rem; /* Tamaño de fuente grande */
+            color: #d5006d; /* Color rosa fuerte */
+            text-align: center; /* Centrar el texto */
+            border-bottom: 2px solid #ff69b4; /* Borde inferior rosa */
+            padding-bottom: 10px; /* Espaciado en la parte inferior */
+            margin-top: 20px; /* Margen superior */
+            margin-bottom: 20px; /* Margen inferior */
+            text-transform: uppercase; /* Texto en mayúsculas */
+            font-family: 'Cambria', Cochin, Georgia, Times, 'Times New Roman', serif; /* Fuente serif */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #ff69b4; /* Rosado pastel */
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            color: #fff;
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 12px 0;
+            border-bottom: 1px solid #FFC0CB; /* Un tono más claro de rosado */
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            background-color: #fff; /* Fondo blanco para las tarjetas */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            color: #d63384; /* Color rosado fuerte */
+        }
+        .btn {
+            margin-left: 10px;
+        }
+        .list-group-item {
+            background-color: #fff; /* Fondo blanco */
+            border: 1px solid #dcdcdc; /* Bordes suaves */
+        }
+        .btn-success {
+            background-color: #ff4d94; /* Rosa más oscuro */
+            border: none;
+        }        
+        .btn-success:hover {
+            background-color: #ff3385; /* Un tono ligeramente más oscuro al pasar el mouse */
+            opacity: 0.9; /* Mantener el efecto de opacidad */
+        }
+        .btn-danger {
+            background-color: #dc3545; /* Rojo */
+            border: none;
+        }
+        .btn-light {
+            background-color: #f8f9fa; /* Color claro */
+        }
+        .btn-primary {
+            background-color: #ff69b4; /* Color primario rosado */
+            border: none;
+        }
+        .btn-primary:hover, .btn-success:hover, .btn-danger:hover {
+            opacity: 0.9; /* Efecto hover */
+        }
+        .card-header {
+            background-color: #ffccf2; /* Fondo rosado claro */
+            color: #d63384; /* Texto rosado fuerte */
+        }
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .list-group-item {
+            border: 1px solid #ff69b4; /* Borde rosado */
+        }
+        .btn-custom {
+            background-color: #d63384; /* Color de fondo rosa */
+            color: white; /* Color del texto */
+            border: none; /* Sin borde */
+            padding: 10px 15px; /* Espaciado interno */
+            border-radius: 5px; /* Bordes redondeados */
+            font-size: 1rem; /* Tamaño de fuente */
+            display: inline-flex; /* Para alinear el ícono y el texto */
+            align-items: center; /* Centrar verticalmente */
+            text-decoration: none; /* Sin subrayado */
+        }
+        
+        .btn-custom i {
+            margin-right: 5px; /* Espacio entre el ícono y el texto */
+        }
+        .btn-custom-subcategoria {
+            background-color: #d63384; /* Color de fondo rosa */
+            color: white; /* Color del texto */
+            border: none; /* Sin borde */
+            padding: 10px 15px; /* Espaciado interno */
+            border-radius: 5px; /* Bordes redondeados */
+            font-size: 1rem; /* Tamaño de fuente */
+            display: inline-flex; /* Para alinear el ícono y el texto */
+            align-items: center; /* Centrar verticalmente */
+            text-decoration: none; /* Sin subrayado */
+        }
+        
+        .btn-custom-subcategoria i {
+            margin-right: 5px; /* Espacio entre el ícono y el texto */
+            
+        }
+        
+        /* Evitar que el texto se vuelva azul al hacer clic */
+            .btn-custom-subcategoria:focus,
+            .btn-custom-subcategoria:active {
+            color: white; /* Mantener el color blanco */
+            outline: none; /* Sin contorno */
+            ox-shadow: none; /* Sin sombra */
+        }
+        .icono-editar {
+            color: #000000; /* O también puedes usar: color: black; */
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <h2>Panel de Control</h2>
+        <ul>
+            <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li>
+            <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+            <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
+            <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
+            <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
+            <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
+            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+        </ul>
+    </div> 
+    <div class="content">
+        <h1 class="mt-4 mb-4">Gestión de Categorías y Subcategorías</h1>
+        <a href="{% url 'agregar_categoria' %}" class="btn btn-custom mb-3">
+            <i class="fas fa-plus"></i> Agregar Categoría
+        </a>
+        
+        {% for categoria in categorias %}
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0">{{ categoria.nombre }}</h2>
+                <div>
+                    <a href="{% url 'editar_categoria' categoria.pk %}" class="text-decoration-none icono-editar" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{% url 'eliminar_categoria' categoria.pk %}" class="text-decoration-none text-danger ml-2" title="Eliminar">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <h3 class="h5 mb-3">Subcategorías</h3>
+                <ul class="list-group">
+                    {% for subcategoria in categoria.subcategorias.all %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ subcategoria.nombre }}
+                        <div>
+                            <a href="{% url 'editar_subcategoria' subcategoria.pk %}" class="text-decoration-none" title="Editar" style="color: #d5006d;">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'eliminar_subcategoria' subcategoria.pk %}" class="text-decoration-none text-danger ml-2" title="Eliminar">
+                                <i class="fas fa-trash-alt" ></i> <!-- Icono de eliminar -->
+                            </a>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item">No hay subcategorías</li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'agregar_subcategoria' categoria.pk %}" class="btn-custom-subcategoria mt-3">
+                    <i class="fas fa-plus"></i> Agregar Subcategoría
+                </a>
+                
+            </div>
+        </div>
+        {% empty %}
+        <p>No hay categorías disponibles.</p>
+        {% endfor %}
+    </div> 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

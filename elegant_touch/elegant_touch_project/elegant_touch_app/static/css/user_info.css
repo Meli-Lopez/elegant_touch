@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2; /* Cambiado a un fondo gris claro */
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.form-container {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+    border: 1px solid #ec6b81; /* Añadido borde de color */
+}
+
+h2 {
+    font-size: 28px;
+    color: #ec6b81;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ec6b81;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333; /* Color un poco más oscuro */
+    font-size: 16px;
+}
+
+
+
+.form-group p {
+    font-size: 18px;
+    color: #444;
+    margin: 0;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #ec6b81;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+
+.user-form input,
+.user-form select,
+.user-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+.user-form input:focus,
+.user-form select:focus,
+.user-form textarea:focus {
+    border-color: #ec6b81;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+
+
+button.btn-primary {
+    background-color: #ec6b81;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+
+
+button.btn-primary:focus {
+    outline: none;
+}
+
+
+
+
+

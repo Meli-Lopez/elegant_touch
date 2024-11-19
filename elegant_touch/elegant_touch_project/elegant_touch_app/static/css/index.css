@@ -1,0 +1,276 @@
+.product-area {
+    margin-bottom: 1px;
+}
+
+.owl-carousel .item {
+    padding: 5px; /* Mantener en 5px para el contenedor */
+}
+
+.product-item {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 5px; /* Mantener en 5px */
+    transition: all 0.3s ease;
+    margin-bottom: 15px; /* Mantener en 15px */
+    max-width: 90%; /* Reducido para hacer el contenedor un poco más pequeño */
+    margin-left: auto; /* Centrar horizontalmente */
+    margin-right: auto; /* Centrar horizontalmente */
+}
+
+.product-item:hover {
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2); /* Un poco más sutil */
+}
+
+.product-title {
+    margin-top: 5px; /* Mantener en 5px */
+    font-size: 12px; /* Aumentado de 10px a 12px */
+}
+
+.prices .price {
+    font-size: 12px; /* Aumentado de 10px a 12px */
+}
+
+/* Estilo para 4 columnas por fila */
+@media (min-width: 992px) {
+    .owl-carousel .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .col-md-3 {
+        flex: 0 0 25%; /* 4 columnas por fila */
+        max-width: 25%;
+    }
+
+    /* Ajuste de imágenes */
+    .product-image {
+        width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
+        height: 200px; /* Ajusta la altura deseada */
+        object-fit: contain; /* Ajusta la imagen dentro del contenedor sin cortar */
+        border-radius: 10px; /* Asegura que las imágenes tengan bordes redondeados */
+    }
+}
+
+.product-thumb {
+  position: relative; /* Permite posicionar elementos dentro de este contenedor */
+}
+
+.product-action {
+  position: absolute;
+  top: 10px; /* Ajusta la distancia desde la parte superior de la imagen */
+  right: 10px; /* Ajusta la distancia desde el borde derecho de la imagen */
+  z-index: 10; /* Asegúrate de que los botones estén por encima de la imagen */
+}
+
+.addto-wrap {
+  display: flex;
+}
+
+.addto-wrap a {
+  background: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+  border-radius: 50%; /* Botones redondeados */
+  padding: 5px; /* Espaciado interno */
+  margin-bottom: 5px; /* Espaciado entre los botones */
+}
+
+.addto-wrap a:hover {
+  background: rgba(255, 0, 0, 0.8); /* Cambia el color al pasar el ratón */
+  color: #fff; /* Cambia el color del icono */
+}
+.discount-product-slider .product-item .product-thumb {
+  position: relative;
+  overflow: hidden;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  max-width: 250px; /* Aumenta el tamaño máximo de la imagen */
+  margin: 0 auto; /* Centra el producto */
+  padding-top: 200px; /* Ajusta la altura del contenedor */
+}
+
+.discount-product-slider .product-item .product-thumb img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Hace que la imagen se ajuste sin ser recortada */
+}
+
+.discount-product-slider .product-item {
+  text-align: center; /* Centra el texto del producto */
+  
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: pink; /* Cambia el color de fondo de las flechas a rosado */
+
+}
+
+  #carouselImagesContainer .carousel-item {
+    height: 400px; /* Ajusta la altura según tus necesidades */
+    overflow: hidden; /* Evita que se muestren partes de la imagen que sobresalen */
+  }
+
+  #carouselImagesContainer .carousel-item img {
+    max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
+    max-height: 100%; /* Asegura que la imagen no exceda la altura del contenedor */
+    object-fit: contain; /* Asegura que la imagen se ajuste sin recortarse */
+  }
+
+
+  /* Estilos para el carrito */
+.cart-popup-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .cart-product-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .cart-item {
+    display: flex;
+    align-items: flex-start; /* Alinea imagen y detalles del producto en un mismo nivel */
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+  }
+  
+  .cart-item-left {
+    flex: 0 0 60px; /* Controla el ancho fijo para la imagen */
+    margin-right: 20px; /* Espacio entre imagen y detalles */
+  }
+  
+  .cart-product-image {
+    border-radius: 5px;
+    width: 60px;
+    height: 50px;
+    object-fit: cover; /* Asegura que la imagen mantenga sus proporciones */
+  }
+  
+  .cart-item-right {
+    flex: 1; /* Toma el resto del espacio disponible */
+    display: flex;
+    flex-direction: column; /* Asegura que los detalles se coloquen en columnas */
+    align-items: flex-start;
+  }
+  
+  .product-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px; /* Espacio entre nombre del producto y otros detalles */
+  }
+  
+  .product-quantity,
+  .product-unit-price,
+  .product-total-price {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .product-unit-price,
+  .product-total-price {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  
+  .cart-item-pricing {
+    text-align: left;
+  }
+  
+  .cart-price-content {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+  }
+  
+  .cart-total-label {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .cart-total-value {
+    font-weight: bold;
+    font-size: 16px;
+    color: #e63946;
+  }
+  
+  .cart-total {
+    margin-bottom: 20px;
+  }
+  
+  .cart-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .cart-button:hover {
+    background-color: #d62839;
+  }
+  
+  .item {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinear el contenido en la parte superior */
+}
+
+.user-icon {
+    background-color: #ec6b81; /* Fondo rosa */
+    color: #ffffff; /* Color del ícono */
+    border-radius: 50%; /* Hacer el fondo redondo */
+    width: 60px; /* Ancho del círculo */
+    height: 60px; /* Altura del círculo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px; /* Tamaño del ícono */
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    flex-shrink: 0; /* Mantener el tamaño del icono constante */
+}
+
+.testi-author {
+    display: flex;
+    align-items: center; /* Mantener el icono y la info del usuario alineados horizontalmente */
+}
+
+.testi-info {
+    display: flex;
+    flex-direction: column; /* Nombre y correo en columna */
+    line-height: 1.2; /* Reducir espacio entre líneas */
+}
+
+.testi-info .name {
+    font-weight: bold;
+    margin-bottom: 0; /* Quitar el margen inferior */
+}
+
+.testi-info .email {
+    color: #555; /* Color de texto para el correo electrónico */
+    font-size: 0.9em; /* Tamaño de texto ligeramente más pequeño para el correo */
+    margin-top: 2px; /* Pequeño espacio entre el nombre y el correo electrónico */
+}
+
+.testi-content {
+    margin-top: 15px; /* Espacio entre el contenido y la información del usuario */
+    text-align: left;
+    max-width: 600px; /* Limitar ancho para una mejor alineación */
+}
+
+

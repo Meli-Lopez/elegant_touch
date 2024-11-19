@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Eliminación</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #ff69b4; /* Rosado pastel */
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            color: #fff;
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 12px 0;
+            border-bottom: 1px solid #FFC0CB; /* Un tono más claro de rosado */
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .confirmation-message {
+            margin: 20px auto;
+            text-align: center;
+            max-width: 600px; /* Limitar el ancho para mayor legibilidad */
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #d5006d; /* Color rosa fuerte */
+            text-align: center;
+            border-bottom: 2px solid #ff69b4; /* Borde inferior rosa */
+            padding-bottom: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-transform: uppercase; /* Texto en mayúsculas */
+            font-family: 'Cambria', Cochin, Georgia, Times, 'Times New Roman', serif; /* Fuente serif */
+        }
+        .confirmation-message {
+            margin: 20px auto;
+            max-width: 600px; /* Limitar el ancho */
+        }
+        
+        .confirmation-message h3 {
+            text-align: left;
+            margin-top: 20px;
+        }
+        
+        .confirmation-message p {
+            text-align: left; /* Alinear el texto a la izquierda */
+            margin: 10px 0; /* Margen superior e inferior */
+        }
+        
+        .btn-danger {
+            background-color: #d5006d; /* Botón rojo rosado */
+            border: none;
+        }
+        .btn-danger:hover {
+            background-color: #b3004d; /* Color más oscuro en hover */
+        }
+        .btn-secondary {
+            background-color: #6c757d; /* Color gris */
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268; /* Color más oscuro en hover */
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <h2>Panel de Control</h2>
+        <ul>
+            <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li>
+            <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+            <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
+            <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
+            <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
+            <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
+            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+        </ul>
+    </div> 
+    <div class="content">
+        <h1>Confirmar Eliminación</h1>
+        <div class="confirmation-message">
+            <h3>¿Estás seguro de que deseas eliminar el producto "{{ producto.nombre_producto }}"?</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+                <a href="{% url 'lista_productos' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

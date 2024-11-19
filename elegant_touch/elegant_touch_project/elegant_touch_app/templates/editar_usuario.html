@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Editar Usuario</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #ff69b4; /* Rosado pastel */
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            color: #fff;
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 12px 0;
+            border-bottom: 1px solid #FFC0CB; /* Un tono más claro de rosado */
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        h3 {
+            color: #ff5cad; /* Un tono lavanda inspirado en colores de maquillaje */
+            background-color: transparent; /* Fondo transparente */
+            margin-bottom: 20px;
+            padding: 8px;
+            font-family: 'Playfair Display', serif; /* Una fuente elegante y femenina */
+            font-size: 22px; /* Tamaño adecuado sin ser demasiado grande */
+            font-weight: 600; /* Un peso más marcado, pero sin ser exagerado */
+            border-bottom: 3px solid #f8a1d1; /* Línea inferior en rosa pastel */
+            letter-spacing: 0.5px; /* Espaciado pequeño entre letras */
+            text-transform: uppercase; /* Estilo de mayúsculas para mayor impacto */
+            text-align: center; /* Centra el texto */
+        }
+        
+        h3:hover {
+            color: #ff5cad; /* Cambia a un rosa más intenso al pasar el mouse */
+            border-bottom-color: #ff80c1; /* Línea inferior en un tono rosa vibrante */
+            letter-spacing: 1px; /* Aumenta el espaciado al pasar el mouse */
+        }
+        
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            color: #d63384;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #d63384;
+            border-radius: 4px;
+            background-color: #ffe6ed;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #ff80b3;
+            background-color: #ffebf2;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #d63384;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #b72d6c;
+        }
+
+        .btn-return {
+            display: inline-block; /* Para que el enlace se comporte como un botón */
+            padding: 10px 20px;
+            background-color: #ff66b2; /* Rosa claro */
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin: 20px auto; /* Añadido para centrar */
+            text-align: center; /* Centra el texto dentro del botón */
+        }
+        
+        .btn-return:hover {
+            background-color: #ff66b2; /* Se mantiene el mismo color al pasar el mouse */
+        }
+        
+        .content {
+            display: flex;
+            flex-direction: column; /* Asegura que el contenido sea una columna */
+            align-items: center; /* Centra todos los elementos hijos */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <h2>Panel de Control</h2>
+        <ul>
+            <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li>
+            <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+            <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
+            <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
+            <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
+            <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
+            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h3>Editar Usuario: {{ perfil_usuario.user.first_name }} {{ perfil_usuario.user.last_name }}</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label for="first_name">Nombre:</label>
+            <input type="text" id="first_name" name="first_name" value="{{ perfil_usuario.user.first_name }}" required>
+
+            <label for="last_name">Apellido:</label>
+            <input type="text" id="last_name" name="last_name" value="{{ perfil_usuario.user.last_name }}" required>
+
+            <label for="correo_cliente">Correo:</label>
+            <input type="email" id="correo_cliente" name="correo_cliente" value="{{ perfil_usuario.correo_cliente }}" required>
+
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" name="direccion" value="{{ perfil_usuario.direccion }}" required>
+
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" name="telefono" value="{{ perfil_usuario.telefono }}" required>
+
+            <label for="tipo_usuario">Tipo de Usuario:</label>
+            <select id="tipo_usuario" name="tipo_usuario">
+                <option value="Staff" {% if perfil_usuario.user.is_staff %}selected{% endif %}>Staff</option>
+                <option value="Usuario" {% if not perfil_usuario.user.is_staff %}selected{% endif %}>Usuario</option>
+            </select>
+
+            <button type="submit">Actualizar Usuario</button>
+        </form>
+
+        <a class="btn-return" href="{% url 'gestion_de_usuarios' %}">Volver a la lista de usuarios</a>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

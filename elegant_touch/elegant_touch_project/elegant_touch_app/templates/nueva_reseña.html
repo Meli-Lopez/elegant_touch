@@ -1,0 +1,169 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block content %}
+
+<head>
+    <style>
+        body {
+            background-color: #fefefe; /* Fondo blanco puro */
+            font-family: 'Poppins', sans-serif; /* Fuente moderna y limpia */
+            color: #333;
+        }
+
+        .review-container {
+            max-width: 800px;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 80px auto;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            position: relative;
+        }
+
+        /* Detalle en rosa en la parte superior de la caja */
+        .review-container:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background-color:  #ec6b81; /* Línea decorativa en rosa */
+            border-radius: 10px;
+        }
+
+        .review-title {
+            font-size: 36px;
+            font-weight: 600;
+            color:  #ec6b81; /* Título en rosa brillante */
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        /* Línea fina decorativa bajo el título */
+        .review-title:after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background-color: #ec6b81;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .form-background {
+            background-color: #fff1f5; /* Fondo suave rosado */
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+
+        .review-form label {
+            font-size: 14px;
+            color: #ec6b81;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .review-form input,
+        .review-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: #f9f9f9; /* Fondo gris claro */
+            transition: all 0.3s ease;
+        }
+
+        .review-form input:focus,
+        .review-form textarea:focus {
+            border-color: #ec6b81;/* Rosa brillante en enfoque */
+            background-color: #ec6b81;;
+            box-shadow: 0 0 10px rgba(255, 74, 133, 0.2); /* Brillo rosa */
+            outline: none;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #ff4a85; /* Fondo rosa brillante */
+            color: white; /* Texto blanco */
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 15px rgba(255, 74, 133, 0.3); /* Sombra rosada */
+        }
+
+        .submit-button:hover {
+            background-color: #e63971; /* Oscurecer el rosa en hover */
+            box-shadow: 0 12px 20px rgba(255, 74, 133, 0.5);
+        }
+
+        .submit-button:active {
+            background-color: #cc335f;
+            box-shadow: 0 4px 8px rgba(255, 74, 133, 0.6); /* Más profundo */
+        }
+
+        /* Decoración de formulario */
+        .highlight-text {
+            color: #ff4a85; /* Color rosa brillante */
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-description {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #777;
+        }
+
+        /* Botón de vuelta */
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            color: #ec6b81;;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: #e63971;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="review-container">
+        <h1 class="review-title">Escribir Reseña para {{ producto.nombre_producto }}</h1>
+
+        <div class="form-background">
+            <p class="highlight-text">¡Cuéntanos tu experiencia!</p>
+            <p class="form-description">Queremos saber qué opinas de este producto.</p>
+            
+            <!-- Formulario para la nueva reseña -->
+            <form method="post" class="review-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="submit-button">Enviar reseña</button>
+            </form>
+        </div>
+
+        <a href="{% url 'index' %}" class="back-button">Volver al inicio</a>
+    </div>
+</body>
+
+{% endblock %}

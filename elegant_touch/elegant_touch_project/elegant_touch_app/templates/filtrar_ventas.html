@@ -1,0 +1,44 @@
+
+
+{% block content %}
+  <h1>Filtrar Ventas por Estado</h1>
+  <form method="GET">
+    <label for="estado">Estado:</label>
+    <select name="estado" id="estado">
+      <option value="">-- Selecciona un estado --</option>
+      <option value="pendiente">Pendiente</option>
+      <option value="en proceso">En proceso</option>
+      <option value="enviado">Enviado</option>
+      <option value="entregado">Entregado</option>
+      <option value="cancelado">Cancelado</option>
+    </select>
+    <button type="submit">Filtrar</button>
+  </form>
+  
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID Venta</th>
+        <th>Guía de Pedido</th>
+        <th>Fecha de Venta</th>
+        <th>Total Venta</th>
+        <th>Estado de Venta</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for venta in ventas %}
+        <tr>
+          <td>{{ venta.id }}</td>
+          <td>{{ venta.guia_pedido }}</td>
+          <td>{{ venta.fecha_venta }}</td>
+          <td>{{ venta.total_venta }}</td>
+          <td>{{ venta.get_estado_venta_display }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No hay ventas para el estado seleccionado</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

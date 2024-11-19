@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <style>
+
+        h1 {
+            font-size: 2.5rem; /* Tamaño de fuente grande */
+            color: #d5006d; /* Color rosa fuerte */
+            text-align: center; /* Centrar el texto */
+            border-bottom: 2px solid #ff69b4; /* Borde inferior rosa */
+            padding-bottom: 10px; /* Espaciado en la parte inferior */
+            margin-top: 20px; /* Margen superior */
+            margin-bottom: 20px; /* Margen inferior */
+            text-transform: uppercase; /* Texto en mayúsculas */
+            font-family: 'Cambria', Cochin, Georgia, Times, 'Times New Roman', serif; /* Fuente serif */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #ff69b4; /* Rosado pastel */
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            color: #fff;
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 12px 0;
+            border-bottom: 1px solid #FFC0CB; /* Un tono más claro de rosado */
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .header .user-info img {
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .header .user-info p {
+            margin: 0;
+        }
+        .dashboard-cards {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            margin-bottom: 10px;
+            color: #d63384; /* Color rosado */
+        }
+        .chart {
+            height: 150px;
+            background-color: #ffc0cb; /* Fondo rosado claro */
+            border-radius: 5px;
+        }
+        .progress-bar {
+            background-color: #d63384; /* Barra de progreso rosada */
+        }
+        .btn-upgrade {
+            background-color: #d63384; /* Botón rosado */
+            color: white;
+        }
+        /* Estilos de la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem; /* Tamaño de letra más pequeño */
+        }
+        th, td {
+            padding: 10px; /* Mayor padding para mejor legibilidad */
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #ffc0cb; /* Fondo rosado claro */
+            color: #333;
+        }
+        td {
+            background-color: #fff;
+            color: #333;
+        }
+        tr:hover {
+            background-color: #f1f1f1; /* Efecto hover */
+        }
+        .btn-warning, .btn-danger {
+            margin-right: 5px;
+        }
+        .btn-rosa {
+            background-color: #d5006d; /* Botón rosa */
+            color: white;
+        }
+        .btn-edit {
+            background-color: #ffc107; /* Color amarillo */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+        .btn-delete {
+            background-color: #dc3545; /* Rojo */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-edit i, .btn-delete i {
+            margin-right: 5px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Espacio entre los botones */
+        }
+        
+        /* Estilos para imágenes */
+        img {
+            max-width: 100px; /* Limitar el tamaño de la imagen */
+            height: auto;
+            border-radius: 5px;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .content {
+                margin-left: 0;
+            }
+            h1 {
+                font-size: 2rem; /* Reducir el tamaño de fuente en pantallas pequeñas */
+            }
+        }
+        /* Contenedor con scroll */
+        .table-scroll-container {
+            max-height: 400px; /* Altura máxima de la tabla */
+            overflow-y: auto;  /* Habilita el scroll vertical */
+            width: 100%;       /* Ancho completo */
+            border: 1px solid #ddd; /* Borde alrededor de la tabla */
+        }
+        /* Estilo para el formulario de búsqueda */
+        .form-inline .form-control {
+            width: 400px; /* Ajusta el ancho del campo de búsqueda */
+            max-width: 100%;
+            padding: 10px; /* Aumenta el tamaño del campo de búsqueda */
+            border-radius: 5px; /* Bordes redondeados */
+            border: 1px solid #ddd; /* Borde gris claro */
+            font-size: 16px; /* Aumenta el tamaño de la fuente */
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <h2>Panel de Control</h2>
+        <ul>
+            <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li>
+            <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+            <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
+            <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
+            <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
+            <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
+            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+        </ul>
+    </div>
+
+    <!-- Contenido -->
+    <div class="content">
+        <h1>Lista de Inventario</h1>
+        
+        <!-- Contenedor para el botón de agregar, el buscador y el botón de mostrar todo -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <!-- Botón Agregar Inventario -->
+            <a href="{% url 'inventario_agregar' %}" class="btn btn-rosa mr-2">
+                <i class="fas fa-plus"></i> Agregar Inventario
+            </a>
+    
+            <!-- Formulario de búsqueda -->
+            <form method="GET" action="{% url 'lista_inventario' %}" class="form-inline d-flex align-items-center">
+                <input type="text" name="q" class="form-control mr-2" placeholder="Buscar por nombre de producto" value="{{ query }}">
+                <button type="submit" class="btn btn-rosa mr-2">Buscar</button>
+            </form>
+     
+            <!-- Botón Mostrar Todo -->
+            <a href="{% url 'lista_inventario' %}" class="btn btn-secondary">Mostrar Todo</a>
+        </div>
+        {% if inventarios %}
+<!-- Contenedor con scroll para la tabla -->
+<div class="table-scroll-container">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Imagen</th>
+                <th>Nombre del Producto</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Proveedor</th>
+                <th>Cantidad Mínima</th>
+                <th>Cantidad Máxima</th>
+                <th>Agotado</th>
+                <th>Última Actualización</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inventario in inventarios %}
+                <tr>
+                    <td>
+                        {% if inventario.producto.imagenes.first %}
+                            <img src="{{ inventario.producto.imagenes.first.imagen.url }}" alt="{{ inventario.producto.nombre_producto }}" style="width: 50px; height: auto;">
+                        {% else %}
+                            <p>Sin imagen</p>
+                        {% endif %}
+                    </td>
+                    <td>{{ inventario.producto.nombre_producto }}</td>
+                    <td>${{ inventario.precio }}</td>
+                    <td>{{ inventario.stock }}</td>
+                    <td>{{ inventario.proveedor.nombre_proveedor }} {{ inventario.proveedor.apellido_proveedor }}</td>
+                    <td>{{ inventario.cantidad_minima }}</td>
+                    <td>{{ inventario.cantidad_maxima }}</td>
+                    <td>
+                        {% if inventario.agotado %}
+                            <span class="text-danger">Sí</span>
+                        {% else %}
+                            <span class="text-success">No</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ inventario.fecha_actualizacion }}</td>
+                    <td>
+                        <div class="btn-container">
+                            <a href="{% url 'inventario_editar' inventario.pk %}" class="btn-edit"><i class="fas fa-edit"></i></a>
+                            <a href="{% url 'inventario_eliminar' inventario.pk %}" class="btn-delete"><i class="fas fa-trash"></i> </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        {% else %}
+        <!-- Mensaje de "sin resultados" cuando no se encuentra ningún inventario -->
+        <div class="alert alert-warning" role="alert">
+            No se encontraron productos que coincidan con la búsqueda "{{ query }}".
+        </div>
+    {% endif %}
+    </table>
+</div>
+
+    <!-- Bootstrap y Popper JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

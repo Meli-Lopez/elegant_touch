@@ -1,0 +1,14 @@
+<h1>Lista de Reseñas</h1>
+<ul>
+    {% for reseña in reseñas %}
+        <li>
+            <strong>{{ reseña.calificacion }} estrellas</strong> - {{ reseña.contenido }}
+
+            <a href="{% url 'editar_reseña' reseña.id %}">Editar</a>
+            <a href="{% url 'eliminar_reseña' reseña.id %}">Eliminar</a>
+
+        </li>
+    {% empty %}
+        <li>No hay reseñas disponibles para este producto.</li>
+    {% endfor %}
+</ul>

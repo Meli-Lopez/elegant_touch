@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Elegant Touch</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <style>
+        h1 {
+            font-size: 2.5rem; /* Tamaño de fuente grande */
+            color: #d5006d; /* Color rosa fuerte */
+            text-align: center; /* Centrar el texto */
+            border-bottom: 2px solid #ff69b4; /* Borde inferior rosa */
+            padding-bottom: 10px; /* Espaciado en la parte inferior */
+            margin-top: 20px; /* Margen superior */
+            margin-bottom: 20px; /* Margen inferior */
+            text-transform: uppercase; /* Texto en mayúsculas */
+            font-family: 'Cambria', Cochin, Georgia, Times, 'Times New Roman', serif; /* Fuente serif */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #ff69b4; /* Rosado pastel */
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            color: #fff;
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 12px 0;
+            border-bottom: 1px solid #FFC0CB; /* Un tono más claro de rosado */
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: #d63384;
+        }
+
+        .btn {
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            background-color: #ff69b4;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff3385;
+            opacity: 0.9;
+        }
+        /* Estilos generales del formulario */
+        .form-producto {
+            background-color: #ffe4e1; /* Rosa claro para el fondo del formulario */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            margin-bottom: 30px;
+        }
+        
+        /* Efecto de escala al pasar el mouse sobre el formulario */
+        .form-producto:hover {
+            transform: scale(1.03);
+        }
+
+        
+        /* Estilo de los campos del formulario */
+        input[type="text"], input[type="number"], select, textarea {
+            border: 2px solid #ccc;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 20px;
+            background-color: #fff;
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #ff69b4; /* Color rosa para el enfoque */
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.2);
+        }
+        
+        /* Estilo de las opciones de "Destacado" y "Nuevo" */
+        .checkbox-group {
+            display: flex;
+            justify-content: center; /* Centrar opciones */
+            align-items: center; /* Centrar verticalmente */
+            margin-bottom: 20px;
+            gap: 40px; /* Espacio entre las opciones */
+        }
+        
+        .checkbox-group label {
+            font-size: 1rem;
+            color: #333; /* Color del texto de las etiquetas */
+            display: flex;
+            align-items: center; /* Centrar el checkbox y el texto */
+        }
+        
+        input[type="checkbox"] {
+            margin-right: 10px; /* Espacio entre la etiqueta y el checkbox */
+            accent-color: #ff69b4; /* Color del checkbox en navegadores modernos */
+        }
+        
+        /* Botones del formulario */
+        .btn-group {
+            display: flex;
+            justify-content: center; /* Centrar botones */
+            gap: 20px; /* Espacio entre botones */
+            margin-top: 20px;
+        }
+        
+        .btn-agregar, .btn-cancelar {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        .btn-agregar {
+            background-color: #ff69b4; /* Rosa intenso para el botón Agregar */
+            border: none;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-agregar:hover {
+            background-color: #ff1493; /* Rosa más oscuro al pasar el mouse */
+        }
+        
+        .btn-cancelar {
+            background-color: #d3d3d3; /* Fondo gris claro */
+            color: #333; /* Texto oscuro */
+            border: 1px solid #ccc; /* Borde gris más claro */
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .btn-cancelar:hover {
+            background-color: #a9a9a9; /* Fondo gris oscuro al pasar el mouse */
+            color: #fff; /* Texto blanco al pasar el mouse */
+        }
+        
+        /* Sombra y animación del formulario */
+        form:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Diseño responsivo */
+        @media (max-width: 768px) {
+            .form-producto {
+                padding: 20px;
+            }
+        
+            .title {
+                font-size: 1.5rem;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <h2>Panel de Control</h2>
+        <ul>
+            <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li>
+            <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
+            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+            <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
+            <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
+            <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
+            <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
+            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+        </ul>
+    </div> 
+
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-8 m-auto">
+                <div class="section-title text-center mb-30">
+                    <h1 class="title">Agregar Nuevo Producto</h1>
+                </div>
+
+                <form method="POST" enctype="multipart/form-data" class="form-producto">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <div class="form-group">
+                        <label for="imagenes">Subir Imágenes del Producto:</label>
+                        <input type="file" name="imagenes" id="imagenes" multiple class="form-control">
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn-agregar">
+                            <i class="fas fa-plus"></i> Agregar
+                        </button>
+                        <a href="{% url 'lista_productos' %}" class="btn-cancelar">
+                            <i class="fas fa-times"></i> Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

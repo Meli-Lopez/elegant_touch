@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+.sidebar {
+    width: 250px;
+    background-color: #ff69b4; /* Rosado pastel */
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+    color: #fff;
+}
+.sidebar h2 {
+    margin-top: 0;
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+.sidebar ul li {
+    padding: 12px 0;
+    border-bottom: 1px solid #FFC0CB; /* Un tono más claro de rosado */
+}
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+.btn-custom {
+    background-color: #d63384;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-decoration: none;
+}
+.table-container {
+    width: 100%; /* Ancho total del contenedor */
+    max-height: 550px; /* Altura limitada para la tabla */
+    overflow-y: auto; /* Barra de desplazamiento vertical */
+    overflow-x: auto; /* Barra de desplazamiento horizontal */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding-top: 0; /* Espacio eliminado para el borde superior */
+}
+table {
+    width: 100%;
+    margin: 10px 0;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+    font-size: 12px;
+    border-bottom: 1px solid #ddd;
+}
+th {
+    background-color: #ffc0cb;
+    color: #333;
+}
+td {
+    background-color: #fff;
+    color: #333;
+}
+tr:hover {
+    background-color: #f1f1f1;
+}
+.search-bar {
+    text-align: right;
+    margin-bottom: 10px;
+}
+.search-bar input {
+    width: 350px; /* Aumenta el tamaño de la barra de búsqueda */
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.action-buttons {
+    text-align: center; /* Centra los botones */
+}
+.action-buttons a {
+    font-size: 1rem; /* Tamaño más pequeño para los iconos */
+    margin: 0 2px;
+    display: inline-block;
+    color: #d63384; /* Color del icono */
+}
+.action-buttons a:hover {
+    color: #a3005c; /* Color del icono al pasar el cursor */
+}
+.product-image {
+    width: 90px; /* Tamaño de la imagen del producto */
+    height: 90px; /* Ajusta según sea necesario */
+    object-fit: cover; /* Ajusta la imagen para que mantenga su proporción */
+}

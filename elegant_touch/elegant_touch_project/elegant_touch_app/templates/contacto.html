@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Touch</title>
+    {% load static %}
+    
+    <!--== Favicon ==-->
+    <link rel="shortcut icon" href="{% static 'img/favicon-32x32.png' %}" type="image/x-icon" />
+    
+    <!--== Google Fonts ==-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!--== Font Awesome (for social icons) ==-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!--== CSS Styles ==-->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/contacto.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+    <style>
+        /* Estilo de la sección de contacto usando flexbox */
+        .contact-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch; /* Asegura que ambos contenedores se alineen a la misma altura */
+        }
+
+        /* Asegura que los contenedores izquierdo y derecho ocupen el mismo espacio */
+        .left-container, .right-container {
+            flex: 1;
+        }
+
+        /* Centra verticalmente el contenido dentro del contenedor derecho */
+        .contact-info-list {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        /* Style for the social media icons */
+        .social-icons a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            margin: 0 10px;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            background-color: #f0f0f0; /* Light gray background */
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: background-color 0.3s ease;
+        }
+
+        /* Facebook icon specific styles */
+        .social-icons a.facebook {
+            background-color: #3b5998;
+        }
+
+        /* Instagram icon specific styles */
+        .social-icons a.instagram {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+
+        /* Gmail icon specific styles */
+        .social-icons a.gmail {
+            background-color: #D14836; /* Gmail's red color */
+        }
+
+        /* Hover effect */
+        .social-icons a:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+  
+    <!--== Start Header ==-->
+    <header class="header-area header-default">
+        <div class="header-top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 text-md-end text-center mt-sm-15">
+                        <div class="theme-setting">
+                            <ul class="dropdown-content">
+                                {% if user.is_authenticated %}
+                                    <li><a href="{% url 'my_account' %}">Mi cuenta</a></li>
+                                    <li><a href="{% url 'verificar' %}">Verificar</a></li>
+                                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                                {% else %}
+                                    <li><a href="{% url 'register' %}">Registrarse</a></li>
+                                    <li><a href="{% url 'login' %}">Iniciar sesión</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!--== Main Content ==-->
+    <main class="main-content">
+        <!--== Start Contact Section ==-->
+        <section class="contact-area contact-page-area">
+            <div class="container">
+                <!-- Contenedor principal para aplicar flexbox -->
+                <div class="contact-container">
+                    <div class="col-lg-6 left-container">
+                        <div class="contact-form-wrap">
+                            <div class="contact-form-title">
+                                <h5 class="sub-title">¡No te preocupes!</h5>
+                                <h2 class="title">Si tienes alguna duda, contacta con nosotros</h2>
+                            </div>
+
+                            <!--== Contact Form ==-->
+                            <div class="form-wrapper">
+                                <form method="post" action="/contacto/" id="contactForm">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre:</label>
+                                        {{ form.nombre }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Correo Electrónico:</label>
+                                        {{ form.email }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefono">Teléfono:</label>
+                                        {{ form.telefono }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección:</label>
+                                        {{ form.direccion }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mensaje">Mensaje:</label>
+                                        {{ form.mensaje }}
+                                    </div>
+                                    <div class="button-container">
+                                        <button type="submit">Enviar mensaje</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!--== Display Success/Error Messages ==-->
+                            <div class="form-message">
+                                {% if messages %}
+                                    <ul class="messages">
+                                        {% for message in messages %}
+                                            <li>{{ message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 right-container">
+                        <div class="contact-info-list">
+                            <!-- Información de Contacto en un solo cuadro -->
+                            <div class="info-item">
+                                <h3 class="title">Celular</h3>
+                                <p><a href="tel:7653882142" style="color: black;">(765) 388-2142</a></p>
+                            </div>
+                            <br><br><br>
+                            <div class="info-item">
+                                <h3 class="title">Correo electrónico</h3>
+                                <div class="social-icons" style="color: black;">
+                                    <i class="bi bi-envelope-fill" style="font-size: 24px; color: black;"></i>
+                                    <span style="margin-left: 10px;">eleganttouch@gmail.com</span>
+                                </div>
+                            </div>
+                            <br><br><br>
+                            <div class="info-item">
+                                <h3 class="title">Síguenos</h3>
+                                <br>
+                                <div class="social-icons" style="display: flex; justify-content: center; gap: 15px;">
+                                    <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d" class="facebook" target="_blank">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="https://www.instagram.com/eleganttouch054/" class="instagram" target="_blank">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </section>
+        <!--== End Contact Section ==-->
+    </main>
+
+    <!--== JS Scripts ==-->
+    <script src="{% static 'js/jquery-main.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <!-- SweetAlert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      // Usar AJAX para enviar el formulario sin recargar la página
+      document.getElementById('contactForm').addEventListener('submit', function(event) {
+          event.preventDefault(); // Evitar el envío automático
+  
+          // Obtener los valores de los campos
+          const nombre = document.getElementById('id_nombre').value;
+          const email = document.getElementById('id_email').value;
+          const telefono = document.getElementById('id_telefono').value;
+          const direccion = document.getElementById('id_direccion').value;
+          const mensaje = document.getElementById('id_mensaje').value;
+  
+          // Expresiones regulares para validaciones
+          const nombrePattern = /^[a-zA-ZÀ-ÿ\s]+$/;  // Solo letras y espacios
+          const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+          const telefonoPattern = /^[0-9]{7,10}$/;  // Validar teléfono de 7 a 10 dígitos
+  
+          // Validaciones básicas
+          if (!nombrePattern.test(nombre)) {
+              Swal.fire({
+                  title: 'Error',
+                  text: 'El nombre solo debe contener letras y espacios.',
+                  icon: 'error',
+                  confirmButtonText: 'Aceptar'
+              });
+              return;
+          }
+  
+          if (!emailPattern.test(email)) {
+              Swal.fire({
+                  title: 'Error',
+                  text: 'Por favor, introduce un correo electrónico válido.',
+                  icon: 'error',
+                  confirmButtonText: 'Aceptar'
+              });
+              return;
+          }
+  
+          if (!telefonoPattern.test(telefono)) {
+              Swal.fire({
+                  title: 'Error',
+                  text: 'El teléfono debe contener entre 7 y 10 dígitos.',
+                  icon: 'error',
+                  confirmButtonText: 'Aceptar'
+              });
+              return;
+          }
+  
+          if (mensaje.trim() === "") {
+              Swal.fire({
+                  title: 'Error',
+                  text: 'El campo Mensaje no puede estar vacío.',
+                  icon: 'error',
+                  confirmButtonText: 'Aceptar'
+              });
+              return;
+          }
+  
+          // Si todas las validaciones son correctas, enviar el formulario usando fetch API
+          const formData = new FormData(this);
+  
+          fetch(this.action, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                  'X-Requested-With': 'XMLHttpRequest',  // Especifica que es una petición AJAX
+              },
+          })
+          .then(response => response.json())  // Convertir la respuesta a JSON
+          .then(data => {
+              if (data.success) { 
+                  // Mostrar alerta SweetAlert si el mensaje fue enviado con éxito
+                  Swal.fire({
+                      title: '¡Mensaje enviado!',
+                      text: 'Nos contactaremos contigo lo antes posible.',
+                      icon: 'success',
+                      confirmButtonText: 'Aceptar',
+                      background: '#FFD1DC',  // Fondo rosado pastel
+                      confirmButtonColor: '#000000', // Botón negro
+                      color: '#ffffff', // Texto blanco
+                      backdrop: `rgba(0,0,0,0.4)`
+                  });
+                  document.getElementById('contactForm').reset();  // Resetear el formulario
+              } else {
+                  // Si hay un error con el formulario
+                  Swal.fire({
+                      title: 'Error',
+                      text: data.message || 'Hubo un problema al enviar el mensaje',
+                      icon: 'error',
+                      confirmButtonText: 'Intentar nuevamente',
+                  });
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);  // Mostrar cualquier error en la consola
+              Swal.fire({
+                  title: 'Error',
+                  text: 'Hubo un problema al enviar el mensaje',
+                  icon: 'error',
+                  confirmButtonText: 'Intentar nuevamente',
+              });
+          });
+      });
+    </script>
+</body>
+</html>

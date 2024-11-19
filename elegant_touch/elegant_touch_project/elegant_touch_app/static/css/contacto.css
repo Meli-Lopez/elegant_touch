@@ -1,0 +1,60 @@
+        /* Estilo general del formulario */
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        /* Estilo de los grupos de formularios */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        /* Estilo de las etiquetas */
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Estilo de los campos de entrada */
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Estilo de la caja de texto */
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .button-container {
+            text-align: center; /* Centra el contenido horizontalmente */
+        }
+
+        
+        /* Estilo del botón */
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #ec6b81;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        /* Efecto hover para el botón */
+        button[type="submit"]:hover {
+            background-color: #ec6b81;
+        }

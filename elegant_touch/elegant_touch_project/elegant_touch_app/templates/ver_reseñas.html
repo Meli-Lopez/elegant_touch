@@ -1,0 +1,126 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block content %}
+
+    <title>Reseñas para {{ producto.nombre_producto }}</title>
+    <style>
+        .review-page {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .review-title {
+            color: #ec6b81;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .review-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .review-item {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background-color: #f8f8f8;
+            transition: transform 0.3s;
+        }
+        
+        .review-item:hover {
+            transform: scale(1.02);
+        }
+        
+        .review-title-strong {
+            color: #ec6b81;
+            font-size: 18px;
+        }
+        
+        .stars {
+            color: #ffcc00;
+            margin-left: 10px;
+        }
+        
+        .write-review-link {
+            display: inline-block;
+            margin: 30px auto;
+            padding: 12px 25px;
+            background-color: #ec6b81;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .review-date {
+            color: #666;
+        }
+
+        .review-buttons {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .review-buttons a {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+        }
+
+        .edit-button {
+            background-color: #ec6b81; /* Botón editar en rosa */
+        }
+
+        .delete-button {
+            background-color: #6c757d; /* Botón eliminar en gris */
+        }
+    </style>
+
+    <h1 class="review-title">Reseñas para {{ producto.nombre_producto }}</h1>
+
+    <ul class="review-list">
+        {% for reseña in reseñas %}
+            <li class="review-item">
+                <strong class="review-title-strong">{{ reseña.titulo }}</strong>
+                <span class="stars">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= reseña.calificacion %}
+                            ⭐
+                        {% else %}
+                            ✰
+                        {% endif %}
+                    {% endfor %}
+                </span>
+                <p>{{ reseña.contenido }}</p>
+                <p class="review-date"><small>Por: {{ reseña.user.username }} el {{ reseña.fecha_creacion|date:"d M Y" }}</small></p>
+                
+                {% if request.user == reseña.user or request.user.is_staff %}
+                    <div class="review-buttons">
+                        <a class="edit-button" href="{% url 'editar_reseña' reseña.id %}">Editar</a>
+                        <a class="delete-button" href="{% url 'eliminar_reseña' reseña.id %}" onclick="return confirm('¿Estás seguro de que deseas eliminar esta reseña?');">Eliminar</a>
+                    </div>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li class="review-item">No hay reseñas disponibles para este producto.</li>
+        {% endfor %}
+    </ul>
+
+    <div style="text-align: center;">
+        <a class="write-review-link" href="{% url 'nueva_reseña' producto.id %}">Escribir una reseña</a>
+
+    </div>
+
+
+{% endblock %}

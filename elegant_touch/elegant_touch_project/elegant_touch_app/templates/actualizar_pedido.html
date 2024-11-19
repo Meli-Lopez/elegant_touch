@@ -1,0 +1,23 @@
+
+
+{% block content %}
+    <h1 class="text-center">Actualizar Pedido #{{ pedido.id }}</h1>
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="estado">Estado</label>
+                <select name="estado" class="form-control" id="estado">
+                    <option value="pendiente" {% if pedido.estado == 'pendiente' %}selected{% endif %}>Pendiente</option>
+                    <option value="en_proceso" {% if pedido.estado == 'en_proceso' %}selected{% endif %}>En Proceso</option>
+                    <option value="completado" {% if pedido.estado == 'completado' %}selected{% endif %}>Completado</option>
+                    <option value="cancelado" {% if pedido.estado == 'cancelado' %}selected{% endif %}>Cancelado</option>
+                </select>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <a href="{% url 'detalle_pedido' pedido.id %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

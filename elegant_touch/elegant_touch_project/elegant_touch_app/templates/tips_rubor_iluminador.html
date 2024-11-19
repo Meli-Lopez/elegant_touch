@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tips para rubor e iluminador</title>
+    {% load static %}
+    <!--== Favicon ==-->
+<link rel="shortcut icon" href="{% static 'img/favicon-32x32.png' %}" type="image/x-icon" />
+
+  <!--== Google Fonts ==-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!--== Bootstrap CSS ==-->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+  <!--== Ionicon CSS ==-->
+  <link href="{% static 'css/ionicons.min.css' %}" rel="stylesheet" />
+  <!--== Simple Line Icon CSS ==-->
+  <link href="{% static 'css/simple-line-icons.css' %}" rel="stylesheet" />
+  <!--== Line Icons CSS ==-->
+  <link href="{% static 'css/lineIcons.css' %}" rel="stylesheet" />
+  <!--== Font Awesome Icon CSS ==-->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+  <!--== Animate CSS ==-->
+  <link href="{% static 'css/animate.css' %}" rel="stylesheet" />
+  <!--== Swiper CSS ==-->
+  <link href="{% static 'css/swiper.min.css' %}" rel="stylesheet" />
+  <!--== Range Slider CSS ==-->
+  <link href="{% static 'css/range-slider.css' %}" rel="stylesheet" />
+  <!--== Fancybox Min CSS ==-->
+  <link href="{% static 'css/fancybox.min.css' %}" rel="stylesheet" />
+  <!--== Slicknav Min CSS ==-->
+  <link href="{% static 'css/slicknav.css' %}" rel="stylesheet" />
+  <!--== Owl Carousel Min CSS ==-->
+  <link href="{% static 'css/owlcarousel.min.css' %}" rel="stylesheet" />
+  <!--== Owl Theme Min CSS ==-->
+  <link href="{% static 'css/owltheme.min.css' %}" rel="stylesheet" />
+  <!--== Spacing CSS ==-->
+  <link href="{% static 'css/spacing.css' %}" rel="stylesheet" />
+
+  <!--== Main Style CSS ==-->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/contacto.css' %}">
+  <!--[if lt IE 9]>
+  <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<!--== Start Header Wrapper ==-->
+<header class="header-area header-default header-style">
+  <!--== Start Header Top ==-->
+  <div class="header-top">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 text-md-end text-center mt-sm-15">
+          <div class="theme-setting">
+            <ul class="dropdown-content">
+            {% if user.is_authenticated %}
+              <li>
+                  <a href="{% url 'my_account' %}">Mi cuenta</a>
+              </li>
+              <li>
+                  <a href="{% url 'verificar' %}">Verificar</a>
+              </li>
+              <li>
+                  <a href="{% url 'logout' %}">Cerrar sesión</a>
+              </li>
+            {% else %}
+              <li>
+                  <a href="{% url 'register' %}">Registrarse</a>
+              </li>
+              <li>
+                  <a href="{% url 'login' %}">Iniciar sesión</a>
+              </li>
+            {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--== Inicio Encabezado Inferior ==-->
+<div class="header-bottom sticky-header hidden-md-down">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col col-12">
+        <div class="header-align align-default">
+          <div class="align-left">
+            <div class="header-logo-area">
+              <a href="{% url 'index' %}"></a>
+              <img class="logo-principal" src="{% static 'img/logo.png' %}" alt="Logo" />
+              <img class="logo-light d-none" src="{% static 'img/logo-light.png' %}" alt="Logo" />
+              </a>
+            </div>
+            <div class="header-navigation-area hidden-md-down">
+              <ul class="main-menu nav position-relative">
+                <li><a href="{% url 'index' %}">Inicio</a></li>
+                <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
+                <li class="has-submenu full-width"><a href="#">Tienda</a>
+                  <ul class="submenu-nav submenu-nav-mega submenu-nav-width">
+                    <li class="mega-menu-item"><a href="#/" class="mega-title">Maquillaje</a>
+                      <ul>
+                        <li><a href="{% url 'maquillaje_rostro' %}">Maquillaje de rostro</a></li>
+                        <li><a href="{% url 'maquillaje_ojos' %}">Maquillaje de ojos</a></li>
+                        <li><a href="{% url 'maquillaje_labios' %}">Maquillaje de labios</a></li>
+                        <li><a href="{% url 'maquillaje_anti_envejecimiento' %}">Maquillaje Anti-envejecimiento</a></li>
+                        <li><a href="{% url 'maquillaje_waterproof' %}">Maquillaje waterproof</a></li>
+                      </ul>
+                    </li>
+                    <li class="mega-menu-item"><a href="#/" class="mega-title">Cuidado de la Piel</a>
+                      <ul>
+                        <li><a href="{% url 'limpiadores_faciales' %}">Limpiadores faciales</a></li>
+                        <li><a href="{% url 'exfoliantes_hidratantes' %}">Exfoliantes y Hidratantes faciales</a></li>
+                        <li><a href="{% url 'serums_mascarillas' %}">Sérums y Mascarillas</a></li>
+                        <li><a href="{% url 'protectores_cremas' %}">Protectores y cremas</a></li>
+                      </ul>
+                    </li>
+                    <li class="mega-menu-item"><a href="#/" class="mega-title">Herramientas y Accesorios</a>
+                      <ul>
+                        <li><a href="{% url 'brochas_pinceles' %}">Brochas y Pinceles</a></li>
+                        <li><a href="{% url 'aplicadores' %}">Esponjas y Aplicadores</a></li>
+                        <li><a href="{% url 'otros_accesorios' %}">Otros Accesorios</a></li>
+                      </ul>
+                    </li>
+                    <li class="mega-menu-item"><a href="#/" class="mega-title">Páginas individuales</a>
+                      <ul>
+                        <li><a href="{% url 'carrito' %}">Carrito</a></li>
+                        <li><a href="{% url 'verificar' %}">Verificar</a></li>
+                        <li><a href="{% url 'lista_de_deseos' %}">Lista de deseos</a></li>
+                        <li><a href="{% url 'my_account' %}">Mi cuenta</a></li>
+                        <li><a href="{% url 'login' %}">Acceso</a></li>
+                        <li><a href="{% url 'register' %}">Registro</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li><a href="{% url 'tips' %}">Tips </a></li>
+                <li><a href="{% url 'contacto' %}">Contactanos</a></li>
+                {% if user.is_staff  %} 
+                      <li>    
+                        <li><a href="{% url 'index_admi' %}">Panel admin</a></li>
+
+                      </li>
+                    {% endif %}  
+                  </ul>
+                </div>
+              </div>
+              <div class="align-right">
+                {% if not user.is_authenticated or not user.is_staff %}
+                <div class="contact-link float-start">
+                  <div class="phone">
+                    <span>Llámanos:</span>
+                    <a href="tel:(+57) 3214341900">(+57) 3214341900</a>
+                  </div>
+                </div>
+            {% endif %}
+                <div class="header-action-area float-start">
+                  
+             
+                  <div class="shop-button-group">
+                    <div class="shop-button-item">
+
+                  </a>
+                </div>
+                <div class="shop-button-item">
+                  <a class="shop-button" href="{% url 'lista_de_deseos' %}">
+                      <i class="icon-heart icon"></i>
+                      <sup class="shop-count">{{ conteo_lista_deseos }}</sup>
+                  </a>
+              </div>
+              <div class="shop-button-item">
+                <a class="shop-button" href="#">
+                    <i class="icon-bag icon"></i>
+                    <sup class="shop-count">{{ cart_items|length }}</sup> <!-- Contador dinámico de productos -->
+                    <span class="cart-total">Cop {{ cart_total|floatformat:2 }}</span> <!-- Precio total dinámico -->
+               </a>
+               <div class="popup-cart-content">
+                {% if cart_items %}
+                    <ul class="popup-product-list">
+                        {% for item in cart_items %}
+                            <li class="cart-item">
+                                    <!-- Muestra la imagen del producto -->
+                                    <img src="{{ item.product.imagenes.first.imagen.url|default:'url/de/imagen/por/defecto.png' }}" alt="{{ item.product.nombre_producto }}" class="img-fluid product-image">
+
+                                    <div class="item-right">
+                                      <!-- Nombre del producto -->
+                                      <span class="product-title">{{ item.product.nombre_producto }}</span>
+                                      
+                                      <!-- Cantidad del producto -->
+                                      <p class="product-quantity">Cantidad: {{ item.quantity }}</p>
+                                      
+                                      <!-- Precio unitario del producto -->
+                                      <p class="product-unit-price">Precio unitario: Cop {{ item.product.precio_producto|floatformat:2 }}</p>
+                                      
+                                      <!-- Total por este artículo -->
+                                      <p class="product-total-price">Total por artículo: Cop {{ item.item_total|floatformat:2 }}</p>
+                                    </div>
+                                  </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="price-content">
+                      <div class="cart-subtotals">
+                          <div class="products">
+                              <span class="label">Subtotal</span>
+                              <span class="value">Cop  {{ cart_total|floatformat:2 }}</span>
+                          </div>
+                          <div class="products">
+                              <span class="label">Envío</span>
+                              <span class="value">Gratis</span>
+                          </div>
+                      </div>
+                  
+                      <div class="cart-total">
+                          <span class="label">Total</span>
+                          <span class="value">Cop  {{ cart_total|floatformat:2 }}</span>
+                      </div>
+                  </div>
+                  <div class="checkout">
+                    <a href="{% url 'verificar' %}" class="btn-Checkout">Ver carrito</a> 
+              </div>
+                {% else %}
+                    <p>No hay productos en el carrito.</p>
+                {% endif %}
+            </div>
+        </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <style>
+        /* Estilo base */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fce4ec; /* Fondo rosado pastel claro */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Encabezado */
+        header {
+            background-color: #f8bbd0; /* Rosado pastel más oscuro */
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        /* Contenedor principal */
+        .tips-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        /* Tarjeta de cada tip */
+        .tip-card {
+            display: flex;
+            background-color: #ffffff;
+            border: 1px solid #f8bbd0; /* Borde rosado suave */
+            border-radius: 10px;
+            padding: 20px;
+            width: 90%;
+            max-width: 10000px; /* Aumentado el ancho máximo a 1000px */
+            height: 250px; /* Aumentado el alto */
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Efecto hover en la tarjeta */
+        .tip-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Imagen de cada tarjeta */
+        .tip-card img {
+            width: 180px;
+            height: 180px;
+            border-radius: 8px;
+            margin-right: 25px;
+            object-fit: cover;
+        }
+
+        /* Contenido de cada tarjeta */
+        .tip-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .tip-content h2 {
+            color: #e91e63; /* Rosado oscuro para el título */
+            margin: 0 0 10px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .tip-content p {
+            color: #555;
+            margin: 5px 0 15px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .tip-content button {
+            padding: 12px 20px;
+            border: none;
+            background-color: #f48fb1; /* Botón rosado pastel */
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .tip-content button:hover {
+            background-color: #f06292; /* Botón rosado más oscuro al pasar el cursor */
+            transform: translateY(-3px);
+        }
+
+        /* Estilo del ribbon (Etiqueta en la esquina superior derecha) */
+        .ribbon {
+            position: absolute;
+            top: 15px;
+            right: -10px;
+            background-color: #e91e63; /* Rosado oscuro */
+            color: #fff;
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transform: rotate(45deg);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Tips para rubor e iluminador </h1>
+</header>
+
+<div class="tips-container">
+    <div class="tip-card">
+        <div class="ribbon">Popular</div>
+        <img src="{% static 'img/rubor_iluminador/tipo_1.png' %}" alt="rubor">
+        <div class="tip-content">
+            <h2>Elige un rubor adecuado para tu tono de piel</h2>
+            <p>Los tonos durazno y rosados son versátiles y funcionan bien en la mayoría de los tonos de piel, ya que aportan un toque de color sin ser demasiado intensos. Los tonos durazno son ideales para pieles cálidas, mientras que los rosados favorecen a pieles frías. Ajusta la intensidad según tu preferencia para un look equilibrado.</p>
+        </div>
+    </div>
+
+
+
+    <div class="tip-card">
+        <img src="{% static 'img/rubor_iluminador/tipo_2.png' %}" alt="rubor">
+        <div class="tip-content">
+            <h2>Aplica en las manzanas de las mejillas</h2>
+            <p>Sonríe y coloca el rubor en las manzanas de tus mejillas, justo en el punto más alto. Luego, difumina suavemente hacia las sienes para lograr un acabado natural y bien integrado. Este movimiento ayuda a levantar el rostro y a dar un toque de frescura sin que el rubor se vea marcado o artificial.</p>
+        </div>
+    </div>
+
+
+
+    <div class="tip-card">
+        <img src="{% static 'img/rubor_iluminador/tipo_3.png' %}" alt="rubor">
+        <div class="tip-content">
+            <h2>Aplica iluminador en zonas altas</h2>
+            <p>Coloca un iluminador en los pómulos, el puente de la nariz y el arco de la ceja para resaltar y dar luminosidad a tu rostro. Este truco crea un efecto de frescura y resalta las áreas que capturan la luz, dándote un look radiante y natural. Asegúrate de difuminar bien el iluminador para un acabado suave y sin líneas marcadas.</p>
+        </div>
+    </div>
+
+    <div class="tip-card">
+        <img src="{% static 'img/rubor_iluminador/tipo_4.png' %}" alt="rubor">
+        <div class="tip-content">
+            <h2>Usa poco producto</h2>
+            <p>Usa poco producto al principio y agrega gradualmente según lo necesites. Esto ayuda a evitar un look sobrecargado y te permite controlar la intensidad del maquillaje. Es más fácil intensificar el color poco a poco que tratar de corregir un exceso de producto.</p>
+        </div>
+    </div>
+
+
+    <div class="tip-card">
+        <img src="{% static 'img/rubor_iluminador/tipo_5.png' %}" alt="rubor">
+        <div class="tip-content">
+            <h2>Ilumina el lagrimal</h2>
+            <p>Aplica un toque de iluminador en el lagrimal para abrir y resaltar la mirada. Este pequeño detalle ayuda a dar un efecto de ojos más grandes y despiertos, aportando luminosidad y frescura al rostro.</p>
+        </div>
+    </div>
+
+    <div class="tip-card">
+        <img src="{% static 'img/rubor_iluminador/tipo_6.png' %}" alt="rubor">
+        <div class="tip-content">
+            <h2>Difumina bien el iluminador</h2>
+            <p>Evita que queden líneas marcadas al difuminar bien los productos. Utiliza una brocha o esponja para asegurar que el maquillaje se mezcle suavemente con la piel, logrando un acabado natural y fluido. Esto evitará que se vean líneas duras y te dará un look más uniforme y fresco.</p>
+        </div>
+    </div>
+
+    <div class="tip-card">
+        <img src="{% static 'img/rubor_iluminador/tipo_7.png' %}" alt="rubor">
+        <div class="tip-content">
+            <h2>Aplica rubor en la nariz</h2>
+            <p>Un toque de rubor en la punta de la nariz da un look saludable y juvenil, simulando un ligero sonrojo. Aplica con suavidad y difumina bien para que el color se mezcle de manera natural, evitando que se vea demasiado marcado. Este detalle aporta frescura y un aire más natural al maquillaje.</p>
+        </div>
+    </div> 
+</div>
+</body>
+</html>

@@ -1,0 +1,271 @@
+  /* Estilos generales de la sección */
+  .main-content {
+    background-color: #fdf3f7; /* Fondo suave en tono rosado */
+    padding: 40px 0;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #e91e63; /* Rosa vibrante para el título */
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilos para el contenedor de botones y contador */
+.button-counter-container {
+    display: flex; /* Usar flexbox para alinear los elementos */
+    align-items: center; /* Alinear verticalmente en el centro */
+    justify-content: center; /* Centrar horizontalmente */
+    gap: 10px; /* Espacio entre los botones y el contador */
+}
+
+/* Estilos para el contador */
+.counter {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    color: #555;
+    background-color: #ffe4e8; /* Fondo suave para el contador */
+    padding: 10px 15px; /* Espaciado interno */
+    border-radius: 15px; /* Bordes redondeados */
+}
+
+/* Estilos para la tabla */
+.table thead th {
+    background-color: #ffb3c1; /* Rosa suave */
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+
+.table tbody td {
+    background-color: #fff;
+    color: #555;
+    vertical-align: middle;
+    font-size: 1.1rem;
+    font-family: 'Poppins', sans-serif;
+    padding: 20px;
+}
+
+/* Fondo alterno para filas */
+.table tbody tr:nth-child(even) {
+    background-color: #ffe4e8; /* Rosa muy claro */
+}
+
+/* Imagen en la tabla */
+.table img {
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para los botones */
+.btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.btn-danger {
+    background-color: #ff6f61; /* Rojo rosado */
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #ff4d4d;
+    color: #fff;
+}
+
+.btn-success {
+    background-color: #ff80ab; /* Rosa pastel */
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #ff4081;
+    color: #fff;
+}
+
+.btn-wishlist {
+    background-color: #e91e63; /* Rosa vibrante */
+    color: #fff;
+    padding: 12px 35px;
+    border-radius: 30px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-wishlist:hover {
+    background-color: #d81b60;
+    color: #fff;
+}
+
+/* Estilo del ícono de la bolsa con notificación */
+.cart-icon {
+    position: relative;
+    font-size: 1.0rem; /* Tamaño del ícono más grande */
+    color: #ff4081;
+    margin-right: 9px;
+}
+
+.cart-icon .badge {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    background-color: #e91e63; /* Color rosa fuerte */
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.cart-icon i {
+    color: #ff4081; /* Color rosado para el ícono de la bolsa */
+    font-size: 1.8rem; /* Tamaño más grande */
+}
+
+.btn-wishlist i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+    color: #ff80ab; /* Icono rosado pastel */
+}
+
+.btn-wishlist:hover i {
+    color: #d81b60; /* Cambio de color en hover */
+}
+
+.btn-danger i,
+.btn-success i {
+    margin-right: 6px;
+}
+
+.btn-danger:hover i {
+    color: #ff4d4d; /* Color de hover para icono de eliminar */
+}
+
+.btn-success:hover i {
+    color: #fff;
+}
+
+  /* Estilos para el carrito */
+  .cart-popup-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .cart-product-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .cart-item {
+    display: flex;
+    align-items: flex-start; /* Alinea imagen y detalles del producto en un mismo nivel */
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+  }
+  
+  .cart-item-left {
+    flex: 0 0 60px; /* Controla el ancho fijo para la imagen */
+    margin-right: 20px; /* Espacio entre imagen y detalles */
+  }
+  
+  .cart-product-image {
+    border-radius: 5px;
+    width: 80px;
+    height: 80px;
+    object-fit: cover; /* Asegura que la imagen mantenga sus proporciones */
+  }
+  
+  .cart-item-right {
+    flex: 1; /* Toma el resto del espacio disponible */
+    display: flex;
+    flex-direction: column; /* Asegura que los detalles se coloquen en columnas */
+    align-items: flex-start;
+  }
+  
+  .product-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px; /* Espacio entre nombre del producto y otros detalles */
+  }
+  
+  .product-quantity,
+  .product-unit-price,
+  .product-total-price {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .product-unit-price,
+  .product-total-price {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  
+  .cart-item-pricing {
+    text-align: left;
+  }
+  
+  .cart-price-content {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+  }
+  
+  .cart-total-label {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .cart-total-value {
+    font-weight: bold;
+    font-size: 16px;
+    color: #e63946;
+  }
+  
+  .cart-total {
+    margin-bottom: 20px;
+  }
+  
+  .cart-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .cart-button:hover {
+    background-color: #d62839;
+  }
+  
+

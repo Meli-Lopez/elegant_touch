@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <style>
+        h1 {
+            font-size: 2.5rem; /* Tamaño de fuente grande */
+            color: #d5006d; /* Color rosa fuerte */
+            text-align: center; /* Centrar el texto */
+            border-bottom: 2px solid #ff69b4; /* Borde inferior rosa */
+            padding-bottom: 10px; /* Espaciado en la parte inferior */
+            margin-top: 20px; /* Margen superior */
+            margin-bottom: 20px; /* Margen inferior */
+            text-transform: uppercase; /* Texto en mayúsculas */
+            font-family: 'Cambria', Cochin, Georgia, Times, 'Times New Roman', serif; /* Fuente serif */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #ff69b4; /* Rosado pastel */
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            color: #fff;
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 12px 0;
+            border-bottom: 1px solid #FFC0CB; /* Un tono más claro de rosado */
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .header .user-info img {
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .header .user-info p {
+            margin: 0;
+        }
+        .dashboard-cards {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            margin-bottom: 10px;
+            color: #d63384; /* Color rosado */
+        }
+        .chart {
+            height: 150px;
+            background-color: #ffc0cb; /* Fondo rosado claro */
+            border-radius: 5px;
+        }
+        .progress-bar {
+            background-color: #d63384; /* Barra de progreso rosada */
+        }
+        .btn-upgrade {
+            background-color: #d63384; /* Botón rosado */
+            color: white;
+        }
+        .form-container {
+            background-color: #fff; /* Fondo blanco para el formulario */
+            padding: 30px; /* Espaciado interno */
+            border-radius: 10px; /* Bordes redondeados */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra del formulario */
+            margin: 20px auto; /* Espaciado superior e inferior */
+            max-width: 600px; /* Ancho máximo del formulario */
+        }
+        
+        .form-container h1 {
+            color: #d63384; /* Color del título */
+            margin-bottom: 20px; /* Espaciado inferior */
+        }
+        
+        .form-container input[type="text"], 
+        .form-container input[type="email"], 
+        .form-container select {
+            border-radius: 5px; /* Bordes redondeados en los campos */
+            border: 1px solid #ced4da; /* Borde gris */
+            padding: 10px; /* Espaciado interno */
+            width: 100%; /* Ancho completo */
+            margin-bottom: 15px; /* Espaciado inferior */
+            transition: border-color 0.3s; /* Transición al enfocar */
+        }
+        
+        .form-container input[type="text"]:focus, 
+        .form-container input[type="email"]:focus, 
+        .form-container select:focus {
+            border-color: #d63384; /* Color rosado al enfocar */
+            box-shadow: 0 0 5px rgba(221, 51, 132, 0.5); /* Sombra al enfocar */
+        }
+        
+        .button-container {
+            display: flex; /* Usar flexbox para alinear botones */
+            justify-content: space-between; /* Espacio entre botones */
+            margin-top: 20px; /* Espacio superior para separar del contenido */
+        }
+        
+        .btn-primary {
+            background-color: #d63384; /* Botón rosado */
+            border: none;
+            transition: background-color 0.3s; /* Efecto de transición */
+        }
+        
+        .btn-primary:hover {
+            background-color: #c02570; /* Color más oscuro al pasar el mouse */
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d; /* Botón gris */
+            border: none;
+            transition: background-color 0.3s; /* Efecto de transición */
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268; /* Color más oscuro al pasar el mouse */
+        }        
+    </style>
+</head>
+<body>
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <h2>Panel de Control</h2>
+
+            <ul>
+                <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li>
+                <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
+                <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+                <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
+                <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
+                <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
+                <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
+                <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+        </ul>
+    </div> 
+    <div class="content">
+        <h1 class="mt-4 mb-4 text-center">Editar Categoría</h1>
+        <form method="post" class="form-container">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <a href="{% url 'lista_categorias' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+    
