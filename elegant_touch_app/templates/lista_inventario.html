@@ -199,6 +199,16 @@
             border: 1px solid #ddd; /* Borde gris claro */
             font-size: 16px; /* Aumenta el tamaño de la fuente */
         }
+        /* Aumenta el tamaño de los iconos en toda la página */
+        .fas, .fa {
+            font-size: 1.25rem; /* Aumenta el tamaño de los iconos */
+        }
+
+        /* Opcional: puedes ajustar tamaños específicos para iconos en botones */
+        .btn .fas, .btn .fa {
+            font-size: 1.5rem; /* Tamaño más grande para iconos en botones */
+        }
+
     </style>
 </head>
 <body>
@@ -210,12 +220,12 @@
             <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
             <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li>
             <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
-            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li> 
             <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
             <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
             <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
             <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
-            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+
         </ul>
     </div>
 
@@ -283,8 +293,13 @@
                     <td>{{ inventario.fecha_actualizacion }}</td>
                     <td>
                         <div class="btn-container">
-                            <a href="{% url 'inventario_editar' inventario.pk %}" class="btn-edit"><i class="fas fa-edit"></i></a>
-                            <a href="{% url 'inventario_eliminar' inventario.pk %}" class="btn-delete"><i class="fas fa-trash"></i> </a>
+                            <a href="{% url 'inventario_editar' inventario.pk %}"  class="text-decoration-none" title="Editar" style="color: #ffc107;">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            
+                            <a href="{% url 'inventario_eliminar' inventario.pk %}"  class="text-decoration-none text-danger ml-2" title="Eliminar">
+                                <i class="fas fa-trash-alt" ></i> <!-- Icono de eliminar -->
+                            </a>
                         </div>
                     </td>
                 </tr>

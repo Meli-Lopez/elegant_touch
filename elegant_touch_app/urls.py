@@ -3,7 +3,9 @@ from django.conf.urls.static import static
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
-from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView 
+
+
 
 urlpatterns = [
     # Rutas de la tienda
@@ -12,7 +14,7 @@ urlpatterns = [
     path('contacto/', views.contacto_view, name='contacto'),
     path('tips/', views.tips, name='tips'),
     path('lista-de-deseos/', views.lista_de_deseos, name='lista_de_deseos'),
-    path('my-account/', views.my_account, name='my_account'),
+    path('my-account/', views.my_account, name='mi_cuenta'),
     path('nosotros/', views.nosotros, name='nosotros'),
     path('verificar/', views.verificar, name='verificar'),
     path('informacion/', views.user_info, name='informacion'),
@@ -25,8 +27,46 @@ urlpatterns = [
     # Rutas adicionales
     path('solicitar-datos/', views.request_data, name='request_data'),
     path('data-request/', views.request_data, name='data_request'),
-
-    # Rutas de administración
+     path('producto/vista-rapida/<int:producto_id>/', views.vista_rapida, name='vista_rapida'),
+     path('maquillaje-ojos/', views.productos_maquillaje_ojos, name='maquillaje_ojos'),
+     path('maquillaje-rostro/', views.productos_maquillaje_rostro, name='maquillaje_rostro'),
+     path('maquillaje-labios/', views.productos_maquillaje_labios, name='maquillaje_labios'),
+     path('maquillaje_anti_envejecimiento/', views.productos_maquillaje_anti_envejecimiento, name='maquillaje_anti_envejecimiento'),
+     path('maquillaje_waterproof/', views.productos_maquillaje_waterproof, name='maquillaje_waterproof'),
+     path('limpiadores-faciales/', views.productos_limpiadores_faciales, name='limpiadores_faciales'),
+     path('exfoliantes-hidratantes/', views.productos_exfoliantes_hidratantes, name='exfoliantes_hidratantes'),
+     path('serums-mascarillas/', views.productos_serums_mascarillas, name='serums_mascarillas'),
+     path('protectores-cremas/', views.productos_protectores_cremas, name='protectores_cremas'),
+     path('brochas-pincles/', views.productos_brochas_pinceles, name='brochas_pinceles'),
+     path('aplicadores/', views.productos_esponjas_aplicadores, name='aplicadores'),
+     path('otros-accesorios/', views.productos_otros_accesorios, name='otros_accesorios'),
+     path('lista-de-deseos/', views.lista_de_deseos, name='lista_de_deseos'),
+     path('agregar-a-lista-deseos/<int:producto_id>/', views.agregar_a_lista_deseos, name='agregar_a_lista_deseos'),
+     path('eliminar-de-lista-deseos/<int:item_id>/', views.eliminar_de_lista_deseos, name='eliminar_de_lista_deseos'),
+     path('agregar-al-carrito/<int:product_id>/', views.agregar_al_carrito, name='agregar_al_carrito'),
+     path('carrito/', views.carrito, name='verificar'),
+     path('carrito/actualizar/<int:producto_id>/', views.actualizar_carrito, name='actualizar_carrito'),      
+     path('actualizar_cantidad/<int:product_id>/', views.actualizar_cantidad, name='actualizar_cantidad'),
+     path('carrito/eliminar/<int:producto_id>/', views.eliminar_producto, name='eliminar_producto'),
+     path('reseñas/listar//<int:producto_id>/', views.listar_reseñas, name='listar_reseñas'),
+     path('reseñas/<int:producto_id>/', views.ver_reseñas, name='ver_reseñas'),
+     path('reseña/nueva/<int:producto_id>/', views.nueva_reseña, name='nueva_reseña'),
+     path('reseña/eliminar/<int:reseña_id>/', views.eliminar_reseña, name='eliminar_reseña'),
+     path('reseña/<int:reseña_id>/', views.detalle_reseña, name='detalle_reseña'),
+     path('reseña/editar/<int:reseña_id>/', views.editar_reseña, name='editar_reseña'),
+     path('buscar/', views.buscar_productos, name='buscar_productos'),
+     #url admin
+     path('inventario/', views.lista_inventario, name='lista_inventario'),
+     path('inventario/agregar/', views.inventario_agregar, name='inventario_agregar'),
+     path('inventario/editar/<int:pk>/', views.inventario_editar, name='inventario_editar'),
+     path('inventario/eliminar/<int:pk>/', views.inventario_eliminar, name='inventario_eliminar'),
+     path('pedidos/', views.lista_pedidos, name='lista_pedidos'),
+     path('cambiar_estado_pedido/<int:pedido_id>/', views.cambiar_estado_pedido, name='cambiar_estado_pedido'),
+     path('detalle_pedido/<int:pedido_id>/', views.detalle_pedido, name='detalle_pedido'),# Lista de pedidos
+     path('pago/', views.pago_view, name='pago'),
+     path('confirmacion/', views.confirmationview, name='confirmation'),
+     path('historial-pedidos/', views.historial_pedidos, name='historial_pedidos'),
+     # Rutas de administración
      path('index_admi/', views.index_admi, name='index_admi'),
      path('categorias/', views.lista_categorias, name='lista_categorias'),
      path('categorias/agregar/', views.agregar_categoria, name='agregar_categoria'),
@@ -60,50 +100,6 @@ urlpatterns = [
      path('producto/editar/<int:pk>/', views.producto_editar, name='producto_editar'),
      path('imagen/eliminar/<int:imagen_id>/', views.imagen_eliminar, name='imagen_eliminar'), # Esta es la ruta que necesitas
      path('producto/eliminar/<int:pk>/', views.producto_eliminar, name='producto_eliminar'),
-     path('producto/vista-rapida/<int:producto_id>/', views.vista_rapida, name='vista_rapida'),
-     path('maquillaje-ojos/', views.productos_maquillaje_ojos, name='maquillaje_ojos'),
-     path('maquillaje-rostro/', views.productos_maquillaje_rostro, name='maquillaje_rostro'),
-     path('maquillaje-labios/', views.productos_maquillaje_labios, name='maquillaje_labios'),
-     path('maquillaje_anti_envejecimiento/', views.productos_maquillaje_anti_envejecimiento, name='maquillaje_anti_envejecimiento'),
-     path('maquillaje_waterproof/', views.productos_maquillaje_waterproof, name='maquillaje_waterproof'),
-     path('limpiadores-faciales/', views.productos_limpiadores_faciales, name='limpiadores_faciales'),
-     path('exfoliantes-hidratantes/', views.productos_exfoliantes_hidratantes, name='exfoliantes_hidratantes'),
-     path('serums-mascarillas/', views.productos_serums_mascarillas, name='serums_mascarillas'),
-     path('protectores-cremas/', views.productos_protectores_cremas, name='protectores_cremas'),
-     path('brochas-pincles/', views.productos_brochas_pinceles, name='brochas_pinceles'),
-     path('aplicadores/', views.productos_esponjas_aplicadores, name='aplicadores'),
-     path('otros-accesorios/', views.productos_otros_accesorios, name='otros_accesorios'),
-     path('lista-de-deseos/', views.lista_de_deseos, name='lista_de_deseos'),
-     path('agregar-a-lista-deseos/<int:producto_id>/', views.agregar_a_lista_deseos, name='agregar_a_lista_deseos'),
-     path('eliminar-de-lista-deseos/<int:item_id>/', views.eliminar_de_lista_deseos, name='eliminar_de_lista_deseos'),
-     path('agregar-al-carrito/<int:product_id>/', views.agregar_al_carrito, name='agregar_al_carrito'),
-     path('carrito/', views.carrito, name='verificar'),
-     path('carrito/actualizar/<int:producto_id>/', views.actualizar_carrito, name='actualizar_carrito'),
-     path('carrito/eliminar/<int:producto_id>/', views.eliminar_producto, name='eliminar_producto'),
-     path('reseñas/listar//<int:producto_id>/', views.listar_reseñas, name='listar_reseñas'),
-     path('reseñas/<int:producto_id>/', views.ver_reseñas, name='ver_reseñas'),
-     path('reseña/nueva/<int:producto_id>/', views.nueva_reseña, name='nueva_reseña'),
-     path('reseña/eliminar/<int:reseña_id>/', views.eliminar_reseña, name='eliminar_reseña'),
-     path('reseña/<int:reseña_id>/', views.detalle_reseña, name='detalle_reseña'),
-     path('reseña/editar/<int:reseña_id>/', views.editar_reseña, name='editar_reseña'),
-     path('buscar/', views.buscar_productos, name='buscar_productos'),
-     path('inventario/', views.lista_inventario, name='lista_inventario'),
-     path('inventario/agregar/', views.inventario_agregar, name='inventario_agregar'),
-     path('inventario/editar/<int:pk>/', views.inventario_editar, name='inventario_editar'),
-     path('inventario/eliminar/<int:pk>/', views.inventario_eliminar, name='inventario_eliminar'),
-     path('ventas/', views.lista_ventas, name='lista_ventas'),
-     path('ventas/<int:venta_id>/', views.detalle_venta, name='detalle_venta'),  # Detalle de una venta
-     path('ventas/crear/', views.crear_venta, name='crear_venta'),  # Crear una nueva venta
-     path('ventas/<int:venta_id>/editar/', views.editar_venta, name='editar_venta'),  # Editar una venta
-     path('ventas/filtrar/', views.filtrar_ventas, name='filtrar_ventas'),  # Filtrar ventas por estado
-     path('ventas/<int:venta_id>/eliminar/', views.eliminar_venta, name='eliminar_venta'),  # Eliminar una venta
-     path('clientes/<int:cliente_id>/ventas/', views.ventas_por_cliente, name='ventas_por_cliente'),  # Ventas por cliente
-     path('pedidos/', views.lista_pedidos, name='lista_pedidos'),  # Lista de pedidos
-     path('pedido/crear/', views.crear_pedido, name='crear_pedido'),  # Crear nuevo pedido
-     path('pedido/<int:pedido_id>/', views.detalle_pedido, name='detalle_pedido'),  # Ver detalles de un pedido
-     path('pedido/<int:pedido_id>/actualizar/', views.actualizar_pedido, name='actualizar_pedido'),  # Actualizar estado de pedido
-     path('pedido/<int:pedido_id>/cancelar/', views.cancelar_pedido, name='cancelar_pedido'),  # Cancelar un pedido
-     path('historial_pedidos/', views.historial_pedidos, name='historial_pedidos'),
      
     #Ruta cambio de contraseña(si se le olvido)
     path('reset_password/', 

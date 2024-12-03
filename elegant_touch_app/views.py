@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import UserRegistrationForm, PerfilUsuarioForm, ContactoForm, SubcategoriaForm, GestionCategoriaForm, CategoriaForm, MarcaForm,ProveedorForm ,ProductoForm, ReseñaForm, InventarioForm,VentaForm
-from django.contrib import messages
-from .models import Contacto, PerfilUsuario, Categoria, Producto,  Subcategoria, GestionCategoria, Marca,Proveedor, Producto,  ImagenProducto, ListaDeseos,Reseña, Inventario,Venta, Pedido
+from .forms import UserRegistrationForm, PerfilUsuarioForm, ContactoForm, SubcategoriaForm, GestionCategoriaForm, CategoriaForm, MarcaForm,ProveedorForm ,ProductoForm, ReseñaForm, InventarioForm,PedidoClienteForm
+from .models import Contacto, PerfilUsuario, Categoria, Producto,  Subcategoria, GestionCategoria, Marca,Proveedor, Producto,  ImagenProducto, ListaDeseos,Reseña, Inventario,PedidoCliente,PedidoCliente, PedidoDetalle
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
@@ -17,6 +16,13 @@ from django.template.loader import render_to_string
 from django.db.models import Q
 from django.views.decorators.http import require_POST
 from django.contrib import messages
+from django.views import View
+from .models import PerfilUsuario
+from django.contrib.auth.decorators import user_passes_test
+from django.core.files.storage import default_storage
+from decimal import Decimal
+from django.views.generic import ListView
+from django.core.paginator import Paginator
 
 # Vistas públicas
 def carrito(request):
@@ -140,7 +146,7 @@ def user_info(request):
         form = PerfilUsuarioForm(request.POST, instance=perfil_usuario)
         if form.is_valid():
             form.save()
-            return redirect('my_account')  # Redirige a la página de perfil después de guardar los cambios
+            return redirect('mi_cuenta')  # Redirige a la página de perfil después de guardar los cambios
     else:
         form = PerfilUsuarioForm(instance=perfil_usuario)
 
@@ -183,7 +189,7 @@ def request_data(request):
 @login_required
 def index_admi(request):
     return render(request, 'index-admi.html')
-
+@user_passes_test(lambda user: user.is_superuser)
 @login_required
 def lista_categorias(request):
     categorias = Categoria.objects.all().prefetch_related('subcategorias')
@@ -287,9 +293,9 @@ def crud_productos(request):
 
 @login_required
 def gestion_de_pedidos(request):
-    pedidos = Pedido.objects.all()
+    # pedidos = Pedido.objects.all()
     return render(request, 'admin_gestion-de-pedidos.html')
-
+@user_passes_test(lambda user: user.is_superuser)
 @login_required
 def gestion_de_usuarios(request):
     # Obtener los parámetros de búsqueda y filtro
@@ -352,8 +358,7 @@ def toggle_user_status(request, user_id):
         messages.warning(request, "El usuario ha sido inactivado.")
     return redirect('gestion_de_usuarios')
 
-
-
+@user_passes_test(lambda user: user.is_superuser)
 def dashboard_view(request):
     total_usuarios = PerfilUsuario.objects.count()
     usuarios_activos = PerfilUsuario.objects.filter(is_active=True).count()
@@ -424,6 +429,7 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     
 
 @login_required
+@user_passes_test(lambda user: user.is_superuser)
 def lista_marcas(request):
     marcas = Marca.objects.all()
     return render(request, 'lista_marcas.html', {'marcas': marcas})
@@ -463,6 +469,7 @@ def eliminar_marca(request, marca_id):
 
 #Proveedores
 #Listar Proveedores
+@user_passes_test(lambda user: user.is_superuser)
 def lista_proveedores(request):
     proveedores = Proveedor.objects.all()
     return render(request, 'lista_proveedores.html', {'proveedores': proveedores})
@@ -505,6 +512,7 @@ def eliminar_proveedor(request, pk):
 #views productos
 
 # Vista para listar los productos, incluyendo productos destacados y con búsqueda
+@user_passes_test(lambda user: user.is_superuser)
 def lista_productos(request):
     # Obtén el término de búsqueda de la URL
     query = request.GET.get('q', '')
@@ -757,8 +765,8 @@ def contar_lista_deseos(request):
 def carrito(request):
     # Obtener el carrito de la sesión
     cart = request.session.get('cart', {})
+    envio = 10000  # Costo fijo de envío
     
-    # Obtener detalles del producto en el carrito
     cart_items = []
     subtotal = 0
     
@@ -776,7 +784,10 @@ def carrito(request):
         except Producto.DoesNotExist:
             continue
 
-    total = subtotal  # Añadir impuestos aquí si es necesario
+    total = subtotal + envio  # Total incluyendo envío
+
+    # Validar que el subtotal sea correcto (puedes usar logs para depuración)
+    print(f"Subtotal: {subtotal}, Total: {total}")  # Eliminar en producción
 
     context = {
         'cart_items': cart_items,
@@ -785,7 +796,110 @@ def carrito(request):
     }
     return render(request, 'verificar.html', context)
 
-@login_required(login_url='login')  # Redirige a la página de inicio de sesión si no está autenticado
+@require_POST
+def actualizar_cantidad(request, product_id):
+    cart = request.session.get('cart', {})
+    action = request.POST.get('action', '')  # 'increment' o 'decrement'
+    try:
+        producto = get_object_or_404(Producto, id=product_id)
+        current_quantity = cart.get(str(product_id), 0)
+
+        if action == 'increment':
+            # Incrementar cantidad asegurándose de no exceder el stock
+            if current_quantity + 1 <= producto.stock_producto:
+                cart[str(product_id)] = current_quantity + 1
+            else:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'No hay suficiente stock disponible.'
+                })
+
+        elif action == 'decrement':
+            # Reducir cantidad, asegurándose de no bajar de 1
+            if current_quantity > 1:
+                cart[str(product_id)] = current_quantity - 1
+            else:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'La cantidad no puede ser menor a 1.'
+                })
+
+        else:
+            # Si no se especifica la acción, actualiza la cantidad directamente
+            quantity = int(request.POST.get('quantity', 1))
+            if quantity > 0 and quantity <= producto.stock_producto:
+                cart[str(product_id)] = quantity
+            elif quantity > producto.stock_producto:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'No hay suficiente stock disponible.'
+                })
+            else:
+                cart.pop(str(product_id), None)
+
+        # Guardar carrito actualizado
+        request.session['cart'] = cart
+        request.session.modified = True
+
+        # Calcular totales
+        item_total = quantity * producto.precio_producto
+        cart_total = sum(
+            Producto.objects.get(id=int(pid)).precio_producto * qty 
+            for pid, qty in cart.items()
+        )
+
+        return JsonResponse({
+            'success': True,
+            'quantity': quantity,
+            'item_total': item_total,
+            'cart_total': cart_total,
+            'total': cart_total + 10000  # Incluye envío si es necesario
+        })
+
+    except Producto.DoesNotExist:
+        return JsonResponse({
+            'success': False,
+            'error': 'Producto no encontrado'
+        }, status=404)
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=400)
+
+def eliminar_producto(request, producto_id):
+    if request.method == 'POST':
+        cart = request.session.get('cart', {})
+        producto_id_str = str(producto_id)
+
+        if producto_id_str in cart:
+            del cart[producto_id_str]
+            request.session['cart'] = cart
+            request.session.modified = True
+
+            # Si es una solicitud AJAX, devuelve JSON
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                cart_total = sum(
+                    Producto.objects.get(id=int(pid)).precio_producto * qty
+                    for pid, qty in cart.items()
+                )
+                envio = 10000
+                total = cart_total + envio
+
+                return JsonResponse({
+                    'success': True,
+                    'cart_total': f"${cart_total:,.2f}",
+                    'total': f"${total:,.2f}"
+                })
+            
+            # Si es un formulario tradicional, redirige
+            return redirect('carrito')  # Asegúrate de tener la URL correcta
+    
+    # Si no es una solicitud POST o hay un error
+    return JsonResponse({'success': False, 'error': 'Producto no encontrado en el carrito.'})
+
+
+@login_required(login_url='login')
 def agregar_al_carrito(request, product_id):
     # Obtener los detalles del producto y la cantidad
     cantidad = int(request.POST.get('cantidad', 1))
@@ -793,21 +907,25 @@ def agregar_al_carrito(request, product_id):
     try:
         producto = Producto.objects.get(id=product_id)
         if cantidad > producto.stock_producto:
-            # Si la cantidad supera el stock, agrega un mensaje de error al contexto
             context = {
-                'error': f"La cantidad que seleccionaste supera las existencias actuales de este artículo. Quedan {producto.stock_producto} unidades.",
+                'error': f"La cantidad seleccionada supera las existencias actuales ({producto.stock_producto} disponibles).",
                 'producto': producto,
-                'mostrar_modal': True,  
+                'mostrar_modal': True,
             }
             return render(request, 'mensaje_stock.html', context)
         else:
-            # Lógica para agregar el producto al carrito
             cart = request.session.get('cart', {})
-            cart[product_id] = cantidad
+            if str(product_id) in cart:
+                cart[str(product_id)] += cantidad  # Sumar cantidad si ya está en el carrito
+            else:
+                cart[str(product_id)] = cantidad
+            
             request.session['cart'] = cart
+            request.session.modified = True  # Indica que se modificó la sesión
+
+            # Recalcular totales aquí si es necesario
             return redirect('carrito')
     except Producto.DoesNotExist:
-        # Manejar el caso donde el producto no existe
         return redirect('lista_productos')
 
 
@@ -831,21 +949,6 @@ def actualizar_carrito(request, product_id):
     return redirect('verificar')  # Cambiar por la URL del carrito
 
 
-def eliminar_producto(request, producto_id):
-    # Obtener el carrito de la sesión
-    cart = request.session.get('cart', {})
-    
-    # Verifica si el producto está en el carrito y lo elimina
-    if str(producto_id) in cart:
-        del cart[str(producto_id)]  # Eliminar el producto del carrito
-
-    # Guardar el carrito actualizado en la sesión
-    request.session['cart'] = cart
-
-    # Redirigir de nuevo al carrito
-    return redirect('verificar')
-
-
 # Listar todas las reseñas de un producto
 def listar_reseñas(request, producto_id):
     reseñas = Reseña.objects.filter(producto_id=producto_id)  # Filtra por producto_id
@@ -861,19 +964,21 @@ def ver_reseñas(request, producto_id):
 @login_required
 def nueva_reseña(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
-
     if request.method == 'POST':
         form = ReseñaForm(request.POST)
         if form.is_valid():
             nueva_reseña = form.save(commit=False)
             nueva_reseña.producto = producto
-            nueva_reseña.user = request.user  # Asocia la reseña con el usuario logueado
+            nueva_reseña.user = request.user
             nueva_reseña.save()
             return redirect('ver_reseñas', producto_id=producto.id)
+        else:
+            # Agregar un mensaje de error si no es válido
+            return render(request, 'nueva_reseña.html', {'form': form, 'producto': producto, 'error': 'Por favor corrige los errores en el formulario.'})
     else:
         form = ReseñaForm()
-
     return render(request, 'nueva_reseña.html', {'form': form, 'producto': producto})
+
 
 # Eliminar una reseña (solo si el usuario es el propietario)
 @login_required
@@ -887,7 +992,7 @@ def eliminar_reseña(request, reseña_id):
     if request.method == 'POST':
         producto_id = reseña.producto.id
         reseña.delete()
-        return redirect('listar_reseñas', producto_id=producto_id)
+        return redirect('ver_reseñas', producto_id=producto_id)  # Redirige al listado de reseñas
 
     return render(request, 'eliminar_reseña.html', {'reseña': reseña})
 
@@ -896,24 +1001,26 @@ def detalle_reseña(request, reseña_id):
     producto = reseña.producto  # Asegúrate de que la reseña tiene un atributo 'producto'
     return render(request, 'ver_reseñas.html', {'reseña': reseña, 'producto': producto})
 
-# Editar una reseña (solo si el usuario es el propietario)
-@login_required
 def editar_reseña(request, reseña_id):
+    # Obtener la reseña o devolver 404 si no existe
     reseña = get_object_or_404(Reseña, id=reseña_id)
 
-    # Verifica si el usuario actual es el propietario de la reseña
-    if reseña.user != request.user:
-        return render(request, '403.html', status=403)  # Redirige a una página de error 403
-
-    if request.method == 'POST':
+    if request.method == "POST":
+        # Crear el formulario con los datos enviados
         form = ReseñaForm(request.POST, instance=reseña)
         if form.is_valid():
+            # Guardar los cambios en la reseña
             form.save()
-            return redirect('detalle_reseña', reseña_id=reseña.id)
+            # Agregar un mensaje de éxito (opcional)
+            messages.success(request, "Reseña actualizada con éxito.")
+            # Redirigir a la página de "ver reseñas"
+            return redirect('ver_reseñas', producto_id=reseña.producto.id)
     else:
+        # Mostrar el formulario con los datos de la reseña actual
         form = ReseñaForm(instance=reseña)
 
     return render(request, 'editar_reseña.html', {'form': form, 'reseña': reseña})
+
 
 
 def buscar_productos(request):
@@ -961,6 +1068,7 @@ def buscar_productos(request):
 
 
 #VIEWS INVENTARIO
+@user_passes_test(lambda user: user.is_superuser)
 def lista_inventario(request):
     query = request.GET.get('q')  # Obtener el parámetro de búsqueda de la URL
     if query:
@@ -1009,6 +1117,7 @@ def inventario_eliminar(request, pk):
 
 
 #VIEWS VENTAS
+@user_passes_test(lambda user: user.is_superuser)
 def lista_ventas(request):
     ventas = Venta.objects.all()  # Obtén todas las ventas de la base de datos
     return render(request, 'lista_ventas.html', {'ventas': ventas})
@@ -1063,7 +1172,7 @@ def eliminar_venta(request, venta_id):
 
 
 def ventas_por_cliente(request, cliente_id):
-    cliente = get_object_or_404(Cliente, id=cliente_id)
+    cliente = get_object_or_404(cliente, id=cliente_id)
     ventas = Venta.objects.filter(cliente=cliente)
     return render(request, 'ventas_por_cliente.html', {'cliente': cliente, 'ventas': ventas})
 
@@ -1073,60 +1182,201 @@ def ventas_por_cliente(request, cliente_id):
 # Vista para listar todos los pedidos del cliente
 @login_required
 def lista_pedidos(request):
-    pedidos = Pedido.objects.filter(cliente=request.user).order_by('-fecha_creacion')  # Filtramos por el cliente
-    return render(request, 'lista_pedidos.html', {'pedidos': pedidos})
+    # Obtener todos los pedidos
+    pedidos = PedidoCliente.objects.all().prefetch_related('detalles__producto')
 
-# Vista para crear un nuevo pedido
-@login_required
-def crear_pedido(request):
-    if request.method == 'POST':
-        form = PedidoForm(request.POST)
-        if form.is_valid():
-            pedido = form.save(commit=False)
-            pedido.cliente = request.user  # Asociamos el pedido al usuario logueado
-            pedido.save()
-            return redirect('lista_pedidos')  # Redirigimos a la lista de pedidos
-    else:
-        form = PedidoForm()
+    # Paginación
+    paginator = Paginator(pedidos, 10)  # 10 pedidos por página
+    page_number = request.GET.get('page')
+    pedidos_page = paginator.get_page(page_number)
 
-    return render(request, 'crear_pedido.html', {'form': form})
+    context = {
+        'pedidos': pedidos_page
+    }
 
-# Vista para ver los detalles de un pedido específico
-@login_required
-def detalle_pedido(request, pedido_id):
-    pedido = get_object_or_404(Pedido, id=pedido_id, cliente=request.user)
-    return render(request, 'detalle_pedido.html', {'pedido': pedido})
+    return render(request, 'lista_pedidos.html', context)
 
-# Vista para actualizar el estado de un pedido
-@login_required
-def actualizar_pedido(request, pedido_id):
-    pedido = get_object_or_404(Pedido, id=pedido_id, cliente=request.user)
-
-    if request.method == 'POST':
-        # Si se desea actualizar el estado del pedido
-        estado = request.POST.get('estado')
-        if estado:
-            pedido.estado = estado
-            pedido.save()
-            return redirect('detalle_pedido', pedido_id=pedido.id)
-
-    return render(request, 'actualizar_pedido.html', {'pedido': pedido})
-
-# Vista para cancelar un pedido
-@login_required
-def cancelar_pedido(request, pedido_id):
-    pedido = get_object_or_404(Pedido, id=pedido_id, cliente=request.user)
-    if pedido.estado != 'cancelado':
-        pedido.estado = 'cancelado'
-        pedido.save()
-        return redirect('detalle_pedido', pedido_id=pedido.id)
-    else:
-        return HttpResponse('Este pedido ya ha sido cancelado.')
+def cambiar_estado_pedido(request, pedido_id):
+    pedido = get_object_or_404(PedidoCliente, id=pedido_id)
     
+    if request.method == 'POST':
+        nuevo_estado = request.POST.get('estado')
+        pedido.estado = nuevo_estado
+        pedido.save()
+
+        # Enviar el correo correspondiente según el nuevo estado
+        enviar_correo_estado_pedido(pedido)
+
+        messages.success(request, "Estado del pedido actualizado correctamente.")
+    
+    return redirect('lista_pedidos')  # Redirige a la lista de pedidos después de la actualización
+
+def enviar_correo_estado_pedido(pedido):
+    # Dependiendo del estado, se define el asunto y el mensaje
+    if pedido.estado == 'aprobado':
+        asunto = f"Tu pedido {pedido.id} ha sido aprobado"
+        mensaje = f"Hola {pedido.nombre},\n\nTu pedido ha sido aprobado. Los detalles de tu pedido son:\n\n" \
+                  f"Nombre: {pedido.nombre} {pedido.apellido}\n" \
+                  f"Total: {pedido.total}\n" \
+                  f"Fecha: {pedido.fecha_pedido}\n\nGracias por comprar con nosotros."
+    elif pedido.estado == 'cancelado':
+        asunto = f"Tu pedido {pedido.id} ha sido cancelado"
+        mensaje = f"Hola {pedido.nombre},\n\nLamentablemente, tu pedido ha sido cancelado. Los detalles de tu pedido son:\n\n" \
+                  f"Nombre: {pedido.nombre} {pedido.apellido}\n" \
+                  f"Total: {pedido.total}\n" \
+                  f"Fecha: {pedido.fecha_pedido}\n\nSi tienes alguna pregunta, no dudes en contactarnos."
+    elif pedido.estado == 'pendiente':
+        asunto = f"Tu pedido {pedido.id} está pendiente"
+        mensaje = f"Hola {pedido.nombre},\n\nTu pedido está pendiente de aprobación. Los detalles de tu pedido son:\n\n" \
+                  f"Nombre: {pedido.nombre} {pedido.apellido}\n" \
+                  f"Total: {pedido.total}\n" \
+                  f"Fecha: {pedido.fecha_pedido}\n\nTe notificaremos tan pronto como haya una actualización sobre tu pedido."
+
+    # Enviar el correo al cliente
+    destinatario = pedido.correo
+    send_mail(asunto, mensaje, 'eleganttouch054@gmail.com', [destinatario])
+
+
+def detalle_pedido(request, pedido_id):
+    pedido = get_object_or_404(PedidoCliente, id=pedido_id)
+    return render(request, 'detalle_pedido.html', {'pedido': pedido})
 
 @login_required
 def historial_pedidos(request):
     # Obtiene los pedidos del usuario autenticado
-    pedidos = Pedido.objects.filter(cliente=request.user).order_by('-fecha_creacion')
+    pedidos = PedidoCliente.objects.filter(cliente=request.user).order_by('-fecha_pedido')
     
     return render(request, 'historial_pedidos.html', {'pedidos': pedidos})
+
+
+@login_required
+def pago_view(request):
+    step = request.session.get('checkout_step', 1)
+    cart_items = request.session.get('cart', {})
+    envio = 10000
+    
+    if not cart_items:
+        messages.error(request, "Tu carrito está vacío. Agrega productos antes de proceder al pago.")
+        return redirect('cart')
+
+    if request.method == 'POST':
+        if step == 1:
+            # Validar y guardar datos del cliente
+            nombre = request.POST.get('nombre')
+            apellido = request.POST.get('apellido')
+            celular = request.POST.get('celular')
+            correo = request.POST.get('correo')
+            direccion_envio = request.POST.get('direccion_envio')
+            ciudad = request.POST.get('ciudad')
+            codigo_postal = request.POST.get('codigo_postal')
+
+            if not all([nombre, apellido, celular, correo, direccion_envio, ciudad, codigo_postal]):
+                messages.error(request, 'Por favor completa todos los campos obligatorios.')
+                return render(request, 'pago.html', {'step': step})
+
+            # Guardar datos en la sesión
+            for field in ['nombre', 'apellido', 'celular', 'correo', 'direccion_envio', 'ciudad', 'codigo_postal']:
+                request.session[field] = locals()[field]
+
+            request.session['checkout_step'] = 2
+            return redirect('pago')
+
+        elif step == 2:
+            # Validar y guardar el método de pago
+            metodo_pago = request.POST.get('metodo_pago')
+            comprobante_pago = request.FILES.get('comprobante_pago')
+
+            if not metodo_pago or not comprobante_pago:
+                messages.error(request, 'Por favor selecciona un método de pago y sube el comprobante.')
+                return render(request, 'pago.html', {'step': step})
+
+            request.session['metodo_pago'] = metodo_pago
+            request.session['comprobante_pago'] = comprobante_pago.name
+
+            # Guardar archivo
+            with open(f'media/comprobantes/{comprobante_pago.name}', 'wb+') as destination:
+                for chunk in comprobante_pago.chunks():
+                    destination.write(chunk)
+
+            request.session['checkout_step'] = 3
+            return redirect('pago')
+
+        elif step == 3:
+            # Calcular el total del pedido
+            total_pedido = Decimal('0.00')
+            for product_id, item_data in cart_items.items():
+                producto = Producto.objects.get(id=product_id)
+                cantidad = item_data if isinstance(item_data, int) else item_data.get('quantity', 1)
+                precio_unitario = Decimal(str(producto.precio_producto))
+                subtotal = precio_unitario * cantidad
+                total_pedido += subtotal
+
+            # Agregar el costo de envío al total
+            total_pedido += envio
+
+            # Crear y guardar el pedido
+            pedido = PedidoCliente(
+                cliente=request.user,
+                nombre=request.session.get('nombre'),
+                apellido=request.session.get('apellido'),
+                celular=request.session.get('celular'),
+                correo=request.session.get('correo'),
+                direccion_envio=request.session.get('direccion_envio'),
+                ciudad=request.session.get('ciudad'),
+                codigo_postal=request.session.get('codigo_postal'),
+                metodo_pago=request.session.get('metodo_pago'),
+                comprobante_pago=f'comprobantes/{request.session.get("comprobante_pago")}',
+                total=total_pedido  # Guardamos el total incluyendo el envío
+            )
+            pedido.save()
+
+            # Guardar detalles del pedido
+            for product_id, item_data in cart_items.items():
+                producto = Producto.objects.get(id=product_id)
+                cantidad = item_data if isinstance(item_data, int) else item_data.get('quantity', 1)
+                precio_unitario = Decimal(str(producto.precio_producto))
+                subtotal = precio_unitario * cantidad
+
+                PedidoDetalle.objects.create(
+                    pedido=pedido,
+                    producto=producto,
+                    cantidad=cantidad,
+                    precio_unitario=precio_unitario,
+                    subtotal=subtotal
+                )
+
+            # Limpiar sesión y carrito
+            request.session['cart'] = {}
+            for key in ['checkout_step', 'nombre', 'apellido', 'celular', 'correo', 'direccion_envio', 'ciudad', 'codigo_postal', 'metodo_pago', 'comprobante_pago']:
+                request.session.pop(key, None)
+
+            messages.success(request, '¡Tu pedido ha sido procesado con éxito!')
+            return redirect('confirmation')
+
+    # Preparar datos para el resumen del pedido
+    cart_items_details = []
+    subtotal = Decimal('0.00')
+    for product_id, item_data in cart_items.items():
+        producto = Producto.objects.get(id=product_id)
+        quantity = item_data if isinstance(item_data, int) else item_data.get('quantity', 1)
+        item_total = Decimal(str(producto.precio_producto)) * quantity
+        cart_items_details.append({
+            'product': producto,
+            'quantity': quantity,
+            'item_total': item_total
+        })
+        subtotal += item_total
+
+    total = subtotal + envio
+
+    return render(request, 'pago.html', {
+        'step': step,
+        'cart_items': cart_items_details,
+        'subtotal': subtotal,
+        'envio': envio,
+        'total': total
+    })
+
+def confirmationview(request):
+    return render(request, 'confirmation.html')
+

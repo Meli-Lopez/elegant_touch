@@ -152,7 +152,23 @@
         outline: none; /* Sin contorno */
         box-shadow: none; /* Sin sombra */
     }
-      
+    /* Centrando los iconos */
+    a i {
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 1.2rem; /* Ajusta el tamaño según sea necesario */
+    }
+    td {
+        vertical-align: middle; /* Centra el contenido verticalmente */
+        text-align: center; /* Asegura que todo esté alineado horizontalmente */
+    }
+    
+    a {
+        display: inline-flex; /* Asegura que el ícono esté alineado con el texto, si lo hay */
+        align-items: center; /* Centra verticalmente */
+        justify-content: center; /* Centra horizontalmente */
+    }    
 </style>
 </head>
 <body>
@@ -164,12 +180,12 @@
             <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
             <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li>
             <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
-            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li> 
             <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
             <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
             <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
             <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
-            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+   
         </ul>
     </div>                      
     <div class="content">
@@ -199,11 +215,12 @@
                     <td>{{ proveedor.correo_proveedor }}</td>
                     <td>{{ proveedor.marca }}</td> <!-- Mostrar la marca del proveedor -->
                     <td>
-                        <a href="{% url 'editar_proveedor' proveedor.id %}" class="text-decoration-none text-primary">
-                            <i class="fas fa-edit"></i> 
+                        <a href="{% url 'editar_proveedor' proveedor.id %}"  class="text-decoration-none" title="Editar" style="color: #ffc107;">
+                            <i class="fas fa-edit"></i>
                         </a>
-                        <a href="{% url 'eliminar_proveedor' proveedor.id %}" class="text-decoration-none text-danger ml-2">
-                            <i class="fas fa-trash"></i> 
+                        
+                        <a href="{% url 'eliminar_proveedor' proveedor.id %}"class="text-decoration-none text-danger ml-2" title="Eliminar">
+                            <i class="fas fa-trash-alt" ></i> <!-- Icono de eliminar -->
                         </a>
                     </td>
                 </tr>

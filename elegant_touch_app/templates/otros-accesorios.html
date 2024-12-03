@@ -74,13 +74,13 @@
               <ul class="dropdown-content">
                 {% if user.is_authenticated %}
                 <li>
-                    <a href="{% url 'my_account' %}">Mi cuenta</a>
+                    <a href="{% url 'mi_cuenta' %}">Mi cuenta</a>
                 </li>
                 <li>
-                    <a href="{% url 'verificar' %}">Verificar</a>
+                    <a href="{% url 'verificar' %}">Carrito</a>
                 </li>
                 <li>
-                    <a href="{% url 'logout' %}">Cerrar sesión</a>
+                    <a href="{% url 'logout' %}">Cerrar_sesión</a>
                 </li>
             {% else %}
                 <li>
@@ -145,7 +145,7 @@
                         <ul>
                           <li><a href="{% url 'carrito' %}">Carrito</a></li>
                           <li><a href="{% url 'lista_de_deseos' %}">Lista de deseos</a></li>
-                          <li><a href="{% url 'my_account' %}">Mi cuenta</a></li>
+                          <li><a href="{% url 'mi_cuenta' %}">Mi cuenta</a></li>
                           <li><a href="{% url 'login' %}">Acceso</a></li>
                           <li><a href="{% url 'register' %}">Registro</a></li>
                         </ul>
@@ -334,12 +334,23 @@
                     <div class="product-item">
                         <div class="inner-content discount-product">
                             <div class="product-thumb">
-                                <a href="#">
-                                    {% if producto.imagenes.all %}
-                                    <img src="{{ producto.imagenes.first.imagen.url }}" alt="{{ producto.nombre_producto }}" class="img-fluid product-image">
-                                    {% else %}
-                                    <img src="{% static 'images/no-image.png' %}" alt="Imagen no disponible" class="img-fluid product-image">
-                                    {% endif %}
+                              <a class="btn-quick-view"href="javascript:;" 
+                              title="Vista rápida"
+                              data-id="{{ producto.id }}" 
+                              data-nombre="{{ producto.nombre_producto }}"
+                              data-descripcion="{{ producto.descripcion_producto }}"
+                              data-precio="{{ producto.precio_producto }}"
+                              data-imagen="{% if producto.imagenes.first %}{{ producto.imagenes.first.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                              data-imagen-secundaria="{% if producto.imagenes.count > 1 %}{{ producto.imagenes.all.1.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                              data-imagen-tercera="{% if producto.imagenes.count > 2 %}{{ producto.imagenes.all.2.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                              data-imagen-cuarta="{% if producto.imagenes.count > 3 %}{{ producto.imagenes.all.3.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                              data-imagen-quinta="{% if producto.imagenes.count > 4 %}{{ producto.imagenes.all.4.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                              data-toggle="modal" >
+                                {% if producto.imagenes.all %}
+                                <img src="{{ producto.imagenes.first.imagen.url }}" alt="{{ producto.nombre_producto }}" class="img-fluid product-image">
+                                {% else %}
+                                <img src="{% static 'images/no-image.png' %}" alt="Imagen no disponible" class="img-fluid product-image">
+                                {% endif %}
                                 </a>
                                 <div class="product-action">
                                     <div class="addto-wrap">
@@ -458,8 +469,16 @@
                   <div class="info-item">
                     <div class="icon-box">
                       <div class="social-icons">
-                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d"><i class="la la-facebook"></i></a>
-                        <a href="https://www.instagram.com/eleganttouch054/" target="_blank"><i class="la la-instagram"></i></a>
+                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d" 
+                           target="_blank" 
+                           style="color: white;text-decoration: none;">
+                          <i class="la la-facebook"></i>
+                        </a>
+                        <a href="https://www.instagram.com/eleganttouch054/" 
+                           target="_blank" 
+                           style="color: white; text-decoration: none;">
+                          <i class="la la-instagram"></i>
+                        </a>
                       </div>
                     </div>
                     <p>NUESTRAS REDES SOCIALES</p>
@@ -472,51 +491,7 @@
       </div>
     </section>
     <!--== End Contact Info Area Wrapper ==-->
-
-    <!--== Start Divider Area Wrapper ==-->
-    <section class="divider-area">
-      <div class="container pt-90 pt-lg-70 pb-lg-60">
-        <div class="row">
-          <div class="col-12">
-            <div class="divider-style-wrap">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="divider-content text-center">
-                    <h4 class="title hidden-sm-down">Conectémonos en las redes sociales</h4>
-                    <h4 class="title2 hidden-md-up collapsed" data-bs-toggle="collapse" data-bs-target="#dividerId-1">Let’s Connect On Social</h4>
-                    <div id="dividerId-1" class="collapse">
-                      <div class="social-icons">
-                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d"><i class="la la-facebook"></i></a>
-                        <a href="https://www.instagram.com/eleganttouch054/" target="_blank"><i class="la la-instagram"></i></a>
-                      </div>
-                      <p class="mb-sm-25">Síguenos en tus plataformas favoritas. Vea nuevos avances de lanzamiento, videos instructivos y comparta sus estilos favoritos.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="divider-content text-center">
-                    <h4 class="title hidden-sm-down" data-margin-bottom="32">Suscríbete al boletín</h4>
-                    <h4 class="title2 hidden-md-up collapsed" data-bs-toggle="collapse" data-bs-target="#dividerId-2">Suscríbete al boletín</h4>
-                    <div id="dividerId-2" class="collapse">
-                      <div class="newsletter-content-wrap">
-                        <div class="newsletter-form">
-                          <form>
-                            <input type="email" class="form-control" placeholder="Your email address">
-                            <button class="btn btn-submit" type="button">Inscribirse</button>
-                          </form>
-                        </div>
-                      </div>
-                      <p>Puedes darte de baja en cualquier momento. Para ello, por favor encuentre nuestros datos de contacto en el aviso legal..</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--== End Divider Area Wrapper ==-->
+<br>
   </main>
 
   <!--== Start Footer Area Wrapper ==-->
@@ -539,7 +514,7 @@
      
                     </div>
                     <div class="widget-desc">
-                      <p>Somos un equipo de diseñadores y desarrolladores que creamos Magento, Prestashop, Opencart de alta calidad..</p>
+                      <p>Elegant Touch es tu tienda en línea de maquillaje, ofreciendo productos elegantes y de calidad con una experiencia de compra segura y sencilla.</p>
                     </div>
                   </div>
                 </div>
@@ -552,7 +527,7 @@
                       <li><a href="{% url 'data_request' %}">Terminos y Condiciones</a></li>
                       <li><a href="{% url 'contacto' %}">Contáctanos</a></li>
                       <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
-                      <li><a href="{% url 'my_account' %}">Mi Cuenta</a></li>
+                      <li><a href="{% url 'mi_cuenta' %}">Mi Cuenta</a></li>
                     </ul>
                   </div>
                 </div>
@@ -563,22 +538,7 @@
         </div>
       </div>
     </div>
-    <!--== Start Footer Bottom Area ==-->
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <p class="copyright">Copyright © 2022 Todos los derechos reservados | Hecho con<i class="fa fa-heart-o"></i> by <a target="_blank" href="https://www.hasthemes.com">HasThemes.</a></p>
-          </div>
-          <div class="col-lg-6">
-            <div class="payment">
-              <img src="{% static 'img/photos/payment.png' %}" alt="Payment">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--== End Footer Bottom Area ==-->
+
   </footer>
   <!--== End Footer Area Wrapper ==-->
 

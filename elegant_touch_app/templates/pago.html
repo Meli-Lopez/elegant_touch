@@ -1,0 +1,336 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(to right, #f9f9f9, #edf2f7);
+        color: #4a4a4a;
+        line-height: 1.6;
+        margin: 0; /* Asegúrate de que no hay margen en el body */
+        padding: 0;
+    }
+    
+    .main-wrapper {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto; /* Centrar horizontalmente */
+    }
+    
+    
+    .step-indicator {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin: 0; /* Elimina cualquier margen adicional */
+        padding: 0;
+    }
+    h2 {
+        color: #2d3748;
+        font-size: 1.875rem; /* 30px */
+    }
+
+    p, label, input, select {
+        font-size: 1rem; /* 16px */
+    }
+
+    label {
+        font-weight: 600;
+        color: #4a5568;
+    }
+
+    input, select {
+        background-color: #f7fafc;
+        color: #4a5568;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 8px 12px;
+        width: 100%;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:hover, select:hover {
+        border-color: #a0aec0; /* Gris intermedio */
+        box-shadow: 0 0 0 3px rgba(160, 174, 192, 0.2);
+    }
+
+    input:focus, select:focus {
+        border-color: #d53f8c;
+        box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.4);
+        outline: none;
+    }
+
+    button {
+        background-color: #d53f8c;
+        color: #fff;
+        font-weight: 600;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem; /* Espaciado entre texto e icono */
+    }
+
+    button:hover {
+        background-color: #b83280;
+    }
+
+    button:disabled {
+        background-color: #e2e8f0;
+        color: #a0aec0;
+        cursor: not-allowed;
+    }
+
+    .step-indicator {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem; /* Espaciado entre los círculos */
+        margin-bottom: 2rem;
+    }
+
+    .step-circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 1rem;
+        font-weight: bold;
+        text-align: center;
+        transition: all 0.3s;
+        background-color: #f7f7f7;
+        color: #d53f8c;
+        border: 2px solid #d53f8c;
+    }
+
+    .step-active {
+        background-color: #d53f8c;
+        color: white;
+    }
+
+    .step-completed::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #d53f8c;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s;
+    }
+
+    .step-circle:hover {
+        transform: scale(1.1);
+    }
+
+    .total {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #d53f8c;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 16px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+        background-color: #f7fafc;
+        color: #4a5568;
+        font-weight: 600;
+    }
+
+    tbody tr:hover {
+        background-color: #edf2f7;
+        transition: background-color 0.2s ease-in-out;
+    }
+    .qr-small {
+        max-width: 500px;
+        height: auto;
+    }
+    .hidden {
+        display: none;
+    }
+    
+</style>
+<br>
+<div class="main-wrapper mx-auto px-4 py-8 max-w-3xl">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Indicadores de paso -->
+        <div class="step-indicator">
+            {% for num in '123'|make_list %}
+                <div class="step-circle 
+                    {% if step == forloop.counter %}step-active{% elif step > forloop.counter %}step-completed{% else %}step-pending{% endif %}
+                ">
+                    {{ num }}
+                </div>
+            {% endfor %}
+        </div>
+        
+
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="bg-white shadow-md rounded-lg p-8">
+            {% if step == 1 %}
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">Datos del Cliente</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500" value="{{ request.session.nombre }}">
+                    </div>
+                    <div>
+                        <label for="apellido" class="block text-sm font-medium text-gray-700 mb-2">Apellido</label>
+                        <input type="text" id="apellido" name="apellido" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500" value="{{ request.session.apellido }}">
+                    </div>
+                    <div>
+                        <label for="celular" class="block text-sm font-medium text-gray-700 mb-2">Celular</label>
+                        <input type="text" id="celular" name="celular" pattern="^\d{10}$" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500" placeholder="Número de celular (10 dígitos)" value="{{ request.session.celular }}">
+                    </div>
+                    <div>
+                        <label for="correo" class="block text-sm font-medium text-gray-700 mb-2">Correo</label>
+                        <input type="email" id="correo" name="correo" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500" value="{{ request.session.correo }}">
+                    </div>
+                    <div>
+                        <label for="direccion_envio" class="block text-sm font-medium text-gray-700 mb-2">Dirección de Envío</label>
+                        <input type="text" id="direccion_envio" name="direccion_envio" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500" value="{{ request.session.direccion_envio }}">
+                    </div>
+                    <div>
+                        <label for="ciudad" class="block text-sm font-medium text-gray-700 mb-2">Ciudad</label>
+                        <input type="text" id="ciudad" name="ciudad" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500" value="{{ request.session.ciudad }}">
+                    </div>
+                    <div>
+                        <label for="codigo_postal" class="block text-sm font-medium text-gray-700 mb-2">Código Postal</label>
+                        <input type="text" id="codigo_postal" name="codigo_postal" required maxlength="5" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500" value="{{ request.session.codigo_postal }}">
+                    </div>
+                </div>
+            {% elif step == 2 %}
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">Método de Pago</h2>
+                <div class="mb-6">
+                    <label for="metodo_pago" class="block text-sm font-medium text-gray-700 mb-2">Selecciona un Método</label>
+                    <select id="metodo_pago" name="metodo_pago" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500">
+                        <option value="">-- Seleccionar --</option>
+                        <option value="bbva">BBVA</option>
+                        <option value="nequi">Nequi</option>
+                    </select>
+                </div>
+                <div id="qr-images" class="mt-6">
+                    <div id="bbva-qr" class="hidden">
+                        <img src="{% static 'img/codigo_QR_BBVA.jpg' %}" alt="BBVA QR Code" class="mx-auto qr-small">
+                        <p class="text-center mt-2 text-gray-700">Escanea el QR y paga con cualquier billetera digital</p>
+                    </div>
+                    <div id="nequi-qr" class="hidden">
+                        <img src="{% static 'img/codigo_QR_Nequi.jpg' %}" alt="Nequi QR Code" class="mx-auto qr-small">
+                        <p class="text-center mt-2 text-gray-700">Elegant Touch - Cód: 980248628</p>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="comprobante_pago" class="block text-sm font-medium text-gray-700 mb-2">Subir Comprobante</label>
+                    <input type="file" id="comprobante_pago" name="comprobante_pago" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500">
+                </div>
+            {% elif step == 3 %}
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">Confirmación de Pedido</h2>
+                <div class="mb-6">
+                    <p class="text-gray-700">¡Tu pedido ha sido procesado con éxito!</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Resumen del pedido -->
+        <h2 class="text-3xl font-bold mt-8 mb-6 text-gray-800">Resumen de Pedido</h2>
+        <div class="bg-white shadow-md rounded-lg p-8">
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <th class="text-left">Producto</th>
+                        <th class="text-left">Precio</th>
+                        <th class="text-left">Cantidad</th>
+                        <th class="text-left">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td>{{ item.product.nombre_producto }}</td>
+                            <td>${{ item.product.precio_producto }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>${{ total }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% comment %} <div class="mt-4 text-right">
+                <p class="text-xl font-bold">Total: ${{ total }}</p>
+            </div> {% endcomment %}
+        </div>
+        
+        <div class="flex justify-between mt-8">
+            {% if step > 1 %}
+                <button type="button" onclick="history.back()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition duration-300 ease-in-out">Atrás</button>
+            {% else %}
+                <div></div>
+               
+            {% endif %}
+            <br>
+            <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                {% if step < 3 %}Continuar{% else %}Confirmar Pedido{% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+
+     // Detectar cambios en el select de método de pago
+     document.getElementById('metodo_pago').addEventListener('change', function() {
+        const metodo = this.value; // Obtiene el valor seleccionado
+        const bbvaQR = document.getElementById('bbva-qr');
+        const nequiQR = document.getElementById('nequi-qr');
+        
+        // Ocultar ambos códigos QR por defecto
+        bbvaQR.classList.add('hidden');
+        nequiQR.classList.add('hidden');
+        
+        // Mostrar el QR correspondiente al método seleccionado
+        if (metodo === 'bbva') {
+            bbvaQR.classList.remove('hidden');
+        } else if (metodo === 'nequi') {
+            nequiQR.classList.remove('hidden');
+        }
+    });
+</script>
+{% endblock %}
+

@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\Mely\Documents\GitHub\elegant_touch\env
+set VIRTUAL_ENV=C:\Users\Vanesa\OneDrive\Documentos\elegant_touch\elegant_touch\env
 
 if not defined PROMPT set PROMPT=$P$G
 

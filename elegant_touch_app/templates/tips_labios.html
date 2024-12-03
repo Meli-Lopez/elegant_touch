@@ -62,13 +62,13 @@
             <ul class="dropdown-content">
             {% if user.is_authenticated %}
               <li>
-                  <a href="{% url 'my_account' %}">Mi cuenta</a>
+                  <a href="{% url 'mi_cuenta' %}">Mi cuenta</a>
               </li>
               <li>
                   <a href="{% url 'verificar' %}">Verificar</a>
               </li>
               <li>
-                  <a href="{% url 'logout' %}">Cerrar sesión</a>
+                  <a href="{% url 'logout' %}">Cerrar_sesión</a>
               </li>
             {% else %}
               <li>
@@ -133,7 +133,7 @@
                         <li><a href="{% url 'carrito' %}">Carrito</a></li>
                         <li><a href="{% url 'verificar' %}">Verificar</a></li>
                         <li><a href="{% url 'lista_de_deseos' %}">Lista de deseos</a></li>
-                        <li><a href="{% url 'my_account' %}">Mi cuenta</a></li>
+                        <li><a href="{% url 'mi_cuenta' %}">Mi cuenta</a></li>
                         <li><a href="{% url 'login' %}">Acceso</a></li>
                         <li><a href="{% url 'register' %}">Registro</a></li>
                       </ul>

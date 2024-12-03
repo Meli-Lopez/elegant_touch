@@ -18,7 +18,7 @@
         }
         .sidebar {
             width: 250px;
-            background-color: #ff69b4   ; /* Rosado pastel */
+            background-color: #ff69b4;
             height: 100vh;
             padding: 20px;
             position: fixed;
@@ -34,8 +34,8 @@
             padding: 0;
         }
         .sidebar ul li {
-            padding: 12px 0; /* Reducir el espacio entre los elementos */
-            border-bottom: 1px solid #FFC0CB; /* Un tono más claro de rosado */
+            padding: 12px 0;
+            border-bottom: 1px solid #FFC0CB;
         }
         .sidebar ul li a {
             color: #fff;
@@ -57,12 +57,10 @@
             display: flex;
             align-items: center;
         }
-        .header .user-info img {
-            border-radius: 50%;
+        .header .user-info i {
+            font-size: 50px;
+            color: #6c757d;
             margin-right: 10px;
-        }
-        .header .user-info p {
-            margin: 0;
         }
         .dashboard-cards {
             display: flex;
@@ -80,126 +78,185 @@
         }
         .card h3 {
             margin-bottom: 10px;
-            color: #d63384; /* Color rosado */
-        }
-        .chart {
-            height: 150px;
-            background-color: #ffc0cb; /* Fondo rosado claro */
-            border-radius: 5px;
-        }
-        .progress-bar {
-            background-color: #d63384; /* Barra de progreso rosada */
+            color: #d63384;
         }
         .btn-upgrade {
-            background-color: #d63384; /* Botón rosado */
+            background-color: #d63384;
             color: white;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #d63384;
+            text-align: center;
+            border-bottom: 2px solid #d63384;
+            padding-bottom: 10px;
+            margin: 20px 0;
+            text-transform: uppercase;
+            font-family: 'Cambria', Cochin, Georgia, Times, 'Times New Roman', serif;
         }
     </style>
 </head>
 <body>
-    <!-- Barra lateral -->
-    <div class="sidebar">
-        <h2>Panel de Control</h2>
-        <ul>
-            <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a></li> <!-- Enlace a la página de inicio -->
-            <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li> 
-            <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
-            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li> 
-            <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
-            <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
-            <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li> <!-- Enlace a Proveedores -->
-            <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
-            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
-
-        </ul>
-        
-    </div>                      
-
-
-    <!-- Contenido principal -->
-    <div class="content">
-        <div class="header">
-            <div class="user-info">
-                <img src="https://via.placeholder.com/50" alt="Usuario">
-                <p id="user_full_name" class="form-value">{{ user.get_full_name }} </p>
+    {% if user.is_authenticated %}
+        {% if user.is_staff or user.is_superuser %}
+            <!-- Barra lateral -->
+            <div class="sidebar">
+                <h2>Panel de Control</h2>
+                <ul>
+                    <li><a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li> 
+                    <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
+                    <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li> 
+                    <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
+                    <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
+                    <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
+                    <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
+                
+                </ul>
             </div>
-            <div class="user-info">
-                <p id="user_last_login" class="form-value"> {{ user.last_login }}</p>
-            </div>
-            <div>
-                <button class="btn btn-upgrade">Actualizar a Pro</button>
-            </div>
-        </div>
 
-        <!-- Tarjetas de resumen -->
-        <div class="dashboard-cards">
-            <div class="card">
-                <h3>Sesiones por Canal</h3>
-                <p>Porcentaje: 75%</p>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+            <!-- Contenido principal -->
+            <div class="content">
+                <div class="header">
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <p id="user_full_name" class="form-value">{{ user.get_full_name }}</p>
+                    </div>
+                    <div class="user-info">
+                        <p id="user_last_login" class="form-value">{{ user.last_login }}</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-upgrade">Actualizar a Pro</button>
+                    </div>
                 </div>
-                <p>Firewall (3) 4 (100%)</p>
-                <p>Puertos (12) 12 (100%)</p>
-            </div>
-            <div class="card">
-                <h3>Eventos</h3>
-                <canvas id="eventosChart" class="chart"></canvas>
-                <p>Crítico: 1, Error: 2, Advertencia: 3</p>
-            </div>
-            <div class="card">
-                <h3>Estadísticas del Dispositivo</h3>
-                <p>Tiempo Activo: 195 días, 8 horas</p>
-                <p>Primera Vez Visto: 23 Sep 2019</p>
-                <p>Espacio de Memoria: 168.3GB</p>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+
+                <h1>Bienvenido al Panel de Administración</h1>
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <h3>Categorías y Subcategorías</h3>
+                        <canvas id="chartCategorias" width="300" height="150"></canvas>
+                    </div>
+                    <div class="card">
+                        <h3>Productos Registrados</h3>
+                        <canvas id="chartProductos" width="300" height="150"></canvas>
+                    </div>
+                    <div class="card">
+                        <h3>Marcas</h3>
+                        <canvas id="chartMarcas" width="300" height="150"></canvas>
+                    </div>
+                    <div class="card">
+                        <h3>Proveedores</h3>
+                        <canvas id="chartProveedores" width="300" height="150"></canvas>
+                    </div>
                 </div>
-            </div>
-        </div>
+                
+        {% else %}
+            <script>window.location.href = "{% url 'login' %}";</script>
+        {% endif %}
+    {% else %}
+        <script>window.location.href = "{% url 'login' %}";</script>
+    {% endif %}
 
-        <div class="dashboard-cards">
-            <div class="card">
-                <h3>Analítica de Ventas</h3>
-                <p>Online: 23,342</p>
-                <p>Offline: 13,221</p>
-                <p>Marketing: 1,542</p>
-            </div>
-            <div class="card">
-                <h3>Ganancia Total</h3>
-                <p>287,493$</p>
-                <p>1.4% desde el mes pasado</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JS and Chart.js -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script para cargar Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        var ctx = document.getElementById('eventosChart').getContext('2d');
-        var eventosChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
-                datasets: [{
-                    label: 'Eventos',
-                    data: [3, 2, 3, 4, 1, 2],
-                    backgroundColor: 'rgba(255, 192, 203, 0.5)', // Color rosado claro
-                    borderColor: '#d63384', // Borde rosado oscuro
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+        document.addEventListener("DOMContentLoaded", function () {
+            // Gráfica de Categorías y Subcategorías
+            var ctxCategorias = document.getElementById('chartCategorias').getContext('2d');
+            new Chart(ctxCategorias, {
+                type: 'bar',
+                data: {
+                    labels: ['Categorías', 'Subcategorías'],
+                    datasets: [{
+                        label: 'Cantidad',
+                        data: [3, 12], // Ejemplo de datos
+                        backgroundColor: ['#ff9999', '#66b3ff'],
+                        borderColor: ['#ff6666', '#3399ff'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
                     }
                 }
-            }
+            });
+    
+            // Gráfica de Productos Registrados
+            var ctxProductos = document.getElementById('chartProductos').getContext('2d');
+            new Chart(ctxProductos, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Productos Registrados'],
+                    datasets: [{
+                        label: 'Cantidad',
+                        data: [100], // Ejemplo de datos
+                        backgroundColor: ['#ff9999'],
+                        borderColor: ['#ff6666'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+    
+            // Gráfica de Marcas
+            var ctxMarcas = document.getElementById('chartMarcas').getContext('2d');
+            new Chart(ctxMarcas, {
+                type: 'pie',
+                data: {
+                    labels: ['Marcas'],
+                    datasets: [{
+                        label: 'Cantidad',
+                        data: [34], // Ejemplo de datos
+                        backgroundColor: ['#66b3ff'],
+                        borderColor: ['#3399ff'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+    
+            // Gráfica de Proveedores
+            var ctxProveedores = document.getElementById('chartProveedores').getContext('2d');
+            new Chart(ctxProveedores, {
+                type: 'bar',
+                data: {
+                    labels: ['Proveedores'],
+                    datasets: [{
+                        label: 'Cantidad',
+                        data: [34], // Ejemplo de datos
+                        backgroundColor: ['#c7ceea'],
+                        borderColor: ['#a29bfe'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
         });
     </script>
+    
 </body>
 </html>

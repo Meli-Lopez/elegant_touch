@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-t7q9cn6_yl_3^*q0)+)e9a_0+oun3xfukq9=$+le=mytie3k9k'
 DEBUG = True
-ALLOWED_HOSTS = ['eleganttouch.online', '']
+ALLOWED_HOSTS = ['eleganttouch.online', '*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -21,6 +21,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+
 
 ]
 
@@ -95,10 +97,10 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/Neylliber/elegant_touch'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Recomendado para producción
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/Neylliber/elegant_touch/media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  #
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'

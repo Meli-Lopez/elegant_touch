@@ -75,13 +75,13 @@
               <ul class="dropdown-content">
                 {% if user.is_authenticated %}
                 <li>
-                    <a href="{% url 'my_account' %}">Mi cuenta</a>
+                    <a href="{% url 'mi_cuenta' %}">Mi cuenta</a>
                 </li>
                 <li>
                     <a href="{% url 'verificar' %}">Carrito</a>
                 </li>
                 <li>
-                    <a href="{% url 'logout' %}">Cerrar sesión</a>
+                    <a href="{% url 'logout' %}">Cerrar_sesión</a>
                 </li>
             {% else %}
                 <li>
@@ -146,7 +146,7 @@
                           <ul>
                             <li><a href="{% url 'carrito' %}">Carrito</a></li>
                             <li><a href="{% url 'lista_de_deseos' %}">Lista de deseos</a></li>
-                            <li><a href="{% url 'my_account' %}">Mi cuenta</a></li>
+                            <li><a href="{% url 'mi_cuenta' %}">Mi cuenta</a></li>
                             <li><a href="{% url 'login' %}">Acceso</a></li>
                             <li><a href="{% url 'register' %}">Registro</a></li>
                           </ul>
@@ -240,251 +240,88 @@
         <div class="shopping-cart-wrap">
           <div class="row">
             <div class="col-lg-8">
-             <br>
+              <br>
               <div class="shopping-checkout-content">
                 <div class="checkout-accordion" id="accordionExample">
-                  
                   <div class="checkout-accordion-item">
                     <h2 class="heading" id="headingOne">
                       <button class="heading-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         <span class="step-number"></span>
-                     
-
-                  <table class="table cart-table">
-                    <thead>
-                        <tr>
-                            <th>Imagen</th>
-                            <th>Producto</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                            <th>Total</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if cart_items %}
-                            {% for item in cart_items %}
-                                <tr>
-                                    <td>
-                                        {% if item.product.imagenes.all %}
-                                            <img src="{{ item.product.imagenes.first.imagen.url }}" alt="{{ item.product.nombre_producto }}" class="img-fluid product-image" style="width: 100px; height: auto;">
-                                        {% else %}
-                                            <img src="{% static 'images/no-image.png' %}" alt="Imagen no disponible" class="img-fluid product-image">
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ item.product.nombre_producto }}</td>
-                                    <td>€{{ item.product.precio_producto }}</td>
-                                    <td>
-                                        <form method="POST" action="{% url 'actualizar_carrito' item.product.id %}">
-                                            {% csrf_token %}
-                                            <div class="input-group">
-                                                <button type="button" class="btn btn-decrement">-</button>
-                                                <input type="number" name="cantidad" value="{{ item.quantity }}" min="1" class="form-control cantidad-producto" required>
-                                                <button type="button" class="btn btn-increment">+</button>
-                                            </div>
-                                            <button type="submit" class="btn btn-update"></button>
-                                        </form>
-                                    </td>
-                                    <td>€{{ item.item_total }}</td>
-                                    <td>
-                                      <form method="POST" action="{% url 'eliminar_producto' item.product.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fas fa-trash"></i> 
-                                        </button>
-                                    </form>
-                                    
-                                </tr>
-                            {% endfor %}
-                        {% else %}
-                            <tr>
-                                <td colspan="6">No hay productos en el carrito.</td>
-                            </tr>
-                        {% endif %}
-                    </tbody>
-                </table>
-                
-        
-                    <h2 class="heading" id="headingTwo">
-
-                        <!-- Aquí puedes agregar texto o dejarlo vacío -->
                       </button>
-                      
-                      
                     </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                      <div class="checkout-accordion-body" data-margin-top="14">
-                        <div class="personal-addresses">
-                          <p class="p-text">La dirección seleccionada se utilizará tanto como su dirección personal (para la factura) como su dirección de envío..</p>
-                          <div class="delivery-address-form">
-                            <form action="#">
-                              <div class="form-group row">
-                                <label class="col-md-3" for="f_name">Nombre</label>
-                                <div class="col-md-6">
-                                  <input id="f_name" class="form-control" type="text">
+                    <table class="table cart-table">
+                      <thead>
+                        <tr>
+                          <th>Imagen</th>
+                          <th>Producto</th>
+                          <th>Precio</th>
+                          <th>Cantidad</th>
+                          <th>Total</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% if cart_items %}
+                          {% for item in cart_items %}
+                            <tr data-product-id="{{ item.product.id }}">
+                              <td>
+                                {% if item.product.imagenes.all %}
+                                  <img src="{{ item.product.imagenes.first.imagen.url }}" alt="{{ item.product.nombre_producto }}" class="img-fluid product-image" style="width: 100px; height: auto;">
+                                {% else %}
+                                  <img src="{% static 'images/no-image.png' %}" alt="Imagen no disponible" class="img-fluid product-image">
+                                {% endif %}
+                              </td>
+                              <td>{{ item.product.nombre_producto }}</td>
+                              <td class="product-price">{{ item.product.precio_producto }}</td>
+                              <td>
+                                <div class="input-group">
+                                  <button type="button" class="btn btn-decrement">-</button>
+                                  <input type="number" name="cantidad" value="{{ item.quantity }}" min="1" class="form-control cantidad-producto" required>
+                                  <button type="button" class="btn btn-increment">+</button>
                                 </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-md-3" for="l_name">Apellido</label>
-                                <div class="col-md-6">
-                                  <input id="l_name" class="form-control" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-md-3" for="frm_company">Compañía</label>
-                                <div class="col-md-6">
-                                  <input id="frm_company" class="form-control" type="text">
-                                </div>
-                                <div class="col-md-3">
-                                  <span class="optional-label">Opcional</span>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-md-3" for="vat_number">Número de IVA</label>
-                                <div class="col-md-6">
-                                  <input id="vat_number" class="form-control" type="text">
-                                </div>
-                                <div class="col-md-3">
-                                  <span class="optional-label">Opcional</span>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-md-3" for="frm_address">Dirección</label>
-                                <div class="col-md-6">
-                                  <input id="frm_address" class="form-control" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-md-3" for="add_complement">Dirección completa</label>
-                                <div class="col-md-6">
-                                  <input id="add_complement" class="form-control" type="text">
-                                </div>
-                                <div class="col-md-3">
-                                  <span class="optional-label">Opcional</span>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-md-3" for="zip_code">Código postal</label>
-                                <div class="col-md-6">
-                                  <input id="zip_code" class="form-control" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-md-3" for="frm_city">Ciudad</label>
-                                <div class="col-md-6">
-                                  <input id="frm_city" class="form-control" type="text">
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-md-3" for="frm_state">Estado</label>
-                                <div class="col-md-6">
-                                  <select id="frm_state" class="form-select form-control" aria-label="-- please choose --">
-                                    <option disabled selected>-- Por favor elige --</option>
-                                    <option value="1">Agrigento</option>
-                                    <option value="2">Alessandria</option>
-                                    <option value="3">Ancona</option>
-                                    <option value="4">Aosta</option>
-                                    <option value="5">Arezzo</option>
-                                    <option value="6">Ascoli Piceno</option>
-                                    <option value="7">Asti</option>
-                                    <option value="8">Avellino</option>
-                                    <option value="9">Bari</option>
-                                    <option value="10">Barletta-Andria-Trani</option>
-                                    <option value="11">Belluno</option>
-                                    <option value="12">Benevento</option>
-                                    <option value="13">Bergamo</option>
-                                    <option value="14">Biella</option>
-                                    <option value="15">Bologna</option>
-                                    <option value="16">Bolzano</option>
-                                    <option value="17">Brescia</option>
-                                    <option value="18">Brindisi</option>
-                                    <option value="19">Cagliari</option>
-                                    <option value="20">Caltanissetta</option>
-                                    <option value="21">Campobasso</option>
-                                    <option value="22">Carbonia-Iglesias</option>
-                                    <option value="23">Caserta</option>
-                                    <option value="24">Catania</option>
-                                    <option value="25">Catanzaro</option>
-                                    <option value="26">Chieti</option>
-                                    <option value="27">Como</option>
-                                    <option value="28">Cosenza</option>
-                                    <option value="29">Cremona</option>
-                                    <option value="30">Crotone</option>
-                                    <option value="31">Cuneo</option>
-                                    <option value="32">Enna</option>
-                                    <option value="33">Fermo</option>
-                                    <option value="34">Ferrara</option>
-                                    <option value="35">Firenze</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-md-3" for="frm_country">País</label>
-                                <div class="col-md-6">
-                                  <select id="frm_country" class="form-select form-control" aria-label="-- please choose --">
-                                    <option disabled selected>-- Por favor elige --</option>
-                                    <option value="1">Italia</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-md-3" for="frm-phone">Teléfono</label>
-                                <div class="col-md-6">
-                                  <input id="frm-phone" class="form-control" type="tel">
-                                </div>
-                                <div class="col-md-3">
-                                  <span class="optional-label">Opcional</span>
-                                </div>
-                              </div>
-                              <div class="form-group row mb-0">
-                                <div class="col-md-9">
-                                  <input name="use_same_address" id="use_same_address" type="checkbox">
-                                  <label class="pt-0" for="use_same_address">Utilice esta dirección también para la factura</label>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <div class="col-md-12 text-end">
-                                  <button type="submit" class="btn-submit">Continuar</button>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                              </td>
+                              <td class="product-total">{{ item.item_total }}</td>
+                              <td>
+                                <form method="POST" action="{% url 'eliminar_producto' item.product.id %}">
+                                  {% csrf_token %}
+                                  <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-trash"></i> 
+                                  </button>
+                                </form>
+                              </td>
+                            </tr>
+                          {% endfor %}
+                        {% else %}
+                          <tr>
+                            <td colspan="6">No hay productos en el carrito.</td>
+                          </tr>
+                        {% endif %}
+                      </tbody>
+                    </table>
                   </div>
-                </div>
-                <div class="shopping-checkout-disabled">
-                  <h4 class="title"><span>3</span> Método de envío</h4>
-                </div>
-                <div class="shopping-checkout-disabled">
-                  <h4 class="title"><span>4</span> Pago</h4>
                 </div>
               </div>
             </div>
             <div class="col-lg-4">
               <div class="shopping-cart-summary mt-md-70">
-                  <div class="cart-detailed-totals">
-                    <h3 class="shop-cart-title">Resumen de Compra</h3>
-                      <div class="separator"></div>
-                      <div class="card-block">
-                          <div class="card-block-item">
-                              <span class="label">Subtotal</span>
-                              <span class="value">Cop {{ subtotal }}</span>
-                          </div>
-                          <div class="card-block-item">
-                              <span class="label">Envio</span>
-                              <span class="value">Gratis</span>
-                          </div>
-                          <div class="separator"></div>
-                          <div class="card-block-item">
-                              <span class="label">Total </span>
-                              <span class="value">Cop {{ total }}</span>
-                          </div>
-                      </div>
+                <div class="cart-detailed-totals">
+                  <h3 class="shop-cart-title">Resumen de Compra</h3>
+                  <div class="separator"></div>
+                  <div class="card-block">
+                    <div class="card-block-item">
+                      <h6>Subtotal: <span id="subtotal">${{ subtotal|floatformat:2 }}</span></h6>
+                    </div>
+                    <div class="card-block-item">
+                      <h6>Envio: <span id="envio">$10.000</span></h6>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="card-block-item">
+                      <h6>Total: <span id="total">${{ total|floatformat:2 }}</span></h6>
+                    </div>
                   </div>
+                </div>
               </div>
-              <button type="submit" class="btn-submit custom-btn">Comprar Ahora</button>
+              <button type="button" class="btn-submit custom-btn" onclick="window.location.href='{% url 'pago' %}'">Comprar Ahora</button>
               <!-- Mover la sección de block-reassurance aquí -->
               <div class="block-reassurance">
                   <ul>
@@ -503,101 +340,63 @@
                   </ul>
               </div>
           </div>
-          
-       
           </div>
         </div>
       </div>
     </section>
     <!--== End Product Area Wrapper ==-->
 
-    <!--== Start Contact Info Area Wrapper ==-->
-    <section class="bg-black-color">
-      <div class="container pt-35 pb-40">
-        <div class="row">
-          <div class="col-12">
-            <div class="contact-info contact-info-static">
-              <div class="row">
-                <div class="col-border col-12 col-md-4 col-sm-6 border-0">
-                  <div class="info-item">
-                    <div class="icon-box">
-                      <i class="icon las la-phone-volume"></i>
-                    </div>
-                    <p>+57-321-4341900 M-F 10AM-5PM</p>
+   <!--== Start Contact Info Area Wrapper ==-->
+   <section class="bg-black-color">
+    <div class="container pt-35 pb-40">
+      <div class="row">
+        <div class="col-12">
+          <div class="contact-info contact-info-static">
+            <div class="row">
+              <div class="col-border col-12 col-md-4 col-sm-6 border-0">
+                <div class="info-item">
+                  <div class="icon-box">
+                    <i class="icon las la-phone-volume"></i>
                   </div>
+                  <p>+57-321-4341900 M-F 10AM-5PM</p>
                 </div>
-                <div class="col-border col-12 col-md-4 col-sm-6 mt-xs-35">
-                  <div class="info-item">
-                    <div class="icon-box">
-                      <i class="icon las la-envelope"></i>
-                    </div>
-                    <p>eleganttouch@gmail.com</p>
+              </div>
+              <div class="col-border col-12 col-md-4 col-sm-6 mt-xs-35">
+                <div class="info-item">
+                  <div class="icon-box">
+                    <i class="icon las la-envelope"></i>
                   </div>
+                  <p>eleganttouch@gmail.com</p>
                 </div>
-                <div class="col-border col-12 col-md-4 col-sm-12 mt-sm-35">
-                  <div class="info-item">
-                    <div class="icon-box">
-                      <div class="social-icons">
-                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d"><i class="la la-facebook"></i></a>
-                        <a href="https://www.instagram.com/eleganttouch054/" target="_blank"><i class="la la-instagram"></i></a>
-                      </div>
+              </div>
+              <div class="col-border col-12 col-md-4 col-sm-12 mt-sm-35">
+                <div class="info-item">
+                  <div class="icon-box">
+                    <div class="social-icons">
+                      <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d" 
+                         target="_blank" 
+                         style="color: white;text-decoration: none;">
+                        <i class="la la-facebook"></i>
+                      </a>
+                      <a href="https://www.instagram.com/eleganttouch054/" 
+                         target="_blank" 
+                         style="color: white; text-decoration: none;">
+                        <i class="la la-instagram"></i>
+                      </a>
                     </div>
-                    <p>NUESTRAS REDES SOCIALES</p>
                   </div>
+                  <p>NUESTRAS REDES SOCIALES</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-    <!--== End Contact Info Area Wrapper ==-->
-
-    <!--== Start Divider Area Wrapper ==-->
-    <section class="divider-area">
-      <div class="container pt-90 pt-lg-70 pb-lg-60">
-        <div class="row">
-          <div class="col-12">
-            <div class="divider-style-wrap">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="divider-content text-center">
-                    <h4 class="title hidden-sm-down">Conectémonos en las redes sociales</h4>
-                    <h4 class="title2 hidden-md-up collapsed" data-bs-toggle="collapse" data-bs-target="#dividerId-1">Conectémonos en las redes sociales</h4>
-                    <div id="dividerId-1" class="collapse">
-                      <div class="social-icons">
-                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d"><i class="la la-facebook"></i></a>
-                        <a href="https://www.instagram.com/eleganttouch054/" target="_blank"><i class="la la-instagram"></i></a>
-                      </div>
-                      <p class="mb-sm-25">Síguenos en tus plataformas favoritas. Mira los nuevos adelantos de lanzamiento, videos instructivos y comparte tus looks favoritos..</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="divider-content text-center">
-                    <h4 class="title hidden-sm-down" data-margin-bottom="32">Suscríbete al boletín informativo</h4>
-                    <h4 class="title2 hidden-md-up collapsed" data-bs-toggle="collapse" data-bs-target="#dividerId-2">Suscríbete al boletín informativo</h4>
-                    <div id="dividerId-2" class="collapse">
-                      <div class="newsletter-content-wrap">
-                        <div class="newsletter-form">
-                          <form>
-                            <input type="email" class="form-control" placeholder="Su dirección de correo electrónico">
-                            <button class="btn btn-submit" type="button">Ingresar</button>
-                          </form>
-                        </div>
-                      </div>
-                      <p>Puede darse de baja en cualquier momento. Para ello, consulte nuestra información de contacto en el aviso legal.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--== End Divider Area Wrapper ==-->
-  </main>
+    </div>
+  </section>
+  <!--== End Contact Info Area Wrapper ==-->
+<br>
+</main>
 
   <!--== Start Footer Area Wrapper ==-->
   <footer class="footer-area">
@@ -632,7 +431,7 @@
                       <li><a href="{% url 'data_request' %}">Terminos y Condiciones</a></li>
                       <li><a href="{% url 'contacto' %}">Contáctanos</a></li>
                       <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
-                      <li><a href="{% url 'my_account' %}">Mi Cuenta</a></li>
+                      <li><a href="{% url 'mi_cuenta' %}">Mi Cuenta</a></li>
                     </ul>
                   </div>
                 </div>
@@ -643,21 +442,7 @@
         </div>
       </div>
     </div>
-    <!--== Start Footer Bottom Area ==-->
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <p class="copyright">Copyright © <i class="fa fa-heart-o"></i> por <a target="_blank" href="https://www.hasthemes.com">HasThemes.</a></p>
-          </div>
-          <div class="col-lg-6">
-            <div class="payment">
-              <img src="{% static 'img/photos/payment.png' %}" alt="Payment">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <!--== End Footer Bottom Area ==-->
   </footer>
   <!--== End Footer Area Wrapper ==-->
@@ -698,61 +483,117 @@
 
 <!--=======================Javascript============================-->
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-      // Función para actualizar el total del producto
-      function updateProductTotal(button) {
-          const row = button.closest('tr'); // Encuentra la fila del producto
-          const price = parseFloat(row.querySelector('td:nth-child(3)').textContent.replace('€', '')); // Obtiene el precio
-          const quantityInput = row.querySelector('.cantidad-producto'); // Obtiene el input de cantidad
-          const quantity = parseInt(quantityInput.value); // Convierte la cantidad a número
-  
-          const totalCell = row.querySelector('td:nth-child(5)'); // Encuentra la celda del total del producto
-          const itemTotal = (price * quantity).toFixed(2); // Calcula el total del producto
-          totalCell.textContent = '€' + itemTotal; // Actualiza la celda del total
-  
-          updateTotals(); // Actualiza subtotal y total general
-      }
-  
-      // Función para actualizar subtotal y total general
-      function updateTotals() {
-          let subtotal = 0;
-          document.querySelectorAll('.cart-table tbody tr').forEach(row => {
-              const itemTotal = parseFloat(row.querySelector('td:nth-child(5)').textContent.replace('€', ''));
-              subtotal += itemTotal;
-          });
-          
-          // Actualiza el subtotal
-          document.querySelector('.cart-totals h4:nth-of-type(1)').textContent = 'Subtotal: €' + subtotal.toFixed(2);
-          
-          // Actualiza el total (si aplica)
-          const total = subtotal; // Aquí puedes agregar más lógica si necesitas un total diferente
-          document.querySelector('.cart-totals h4:nth-of-type(2)').textContent = 'Total: €' + total.toFixed(2);
-      }
-  
-      // Incrementar cantidad
-      document.querySelectorAll('.btn-increment').forEach(button => {
-          button.addEventListener('click', function () {
-              const input = this.parentElement.querySelector('.cantidad-producto');
-              input.value = parseInt(input.value) + 1; // Incrementa la cantidad
-              updateProductTotal(this); // Actualiza el total del producto
-          });
+document.addEventListener('DOMContentLoaded', function () {
+  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+  function updateProductTotal(button) {
+    const row = button.closest('tr');
+    const quantityInput = row.querySelector('.cantidad-producto');
+    const quantity = parseInt(quantityInput.value);
+    const productId = row.dataset.productId;
+
+    // Actualizar el servidor
+    fetch(`/actualizar_cantidad/${productId}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRFToken': csrfToken
+      },
+      body: `quantity=${quantity}`
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const totalCell = row.querySelector('.product-total');
+          totalCell.textContent = `$${parseFloat(data.item_total).toFixed(2)}`;
+          updateTotals(data.cart_total, data.total);
+        } else {
+          alert('Error al actualizar la cantidad: ' + data.error);
+          quantityInput.value = quantityInput.defaultValue; // Revertir al valor anterior
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error al actualizar la cantidad');
+        quantityInput.value = quantityInput.defaultValue; // Revertir al valor anterior
       });
-  
-      // Decrementar cantidad
-      document.querySelectorAll('.btn-decrement').forEach(button => {
-          button.addEventListener('click', function () {
-              const input = this.parentElement.querySelector('.cantidad-producto');
-              if (parseInt(input.value) > 1) {
-                  input.value = parseInt(input.value) - 1; // Decrementa la cantidad
-                  updateProductTotal(this); // Actualiza el total del producto
-              }
-          });
-      });
-  
-      // Inicializa los totales al cargar la página
-      updateTotals();
+  }
+
+  function updateTotals(cartSubtotal, cartTotal) {
+  if (!isNaN(cartSubtotal)) {
+    document.getElementById('subtotal').textContent = `$${cartSubtotal.toFixed(2)}`;
+  } else {
+    console.error('Subtotal no es un número válido:', cartSubtotal);
+  }
+
+  if (!isNaN(cartTotal)) {
+    document.getElementById('total').textContent = `$${cartTotal.toFixed(2)}`;
+  } else {
+    console.error('Total no es un número válido:', cartTotal);
+  }
+}
+
+  document.querySelectorAll('.btn-increment').forEach(button => {
+    button.addEventListener('click', function () {
+      const input = this.parentElement.querySelector('.cantidad-producto');
+      input.value = parseInt(input.value) + 1;
+      updateProductTotal(this);
+    });
   });
-  </script>
+
+  document.querySelectorAll('.btn-decrement').forEach(button => {
+    button.addEventListener('click', function () {
+      const input = this.parentElement.querySelector('.cantidad-producto');
+      if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+        updateProductTotal(this);
+      }
+    });
+  });
+
+  document.querySelectorAll('.cantidad-producto').forEach(input => {
+    input.addEventListener('change', function () {
+      if (parseInt(this.value) < 1) {
+        this.value = 1; // Evitar valores menores a 1
+      }
+      updateProductTotal(this);
+    });
+  });
+
+  document.querySelectorAll('.btn-eliminar').forEach(button => {
+    button.addEventListener('click', function () {
+        const row = button.closest('tr');
+        const productId = row.dataset.productId;
+
+        fetch(`/carrito/eliminar/${productId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+                'X-Requested-With': 'XMLHttpRequest'  // Añade esta línea
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                row.remove(); 
+                updateTotals(data.cart_total, data.total);
+            } else {
+                alert('Error al eliminar el producto: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al eliminar el producto.');
+        });
+    });
+});
+});
+
+function getCsrfToken() {
+  return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+</script>
   
   
 <!--=== Modernizr Min Js ===-->

@@ -102,7 +102,7 @@
             <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
             <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
             <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
-            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+        
         </ul>
     </div>
 
@@ -128,6 +128,32 @@
                     </tr>
                 {% endfor %}
             </tbody>
+            <ul>
+                <li>Cliente: {{ pedido.nombre }} {{ pedido.apellido }}</li>
+                <li>Celular: {{ pedido.celular }}</li>
+                <li>Correo: {{ pedido.correo }}</li>
+                <li>Dirección: {{ pedido.direccion_envio }}</li>
+                <li>Ciudad: {{ pedido.ciudad }}</li>
+                <li>Código Postal: {{ pedido.codigo_postal }}</li>
+                <li>Método de Pago: {{ pedido.get_metodo_pago_display }}</li>
+                <li>Estado: {{ pedido.get_estado_display }}</li>
+                <li>Fecha: {{ pedido.fecha_pedido }}</li>
+                <li>Total: {{ pedido.total }}</li>
+                <li>Comprobante de Pago: 
+                    {% if pedido.comprobante_pago %}
+                        <a href="{{ pedido.comprobante_pago.url }}" target="_blank">Ver comprobante</a>
+                    {% else %}
+                        No hay comprobante
+                    {% endif %}
+                </li>
+                <li>Detalles del Pedido:</li>
+                <ul>
+                    {% for detalle in pedido.detalles.all %}
+                    <li>{{ detalle.producto.nombre_producto }} - {{ detalle.cantidad }} x {{ detalle.precio_unitario }} = {{ detalle.subtotal }}</li>
+                    {% endfor %}
+                </ul>
+            </ul>
+            
         </table>
 
         <!-- Botón Volver -->

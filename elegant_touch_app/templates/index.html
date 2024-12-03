@@ -86,13 +86,13 @@
               <ul class="dropdown-content">
                 {% if user.is_authenticated %}
                 <li>
-                    <a href="{% url 'my_account' %}">Mi cuenta</a>
+                    <a href="{% url 'mi_cuenta' %}">Mi cuenta</a>
                 </li>
                 <li>
-                    <a href="{% url 'verificar' %}">Verificar</a>
+                    <a href="{% url 'verificar' %}">Carrito</a>
                 </li>
                 <li>
-                    <a href="{% url 'logout' %}">Cerrar sesión</a>
+                    <a href="{% url 'logout' %}">Cerrar_sesión</a>
                 </li>
             {% else %}
                 <li>
@@ -158,7 +158,7 @@
                           <ul>
                             <li><a href="{% url 'carrito' %}">Carrito</a></li>
                             <li><a href="{% url 'lista_de_deseos' %}">Lista de deseos</a></li>
-                            <li><a href="{% url 'my_account' %}">Mi cuenta</a></li>
+                            <li><a href="{% url 'mi_cuenta' %}">Mi cuenta</a></li>
                             <li><a href="{% url 'login' %}">Acceso</a></li>
                             <li><a href="{% url 'register' %}">Registro</a></li>
                           </ul>
@@ -399,12 +399,24 @@
               <div class="product-item">
                 <div class="inner-content discount-product">
                   <div class="product-thumb">
-                    <a href="#">
+                    <a class="btn-quick-view"href="javascript:;" 
+                    title="Vista rápida"
+                    data-id="{{ producto.id }}" 
+                    data-nombre="{{ producto.nombre_producto }}"
+                    data-descripcion="{{ producto.descripcion_producto }}"
+                    data-precio="{{ producto.precio_producto }}"
+                    data-imagen="{% if producto.imagenes.first %}{{ producto.imagenes.first.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                    data-imagen-secundaria="{% if producto.imagenes.count > 1 %}{{ producto.imagenes.all.1.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                    data-imagen-tercera="{% if producto.imagenes.count > 2 %}{{ producto.imagenes.all.2.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                    data-imagen-cuarta="{% if producto.imagenes.count > 3 %}{{ producto.imagenes.all.3.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                    data-imagen-quinta="{% if producto.imagenes.count > 4 %}{{ producto.imagenes.all.4.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                    data-toggle="modal" >
                       {% if producto.imagenes.all %}
                       <img src="{{ producto.imagenes.first.imagen.url }}" alt="{{ producto.nombre_producto }}" class="img-fluid product-image">
                       {% else %}
                       <img src="{% static 'images/no-image.png' %}" alt="Imagen no disponible" class="img-fluid product-image">
                       {% endif %}
+                      
                     </a>
                     <div class="product-action">
                       <div class="addto-wrap">
@@ -553,7 +565,18 @@
           <div class="product-item">
             <div class="inner-content discount-product">
               <div class="product-thumb">
-                <a href="#">
+                <a class="btn-quick-view"href="javascript:;" 
+                title="Vista rápida"
+                data-id="{{ producto.id }}" 
+                data-nombre="{{ producto.nombre_producto }}"
+                data-descripcion="{{ producto.descripcion_producto }}"
+                data-precio="{{ producto.precio_producto }}"
+                data-imagen="{% if producto.imagenes.first %}{{ producto.imagenes.first.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                data-imagen-secundaria="{% if producto.imagenes.count > 1 %}{{ producto.imagenes.all.1.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                data-imagen-tercera="{% if producto.imagenes.count > 2 %}{{ producto.imagenes.all.2.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                data-imagen-cuarta="{% if producto.imagenes.count > 3 %}{{ producto.imagenes.all.3.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                data-imagen-quinta="{% if producto.imagenes.count > 4 %}{{ producto.imagenes.all.4.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                data-toggle="modal" >
                   {% if producto.imagenes.all %}
                   <img src="{{ producto.imagenes.first.imagen.url }}" alt="{{ producto.nombre_producto }}" class="img-fluid product-image">
                   {% else %}
@@ -745,6 +768,18 @@
                {% if producto.imagenes.all %}{% for img in producto.imagenes.all %} '{{ img.imagen.url }}',{% endfor %}{% endif %} '')">
             <div class="product-thumb mb-2">
               <a href="javascript:void(0);"> <!-- Evita la navegación -->
+                <a class="btn-quick-view"href="javascript:;" 
+                title="Vista rápida"
+                data-id="{{ producto.id }}" 
+                data-nombre="{{ producto.nombre_producto }}"
+                data-descripcion="{{ producto.descripcion_producto }}"
+                data-precio="{{ producto.precio_producto }}"
+                data-imagen="{% if producto.imagenes.first %}{{ producto.imagenes.first.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                data-imagen-secundaria="{% if producto.imagenes.count > 1 %}{{ producto.imagenes.all.1.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                data-imagen-tercera="{% if producto.imagenes.count > 2 %}{{ producto.imagenes.all.2.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                data-imagen-cuarta="{% if producto.imagenes.count > 3 %}{{ producto.imagenes.all.3.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                data-imagen-quinta="{% if producto.imagenes.count > 4 %}{{ producto.imagenes.all.4.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
+                data-toggle="modal" >
                 {% if producto.imagenes.all %}
                   <img src="{{ producto.imagenes.first.imagen.url }}" alt="{{ producto.nombre_producto }}" class="img-fluid product-carousel-image">
                 {% else %}
@@ -769,7 +804,7 @@
                    data-imagen-cuarta="{% if producto.imagenes.count > 3 %}{{ producto.imagenes.all.3.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
                    data-imagen-quinta="{% if producto.imagenes.count > 4 %}{{ producto.imagenes.all.4.imagen.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}"
                    data-toggle="modal" 
-                   data-target="#quickViewModal">Vista rápida</a>
+                   data-target="#quickViewModal"></a>
             </div>
             
             </div>
@@ -812,65 +847,7 @@
     </script>
   </div>
 </section>
-<div class="feature-area">
-      <div class="container-fluid bg-theme-color">
-        <div class="row">
-          <div class="col-xl-3 col-sm-6">
-            <div class="feature-icon-box">
-              <div class="inner-content">
-                <div class="icon-box">
-                  <i class="icon las la-shipping-fast"></i>
-                </div>
-                <div class="content">
-                  <h5 class="title">Envío gratis</h5>
-                  <p>En todos los pedidos superiores a $75.00</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6">
-            <div class="feature-icon-box">
-              <div class="inner-content">
-                <div class="icon-box">
-                  <i class="icon las la-money-bill-wave"></i>
-                </div>
-                <div class="content">
-                  <h5 class="title">Devoluciones gratuitas</h5>
-                  <p>Las devoluciones son gratuitas en un plazo de 9 días.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6">
-            <div class="feature-icon-box">
-              <div class="inner-content">
-                <div class="icon-box">
-                  <i class="icon las la-user-astronaut"></i>
-                </div>
-                <div class="content">
-                  <h5 class="title">Soporte 24/7</h5>
-                  <p>Contacta con nosotros las 24 horas del día</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6">
-            <div class="feature-icon-box">
-              <div class="inner-content">
-                <div class="icon-box">
-                  <i class="icon las la-credit-card"></i>
-                </div>
-                <div class="content">
-                  <h5 class="title">100% Pago Seguro</h5>
-                  <p>Su pago está seguro con nosotros.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--== End Product Category Area Wrapper ==-->
+
 
    
     <!--== Start Testimonial Area Wrapper ==-->
@@ -958,10 +935,17 @@
                   <div class="info-item">
                     <div class="icon-box">
                       <div class="social-icons">
-                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d"><i class="la la-facebook"></i></a>
-                        <a href="https://www.instagram.com/eleganttouch054/" target="_blank"><i class="la la-instagram"></i></a>
+                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d" 
+                           target="_blank" 
+                           style="color: white; text-decoration: none;">
+                          <i class="la la-facebook"></i>
+                        </a>
+                        <a href="https://www.instagram.com/eleganttouch054/" 
+                           target="_blank" 
+                           style="color: white; text-decoration: none;">
+                          <i class="la la-instagram"></i>
+                        </a>
                       </div>
-                    </div>
                     <p>NUESTRAS REDES SOCIALES</p>
                   </div>
                 </div>
@@ -973,67 +957,7 @@
     </section>
     <!--== End Contact Info Area Wrapper ==-->
   </main>
-<br>
-<br>
-  <div class="feature-area">
-    <div class="container-fluid bg-theme-color">
-      <div class="row">
-        <div class="col-xl-3 col-sm-6">
-          <div class="feature-icon-box">
-            <div class="inner-content">
-              <div class="icon-box">
-                <i class="icon las la-shipping-fast"></i>
-              </div>
-              <div class="content">
-                <h5 class="title">Envío gratis</h5>
-                <p>En todos los pedidos superiores a $75.00</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6">
-          <div class="feature-icon-box">
-            <div class="inner-content">
-              <div class="icon-box">
-                <i class="icon las la-money-bill-wave"></i>
-              </div>
-              <div class="content">
-                <h5 class="title">Devoluciones gratuitas</h5>
-                <p>Las devoluciones son gratuitas en un plazo de 9 días.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6">
-          <div class="feature-icon-box">
-            <div class="inner-content">
-              <div class="icon-box">
-                <i class="icon las la-user-astronaut"></i>
-              </div>
-              <div class="content">
-                <h5 class="title">Soporte 24/7</h5>
-                <p>Contacta con nosotros las 24 horas del día</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6">
-          <div class="feature-icon-box">
-            <div class="inner-content">
-              <div class="icon-box">
-                <i class="icon las la-credit-card"></i>
-              </div>
-              <div class="content">
-                <h5 class="title">100% Pago Seguro</h5>
-                <p>Su pago está seguro con nosotros.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br>
+
   <br>
   <!--== Start Footer Area Wrapper ==-->
   <footer class="footer-area">
@@ -1068,7 +992,7 @@
                       <li><a href="{% url 'data_request' %}">Terminos y Condiciones</a></li>
                       <li><a href="{% url 'contacto' %}">Contáctanos</a></li>
                       <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
-                      <li><a href="{% url 'my_account' %}">Mi Cuenta</a></li>
+                      <li><a href="{% url 'mi_cuenta' %}">Mi Cuenta</a></li>
                     </ul>
                   </div>
                 </div>

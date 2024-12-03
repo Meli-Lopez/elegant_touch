@@ -145,6 +145,16 @@
                 margin-left: 0;
             }
         }
+                    /* Tamaño de los íconos */
+            td i {
+                font-size: 1.0rem; /* Tamaño más grande para los íconos */
+            }
+
+            /* Opcional: Aumentar el espacio entre íconos */
+            td a {
+                margin-right: 10px; /* Espacio entre los enlaces */
+            }
+
     </style>
 </head>
 <body>
@@ -156,12 +166,12 @@
             <li><a href="{% url 'index_admi' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
             <li><a href="{% url 'lista_productos' %}"><i class="fas fa-boxes"></i> Productos</a></li>
             <li><a href="{% url 'lista_categorias' %}"><i class="fas fa-tags"></i> Categorías</a></li>
-            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+            <li><a href="{% url 'lista_pedidos' %}"><i class="fas fa-shopping-bag"></i> Pedidos</a></li> 
             <li><a href="{% url 'lista_inventario' %}"><i class="fas fa-warehouse"></i> Inventario</a></li>
             <li><a href="{% url 'gestion_de_usuarios' %}"><i class="fas fa-users"></i> Usuarios</a></li>
             <li><a href="{% url 'lista_proveedores' %}"><i class="fas fa-truck"></i> Proveedores</a></li>
             <li><a href="{% url 'lista_marcas' %}"><i class="fas fa-certificate"></i> Marcas</a></li>
-            <li><a href="{% url 'lista_ventas' %}"><i class="fas fa-chart-line"></i> Ventas</a></li>
+
         </ul>
     </div>                      
     <div class="content">
@@ -181,8 +191,13 @@
                     <td>{{ marca.id }}</td>
                     <td>{{ marca.nombre_marca }}</td>
                     <td>
-                        <a href="{% url 'editar_marca' marca.id %}" class="text-decoration-none text-primary mr-2"><i class="fas fa-edit"></i> </a>
-                        <a href="{% url 'eliminar_marca' marca.id %}" class="text-danger btn btn-link"><i class="fas fa-trash-alt"></i></a>
+                        <a href="{% url 'editar_marca' marca.id %}" class="text-decoration-none" title="Editar" style="color: #ffc107;">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        
+                        <a href="{% url 'eliminar_marca' marca.id %}"  class="text-decoration-none text-danger ml-2" title="Eliminar">
+                            <i class="fas fa-trash-alt" ></i> <!-- Icono de eliminar -->
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}

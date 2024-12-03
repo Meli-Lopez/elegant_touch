@@ -4,6 +4,7 @@
 {% block content %}
 <title>Editar Reseña</title>
 <style>
+    /* Estilos anteriores permanecen igual */
     .edit-review-page {
         font-family: 'Arial', sans-serif;
         max-width: 600px;
@@ -85,6 +86,13 @@
     .form-buttons a:hover {
         background-color: #5a6268; /* Más oscuro al pasar el mouse */
     }
+
+    .update-success {
+        color: green;
+        margin-top: 20px;
+        text-align: center;
+        display: none; /* Inicialmente oculto */
+    }
 </style>
 
 <div class="edit-review-page">
@@ -95,7 +103,7 @@
             <label for="titulo">Título:</label>
             <input type="text" id="titulo" name="titulo" value="{{ reseña.titulo }}" required>
         </div>
-        
+
         <div class="form-group">
             <label for="contenido">Contenido:</label>
             <textarea id="contenido" name="contenido" required>{{ reseña.contenido }}</textarea>
@@ -107,10 +115,49 @@
         </div>
 
         <div class="form-buttons">
+            <!-- Botón para guardar cambios -->
             <button type="submit">Guardar Cambios</button>
-            <a href="{% url 'ver_reseñas' reseña.id %}">Cancelar</a>
+
+            <!-- Botón para cancelar -->
+            <a href="{% url 'ver_reseñas' reseña.producto.id %}" class="cancel-button">Cancelar</a>
         </div>
     </form>
-</div>
-{% endblock %}
 
+    <!-- Mensaje de éxito -->
+    <div id="updateSuccess" class="update-success" style="display:none;">Reseña actualizada con éxito.</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#editReviewForm").on("submit", function(event) {
+            event.preventDefault();  // Prevenir la recarga de página
+
+            var formData = $(this).serialize(); // Recoger los datos del formulario
+
+            $.ajax({
+                url: "{% url 'editar_reseña' reseña.id %}",  // URL para enviar el formulario
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    if(response.success) {
+                        // Mostrar mensaje de éxito
+                        $("#updateSuccess").show();
+
+                        // Actualizar la vista con los nuevos datos de la reseña
+                        var updatedReview = `
+                            <strong>${response.reseña.calificacion} estrellas</strong> - ${response.reseña.contenido}
+                        `;
+                        $("li#reseña-" + response.reseña.id).html(updatedReview);
+                    }
+                },
+                error: function() {
+                    alert("Hubo un error al actualizar la reseña.");
+                }
+            });
+        });
+    });
+</script>
+
+
+{% endblock %}

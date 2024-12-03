@@ -8,6 +8,8 @@
             background-color: #fefefe; /* Fondo blanco puro */
             font-family: 'Poppins', sans-serif; /* Fuente moderna y limpia */
             color: #333;
+            margin: 0;
+            padding: 0;
         }
 
         .review-container {
@@ -38,8 +40,9 @@
             font-weight: 600;
             color:  #ec6b81; /* Título en rosa brillante */
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         /* Línea fina decorativa bajo el título */
@@ -52,11 +55,47 @@
             margin: 20px auto;
         }
 
-        .form-background {
+        .content-container {
+            margin-top: 40px;
             background-color: #fff1f5; /* Fondo suave rosado */
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight-text {
+            color: #ec6b81; /* Color rosa brillante */
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-description {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #777;
+        }
+
+        /* Estilo de los contenedores de calificación */
+        .calification-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-top: 20px;
+        }
+
+        .calification-container .star {
+            font-size: 24px;
+            color: #ec6b81;
+            margin-right: 5px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .calification-container .star:hover {
+            color: #e63971; /* Color rosa más oscuro en hover */
         }
 
         .review-form label {
@@ -64,6 +103,7 @@
             color: #ec6b81;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
 
         .review-form input,
@@ -80,8 +120,8 @@
 
         .review-form input:focus,
         .review-form textarea:focus {
-            border-color: #ec6b81;/* Rosa brillante en enfoque */
-            background-color: #ec6b81;;
+            border-color: #ec6b81; /* Rosa brillante en enfoque */
+            background-color: #ec6b81;
             box-shadow: 0 0 10px rgba(255, 74, 133, 0.2); /* Brillo rosa */
             outline: none;
         }
@@ -89,7 +129,7 @@
         .submit-button {
             width: 100%;
             padding: 15px;
-            background-color: #ff4a85; /* Fondo rosa brillante */
+            background-color: #ec6b81; /* Color rosa de la interfaz */
             color: white; /* Texto blanco */
             border: none;
             border-radius: 12px;
@@ -112,36 +152,24 @@
             box-shadow: 0 4px 8px rgba(255, 74, 133, 0.6); /* Más profundo */
         }
 
-        /* Decoración de formulario */
-        .highlight-text {
-            color: #ff4a85; /* Color rosa brillante */
-            font-weight: bold;
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .form-description {
-            text-align: center;
-            font-size: 16px;
-            margin-bottom: 30px;
-            color: #777;
-        }
-
         /* Botón de vuelta */
         .back-button {
             display: block;
             margin: 20px auto;
-            color: #ec6b81;;
+            color: #ec6b81; /* Color rosa para el texto */
             text-align: center;
             text-decoration: none;
             font-weight: bold;
             text-transform: uppercase;
             transition: color 0.3s ease;
+            padding: 10px 15px;
+            border: 2px solid #ec6b81;
+            border-radius: 12px;
         }
 
         .back-button:hover {
-            color: #e63971;
+            color: white;
+            background-color: #ec6b81;
         }
     </style>
 </head>
@@ -150,15 +178,25 @@
     <div class="review-container">
         <h1 class="review-title">Escribir Reseña para {{ producto.nombre_producto }}</h1>
 
-        <div class="form-background">
+        <div class="content-container">
             <p class="highlight-text">¡Cuéntanos tu experiencia!</p>
             <p class="form-description">Queremos saber qué opinas de este producto.</p>
-            
-            <!-- Formulario para la nueva reseña -->
-            <form method="post" class="review-form">
+
+            <!-- Contenedor de calificación -->
+            <div class="calification-container">
+                <span class="star">&#9733;</span> <!-- Estrella llena -->
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+            </div>
+        </div>
+
+        <div class="form-background">
+            <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="submit-button">Enviar reseña</button>
+                <button type="submit" class="submit-button">Enviar Reseña</button>
             </form>
         </div>
 

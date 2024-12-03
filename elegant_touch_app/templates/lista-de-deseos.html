@@ -73,13 +73,13 @@
               <ul class="dropdown-content">
                 {% if user.is_authenticated %}
                 <li>
-                    <a href="{% url 'my_account' %}">Mi cuenta</a>
+                    <a href="{% url 'mi_cuenta' %}">Mi cuenta</a>
                 </li>
                 <li>
                     <a href="{% url 'verificar' %}">Carrito</a>
                 </li>
                 <li>
-                    <a href="{% url 'logout' %}">Cerrar sesión</a>
+                    <a href="{% url 'logout' %}">Cerrar_sesión</a>
                 </li>
             {% else %}
                 <li>
@@ -145,7 +145,7 @@
                           <li><a href="{% url 'carrito' %}">Carrito</a></li>
 
                           <li><a href="{% url 'lista_de_deseos' %}">Lista de deseos</a></li>
-                          <li><a href="{% url 'my_account' %}">Mi cuenta</a></li>
+                          <li><a href="{% url 'mi_cuenta' %}">Mi cuenta</a></li>
                           <li><a href="{% url 'login' %}">Acceso</a></li>
                           <li><a href="{% url 'register' %}">Registro</a></li>
                         </ul>
@@ -364,7 +364,7 @@
                             <div class="wishlist-footer">
                                 <div class="button-counter-container">
                                     <!-- Botón con ícono de cuenta -->
-                                    <a href="{% url 'my_account' %}" class="btn-wishlist">
+                                    <a href="{% url 'mi_cuenta' %}" class="btn-wishlist">
                                       <i class="fas fa-user-circle"></i> Volver a su cuenta
                                   </a>
                                   
@@ -385,7 +385,7 @@
 
     <!--== End Product Area Wrapper ==-->
 
-    <!--== Start Contact Info Area Wrapper ==-->
+          <!--== Start Contact Info Area Wrapper ==-->
     <section class="bg-black-color">
       <div class="container pt-35 pb-40">
         <div class="row">
@@ -412,8 +412,16 @@
                   <div class="info-item">
                     <div class="icon-box">
                       <div class="social-icons">
-                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d"><i class="la la-facebook"></i></a>
-                        <a href="https://www.instagram.com/eleganttouch054/" target="_blank"><i class="la la-instagram"></i></a>
+                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d" 
+                           target="_blank" 
+                           style="color: white;text-decoration: none;">
+                          <i class="la la-facebook"></i>
+                        </a>
+                        <a href="https://www.instagram.com/eleganttouch054/" 
+                           target="_blank" 
+                           style="color: white; text-decoration: none;">
+                          <i class="la la-instagram"></i>
+                        </a>
                       </div>
                     </div>
                     <p>NUESTRAS REDES SOCIALES</p>
@@ -426,51 +434,7 @@
       </div>
     </section>
     <!--== End Contact Info Area Wrapper ==-->
-
-    <!--== Start Divider Area Wrapper ==-->
-    <section class="divider-area">
-      <div class="container pt-90 pt-lg-70 pb-lg-60">
-        <div class="row">
-          <div class="col-12">
-            <div class="divider-style-wrap">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="divider-content text-center">
-                    <h4 class="title hidden-sm-down">Conectémonos en las redes sociales</h4>
-                    <h4 class="title2 hidden-md-up collapsed" data-bs-toggle="collapse" data-bs-target="#dividerId-1">Conectémonos en las redes sociales</h4>
-                    <div id="dividerId-1" class="collapse">
-                      <div class="social-icons">
-                        <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d"><i class="la la-facebook"></i></a>
-                        <a href="https://www.instagram.com/eleganttouch054/" target="_blank"><i class="la la-instagram"></i></a>
-                      </div>
-                      <p class="mb-sm-25">Síguenos en tus plataformas favoritas. Vea nuevos avances de lanzamiento, videos instructivos y comparta sus looks favoritos.Follow us on your favorite platforms. Check out new launch teasers, how-to videos, and share your favorite looks.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="divider-content text-center">
-                    <h4 class="title hidden-sm-down" data-margin-bottom="32">Suscríbete al boletín informativo</h4>
-                    <h4 class="title2 hidden-md-up collapsed" data-bs-toggle="collapse" data-bs-target="#dividerId-2">Suscríbete al boletín informativo</h4>
-                    <div id="dividerId-2" class="collapse">
-                      <div class="newsletter-content-wrap">
-                        <div class="newsletter-form">
-                          <form>
-                            <input type="email" class="form-control" placeholder="Su dirección de correo electrónico">
-                            <button class="btn btn-submit" type="button">Registrarse</button>
-                          </form>
-                        </div>
-                      </div>
-                      <p>Puedes darte de baja en cualquier momento. Para ello, encontrará nuestros datos de contacto en el aviso legal.You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--== End Divider Area Wrapper ==-->
+<br>
   </main>
 
   <!--== Start Footer Area Wrapper ==-->
@@ -492,7 +456,7 @@
                       </div>
                     </div>
                     <div class="widget-desc">
-                      <p>Somos un equipo de diseñadores y desarrolladores que creamos Magento, Prestashop, Opencart de alta calidad.</p>
+                      <p>Elegant Touch es tu tienda en línea de maquillaje, ofreciendo productos elegantes y de calidad con una experiencia de compra segura y sencilla.</p>
                     </div>
                   </div>
                 </div>
@@ -505,7 +469,7 @@
                       <li><a href="{% url 'data_request' %}">Terminos y Condiciones</a></li>
                       <li><a href="{% url 'contacto' %}">Contáctanos</a></li>
                       <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
-                      <li><a href="{% url 'my_account' %}">Mi Cuenta</a></li>
+                      <li><a href="{% url 'mi_cuenta' %}">Mi Cuenta</a></li>
                     </ul>
                   </div>
                 </div>
@@ -516,22 +480,7 @@
         </div>
       </div>
     </div>
-    <!--== Start Footer Bottom Area ==-->
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <p class="copyright">Copyright © <i class="fa fa-heart-o"></i> por <a target="_blank" href="https://www.hasthemes.com">HasThemes.</a></p>
-          </div>
-          <div class="col-lg-6">
-            <div class="payment">
-              <img src="{% static 'img/photos/payment.png' %}" alt="Payment">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--== End Footer Bottom Area ==-->
+
   </footer>
   <!--== End Footer Area Wrapper ==-->
 

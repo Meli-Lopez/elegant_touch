@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-
+from django.core.validators import RegexValidator
+from decimal import Decimal
 
 class PerfilUsuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -89,35 +90,7 @@ class MetodoDePago(models.Model):
         return self.nombre_metodo_pago
 
 
-class Venta(models.Model):
-    guia_pedido = models.CharField(max_length=100)
-    OPCIONES_ESTADO_VENTA = [
-        ('pendiente', 'Pendiente'),
-        ('en proceso', 'En proceso'),
-        ('en espera', 'En espera'),
-        ('enviado', 'Enviado'),
-        ('entregado', 'Entregado'),
-        ('cancelado', 'Cancelado'),
-    ]
 
-    fecha_venta = models.DateField()
-    total_venta = models.FloatField()
-    estado_venta = models.CharField(
-        max_length=12,
-        choices=OPCIONES_ESTADO_VENTA,
-        default='pendiente'
-    )
-    cliente = models.ForeignKey(
-        'Cliente',  # Asegúrate de que el modelo Cliente esté definido en el mismo archivo o esté importado correctamente.
-        on_delete=models.CASCADE
-    )
-    metodo_de_pago = models.ForeignKey(
-        MetodoDePago,
-        on_delete=models.CASCADE
-    )
-
-    def __str__(self):
-        return f"Venta {self.id} - Estado: {self.estado_venta}"
 
 
 class Reseña(models.Model):
@@ -227,40 +200,59 @@ def delete_producto_on_inventario_delete(sender, instance, **kwargs):
     producto.delete()
 
 
-class Pedido(models.Model):
-    ESTADOS_PEDIDO = [
-        ('pendiente', 'Pendiente'),
-        ('procesando', 'Procesando'),
-        ('enviado', 'Enviado'),
-        ('completado', 'Completado'),
-        ('cancelado', 'Cancelado'),
+class PedidoCliente(models.Model):
+    METODO_PAGO_CHOICES = [
+        ('bbva', 'BBVA'),
+        ('nequi', 'Nequi'),
     ]
-
-    cliente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pedidos')  # Relación con el usuario
-    fecha_creacion = models.DateTimeField(auto_now_add=True)  # Fecha de creación del pedido
-    estado = models.CharField(max_length=20, choices=ESTADOS_PEDIDO, default='pendiente')  # Estado del pedido
-    total = models.DecimalField(max_digits=10, decimal_places=2)  # Total del pedido
-    direccion_envio = models.CharField(max_length=255)  # Dirección de envío del pedido
-    detalles_adicionales = models.TextField(blank=True, null=True)  # Información adicional del pedido
-
-    def __str__(self):
-        return f"Pedido #{self.id} - Cliente: {self.cliente.username}"
+    
+    ESTADO_PEDIDO_CHOICES = [
+        ('pendiente', 'Pendiente'),
+        ('aprobado', 'Aprobado'),
+        ('rechazado', 'Rechazado'),
+    ]
+    
+    cliente = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='pedidos', null=True, blank=True)
+    nombre = models.CharField("Nombre", max_length=100)
+    apellido = models.CharField("Apellido", max_length=100)
+    celular_validator = RegexValidator(regex=r'^\d{10}$', message="El número de celular debe tener 10 dígitos y solo contener números.")
+    celular = models.CharField("Celular", max_length=15, validators=[celular_validator], default=1)
+    correo = models.EmailField("Correo electrónico", max_length=254, default=None)
+    direccion_envio = models.CharField("Dirección de envío", max_length=255)
+    ciudad = models.CharField("Ciudad", max_length=100)
+    codigo_postal = models.CharField("Código postal", max_length=5)
+    metodo_pago = models.CharField("Método de pago", max_length=20, choices=METODO_PAGO_CHOICES)
+    comprobante_pago = models.FileField("Comprobante de pago", upload_to='comprobantes/', null=True, blank=True)
+    estado = models.CharField("Estado del pedido", max_length=10, choices=ESTADO_PEDIDO_CHOICES, default='pendiente')
+    fecha_pedido = models.DateTimeField("Fecha del pedido", auto_now_add=True)
+    total = models.DecimalField("Total del pedido", max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
     class Meta:
-        verbose_name = "Pedido"
-        verbose_name_plural = "Pedidos"
-        ordering = ['-fecha_creacion']  # Ordenar por fecha de creación descendente
-
-
-class DetallePedido(models.Model):
-    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name='detalles')
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='detalles')
-    cantidad = models.PositiveIntegerField()  # Cantidad del producto en el pedido
-    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)  # Precio del producto en ese pedido
+        verbose_name = "Pedido de cliente"
+        verbose_name_plural = "Pedidos de clientes"
+        ordering = ['-fecha_pedido']
 
     def __str__(self):
-        return f"Pedido #{self.pedido.id} - Producto: {self.producto.nombre_producto}"
+        return f"Pedido de {self.nombre} {self.apellido} - {self.fecha_pedido.strftime('%d/%m/%Y')} - {self.estado}"
 
-    @property
-    def subtotal(self):
-        return self.precio_unitario * self.cantidad
+    def get_total_items(self):
+        return sum(detalle.cantidad for detalle in self.detalles.all())
+
+    def actualizar_total(self):
+        self.total = sum(detalle.subtotal for detalle in self.detalles.all())
+        self.save()
+
+
+class PedidoDetalle(models.Model):
+    pedido = models.ForeignKey(PedidoCliente, related_name='detalles', on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def save(self, *args, **kwargs):
+        self.subtotal = self.cantidad * self.precio_unitario
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.producto.nombre_producto} - {self.cantidad}"

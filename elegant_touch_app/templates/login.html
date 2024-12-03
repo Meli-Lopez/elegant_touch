@@ -73,13 +73,13 @@
               <ul class="dropdown-content">
                 {% if user.is_authenticated %}
                 <li>
-                    <a href="{% url 'my_account' %}">Mi cuenta</a>
+                    <a href="{% url 'mi_cuenta' %}">Mi cuenta</a>
                 </li>
                 <li>
                     <a href="{% url 'verificar' %}">Carrito</a>
                 </li>
                 <li>
-                    <a href="{% url 'logout' %}">Cerrar sesión</a>
+                    <a href="{% url 'logout' %}">Cerrar_sesión</a>
                 </li>
             {% else %}
                 <li>
@@ -144,7 +144,7 @@
                         <ul>
                           <li><a href="{% url 'carrito' %}">Carrito</a></li>
                           <li><a href="{% url 'lista_de_deseos' %}">Lista de deseos</a></li>
-                          <li><a href="{% url 'my_account' %}">Mi cuenta</a></li>
+                          <li><a href="{% url 'mi_cuenta' %}">Mi cuenta</a></li>
                           <li><a href="{% url 'login' %}">Acceso</a></li>
                           <li><a href="{% url 'register' %}">Registro</a></li>
                         </ul>
@@ -288,94 +288,58 @@
 </script>
     <!--== End Account Area Wrapper ==-->
 
-  <!--== Start Contact Info Area Wrapper ==-->
-  <section class="bg-black-color">
-    <div class="container pt-35 pb-40">
-      <div class="row">
-        <div class="col-12">
-          <div class="contact-info contact-info-static">
-            <div class="row">
-              <div class="col-border col-12 col-md-4 col-sm-6 border-0">
-                <div class="info-item">
-                  <div class="icon-box">
-                    <i class="icon las la-phone-volume"></i>
-                  </div>
-                  <p>+57-321-4341900 M-F 10AM-5PM</p>
-                </div>
-              </div>
-              <div class="col-border col-12 col-md-4 col-sm-6 mt-xs-35">
-                <div class="info-item">
-                  <div class="icon-box">
-                    <i class="icon las la-envelope"></i>
-                  </div>
-                  <p>eleganttouch@gmail.com</p>
-                </div>
-              </div>
-              <div class="col-border col-12 col-md-4 col-sm-12 mt-sm-35">
-                <div class="info-item">
-                  <div class="icon-box">
-                    <div class="social-icons">
-                      <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d"><i class="la la-facebook"></i></a>
-                      <a href="https://www.instagram.com/eleganttouch054/" target="_blank"><i class="la la-instagram"></i></a>
-                    </div>
-                  </div>
-                  <p>NUESTRAS REDES SOCIALES</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--== End Contact Info Area Wrapper ==-->
-
-
-   <!--== Start Divider Area Wrapper ==-->
-   <section class="divider-area">
-    <div class="container pt-90 pt-lg-70 pb-lg-60">
-      <div class="row">
-        <div class="col-12">
-          <div class="divider-style-wrap">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="divider-content text-center">
-                  <h4 class="title hidden-sm-down">Conectémonos en las redes sociales</h4>
-                  <h4 class="title2 hidden-md-up collapsed" data-bs-toggle="collapse" data-bs-target="#dividerId-1">Conectémonos en las redes sociales</h4>
-                  <div id="dividerId-1" class="collapse">
-                    <div class="social-icons">
-                      <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d"><i class="la la-facebook"></i></a>
-                      <a href="https://www.instagram.com/eleganttouch054/" target="_blank"><i class="la la-instagram"></i></a>
-                    </div>
-                    <p class="mb-sm-25">Síguenos en tus plataformas favoritas. Mira los nuevos adelantos de lanzamiento, videos instructivos y comparte tus looks favoritos.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="divider-content text-center">
-                  <h4 class="title hidden-sm-down" data-margin-bottom="32">Suscríbete al boletín informativo/h4>
-                  <h4 class="title2 hidden-md-up collapsed" data-bs-toggle="collapse" data-bs-target="#dividerId-2">Suscríbete al boletín informativoSign Up For Newsletter</h4>
-                  <div id="dividerId-2" class="collapse">
-                    <div class="newsletter-content-wrap">
-                      <div class="newsletter-form">
-                        <form>
-                          <input type="email" class="form-control" placeholder="Su dirección de correo electrónico">
-                          <button class="btn btn-submit" type="button">Registrarse</button>
-                        </form>
+           <!--== Start Contact Info Area Wrapper ==-->
+           <section class="bg-black-color">
+            <div class="container pt-35 pb-40">
+              <div class="row">
+                <div class="col-12">
+                  <div class="contact-info contact-info-static">
+                    <div class="row">
+                      <div class="col-border col-12 col-md-4 col-sm-6 border-0">
+                        <div class="info-item">
+                          <div class="icon-box">
+                            <i class="icon las la-phone-volume"></i>
+                          </div>
+                          <p>+57-321-4341900 M-F 10AM-5PM</p>
+                        </div>
+                      </div>
+                      <div class="col-border col-12 col-md-4 col-sm-6 mt-xs-35">
+                        <div class="info-item">
+                          <div class="icon-box">
+                            <i class="icon las la-envelope"></i>
+                          </div>
+                          <p>eleganttouch@gmail.com</p>
+                        </div>
+                      </div>
+                      <div class="col-border col-12 col-md-4 col-sm-12 mt-sm-35">
+                        <div class="info-item">
+                          <div class="icon-box">
+                            <div class="social-icons">
+                              <a href="https://www.facebook.com/share/4FtAToVyknEDKXqS/?mibextid=LQQJ4d" 
+                                 target="_blank" 
+                                 style="color: white;text-decoration: none;">
+                                <i class="la la-facebook"></i>
+                              </a>
+                              <a href="https://www.instagram.com/eleganttouch054/" 
+                                 target="_blank" 
+                                 style="color: white; text-decoration: none;">
+                                <i class="la la-instagram"></i>
+                              </a>
+                            </div>
+                          </div>
+                          <p>NUESTRAS REDES SOCIALES</p>
+                        </div>
                       </div>
                     </div>
-                    <p>Puede darse de baja en cualquier momento. Para ello, consulte nuestra información de contacto en el aviso legal.</p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--== End Divider Area Wrapper ==-->
-</main>
+          </section>
+          <!--== End Contact Info Area Wrapper ==-->
+      <br>
+        </main>
+      
 
 
    <!--== Start Footer Area Wrapper ==-->
@@ -397,7 +361,7 @@
                       </div>
                     </div>
                     <div class="widget-desc">
-                      <p>Somos un equipo de diseñadores y desarrolladores que creamos Magento, Prestashop, Opencart de alta calidad.</p>
+                      <p>Elegant Touch es tu tienda en línea de maquillaje, ofreciendo productos elegantes y de calidad con una experiencia de compra segura y sencilla.</p>
                     </div>
                   </div>
                 </div>
@@ -410,7 +374,7 @@
                       <li><a href="{% url 'data_request' %}">Terminos y Condiciones</a></li>
                       <li><a href="{% url 'contacto' %}">Contáctanos</a></li>
                       <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
-                      <li><a href="{% url 'my_account' %}">Mi Cuenta</a></li>
+                      <li><a href="{% url 'mi_cuenta' %}">Mi Cuenta</a></li>
                     </ul>
                   </div>
                 </div>
@@ -421,143 +385,12 @@
         </div>
       </div>
     </div>
-    <!--== Start Footer Bottom Area ==-->
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <p class="copyright">Copyright © <i class="fa fa-heart-o"></i> porby <a target="_blank" href="https://www.hasthemes.com">HasThemes.</a></p>
-          </div>
-          <div class="col-lg-6">
-            <div class="payment">
-              <img src="{% static 'img/photos/payment.png' %}" alt="Payment">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--== End Footer Bottom Area ==-->
+
   </footer>
   <!--== End Footer Area Wrapper ==-->
 
-  <!--== Scroll Top Button ==-->
-  <div id="scroll-to-top" class="scroll-to-top"><span class="ion-md-arrow-up"></span></div>
 
-  <!--== Start Side Menu ==-->
-  <aside class="off-canvas-wrapper">
-    <div class="off-canvas-inner">
-      <div class="off-canvas-overlay"></div>
-      <!-- Start Off Canvas Content Wrapper -->
-      <div class="off-canvas-content">
-        <!-- Off Canvas Header -->
-        <div class="off-canvas-header">
-          <div class="close-action">
-            <button class="btn-menu-close">Menu<i class="icon-arrow-left"></i></button>
-          </div>
-        </div>
-
-        <div class="off-canvas-item">
-          <!-- Start Mobile Menu Wrapper -->
-          <div class="res-mobile-menu menu-active-one">
-            <!-- Note Content Auto Generate By Jquery From Main Menu -->
-          </div>
-          <!-- End Mobile Menu Wrapper -->
-        </div>
-      </div>
-      <!-- End Off Canvas Content Wrapper -->
-    </div>
-  </aside>
-  <!--== End Side Menu ==-->
-
-
-
-  <!--== Start Popup Product  ==-->
-  <div class="popup-product-quickview">
-    <div class="product-single-item">
-      <div class="row">
-        <div class="col-md-6">
-          <!--== Start Product Thumbnail Area ==-->
-          <div class="product-thumb">
-            <div class="swiper-container single-product-thumb-content single-product-thumb-slider">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <a href="#/">
-                    <img src="{% static 'img/shop/product-single/05.jpg' %}" alt="Image-HasTech">
-                    <span class="product-flag-new">Nuevo</span>
-                  </a>
-                </div>
-                <div class="swiper-slide">
-                  <a href="#/">
-                    <img src="{% static 'img/shop/product-single/06.jpg' %}" alt="Image-HasTech">
-                    <span class="product-flag-new">Nuevo</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-container single-product-nav-content single-product-nav-slider">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <img src="{% static 'img/shop/product-single/nav-05.jpg' %}" alt="Image-HasTech">
-                </div>
-                <div class="swiper-slide">
-                  <img src="{% static 'img/shop/product-single/nav-06.jpg' %}" alt="Image-HasTech">
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--== End Product Thumbnail Area ==-->
-        </div>
-        <div class="col-md-6">
-          <!--== Start Product Info Area ==-->
-          <div class="product-single-info mt-sm-70">
-            <h1 class="title">Chaqueta aislante resistente al agua y al viento</h1>
-            <div class="product-info">
-              <div class="star-content">
-                <i class="ion-md-star"></i>
-                <i class="ion-md-star"></i>
-                <i class="ion-md-star"></i>
-                <i class="ion-md-star"></i>
-                <i class="ion-md-star icon-color-gray"></i>
-              </div>
-              <ul class="comments-advices">
-                <li><a href="#/" class="reviews"><i class="fa fa-commenting-o"></i>Leer reseñas(1)</a></li>
-                <li><a href="#/" class="comment"><i class="fa fa-pencil-square-o"></i>Escribe una reseña</a></li>
-              </ul>
-            </div>
-            <div class="prices">
-              <span class="price">€14.52</span>
-              <div class="tax-label">Impuesto incluido</div>
-            </div>
-            <div class="product-description">
-              <ul class="product-desc-list">
-                <li>Mantente preparado para un cambio en el clima con la Chaqueta Aislada Resistente al Agua y al Viento IZOD®.</li>
-                <li>La chaqueta resistente al agua te mantiene cálido y seco.</li>
-                <li>El cuello alto cuenta con una capucha incorporada.</li>
-                <li>Cierre frontal con cremallera.</li>
-              </ul>
-            </div>
-            <div class="product-quick-action">
-              <div class="product-quick-qty">
-                <div class="pro-qty">
-                  <input type="text" id="quantity" title="Quantity" value="1">
-                </div>
-              </div>
-              <a class="btn-product-add" href="single-product.html">Añadir al carrito</a>
-            </div>
-            <div class="product-wishlist-compare">
-              <a href="#" class="btn-wishlist"><i class="icon-heart"></i>Añadir a la lista de deseos</a>
-              <a href="#" class="btn-compare"><i class="icon-shuffle"></i>Añadir para comparar</a>
-            </div>
-            <div class="social-sharing">
-              <span>Compartir</span>
-              <div class="social-icons">
-                <a href="#/"><i class="la la-facebook"></i></a>
-                <a href="#/"><i class="la la-twitter"></i></a>
-              </div>
-            </div>
-          </div>
-          <!--== End Product Info Area ==-->
-        </div>
+  
       </div>
     </div>
   </div>

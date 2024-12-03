@@ -1,14 +1,99 @@
-<h1>Lista de Reseñas</h1>
-<ul>
-    {% for reseña in reseñas %}
-        <li>
-            <strong>{{ reseña.calificacion }} estrellas</strong> - {{ reseña.contenido }}
+{% extends "layout.html" %}
+{% load static %}
 
-            <a href="{% url 'editar_reseña' reseña.id %}">Editar</a>
-            <a href="{% url 'eliminar_reseña' reseña.id %}">Eliminar</a>
+{% block content %}
+<title>Lista de Reseñas</title>
+<style>
+    .review-list-page {
+        font-family: 'Arial', sans-serif;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fbe0e6; /* Fondo pastel rosado */
+        border: 1px solid #f1c6d7; /* Bordes suaves */
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        </li>
-    {% empty %}
-        <li>No hay reseñas disponibles para este producto.</li>
-    {% endfor %}
-</ul>
+    .review-list-title {
+        color: #ec6b81; /* Rosa oscuro */
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .review-item {
+        background-color: #fff; /* Fondo blanco */
+        border: 1px solid #f1c6d7; /* Borde suave */
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .review-item strong {
+        color: #ec6b81; /* Color rosa para la calificación */
+        font-size: 18px;
+    }
+
+    .review-item p {
+        font-size: 16px;
+        color: #333;
+    }
+
+    .review-item a {
+        text-decoration: none;
+        padding: 8px 15px;
+        margin: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+    }
+
+    .review-item .edit-btn {
+        background-color: #ff6f91; /* Botón de editar en rosa */
+        color: white;
+    }
+
+    .review-item .delete-btn {
+        background-color: #dc3545; /* Botón de eliminar en rojo */
+        color: white;
+    }
+
+    .review-item a:hover {
+        opacity: 0.8; /* Efecto de opacidad al pasar el ratón */
+    }
+
+    .review-item .edit-btn:hover {
+        background-color: #ec4a70; /* Más oscuro al pasar el ratón */
+    }
+
+    .review-item .delete-btn:hover {
+        background-color: #c82333; /* Más oscuro al pasar el ratón */
+    }
+
+    .no-reviews {
+        text-align: center;
+        font-size: 18px;
+        color: #333;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="review-list-page">
+    <h1 class="review-list-title">Lista de Reseñas</h1>
+    <ul>
+        {% for reseña in reseñas %}
+            <li class="review-item">
+                <strong>{{ reseña.calificacion }} estrellas</strong> - {{ reseña.contenido }}
+                <div>
+                    <a href="{% url 'editar_reseña' reseña.id %}" class="edit-btn">Editar</a>
+                    <a href="{% url 'eliminar_reseña' reseña.id %}" class="delete-btn">Eliminar</a>
+                </div>
+            </li>
+        {% empty %}
+            <li class="no-reviews">No hay reseñas disponibles para este producto.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

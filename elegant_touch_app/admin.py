@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import (PerfilUsuario, Cliente, Proveedor, Marca, Categoria, Producto, MetodoDePago, Venta, Reseña, Contacto, Subcategoria, GestionCategoria, Inventario)
+from .models import (PerfilUsuario, Cliente, Proveedor, Marca, Categoria, Producto, MetodoDePago, Reseña, Contacto, Subcategoria, GestionCategoria, Inventario, PedidoCliente)
 from django.utils.html import mark_safe
 
 @admin.register(Categoria)
@@ -46,10 +46,6 @@ class MarcaAdmin(admin.ModelAdmin):
 class MetodoDePagoAdmin(admin.ModelAdmin):
     list_display = ('nombre_metodo_pago',)
 
-@admin.register(Venta)
-class VentaAdmin(admin.ModelAdmin):
-    list_display = ('fecha_venta', 'total_venta', 'estado_venta', 'guia_pedido', 'cliente', 'metodo_de_pago')
-
 
 @admin.register(Contacto)
 class ContactoAdmin(admin.ModelAdmin):
@@ -67,8 +63,9 @@ class ReseñaAdmin(admin.ModelAdmin):
     list_display = ('user', 'producto', 'titulo', 'calificacion', 'fecha_creacion')  # Muestra estos campos en la lista
     list_filter = ('calificacion', 'fecha_creacion')  # Filtros para calificación y fecha
     search_fields = ('user__username', 'producto__nombre_producto', 'titulo')  # Campos de búsqueda
+    
 
-
+admin.site.register(Inventario)
 class InventarioAdmin(admin.ModelAdmin):
     list_display = ('producto', 'descripcion', 'precio', 'stock', 'proveedor', 'agotado', 'mostrar_imagen_producto', 'fecha_actualizacion', 'cantidad_minima', 'cantidad_maxima')
 
@@ -81,5 +78,17 @@ class InventarioAdmin(admin.ModelAdmin):
 
     mostrar_imagen_producto.short_description = "Imagen del Producto"
 
-# Registra el modelo Inventario con los cambios en el Admin
-admin.site.register(Inventario, InventarioAdmin)
+
+
+
+
+class PedidoClienteAdmin(admin.ModelAdmin):
+    list_display = ('id', 'cliente', 'nombre', 'apellido', 'celular', 'correo', 'direccion_envio', 'ciudad', 'codigo_postal', 'metodo_pago', 'estado', 'fecha_pedido')
+    list_filter = ('estado', 'metodo_pago', 'ciudad', 'fecha_pedido')
+    search_fields = ('nombre', 'apellido', 'correo', 'celular', 'ciudad')
+    ordering = ('-fecha_pedido',)  # Mostrar los pedidos más recientes primero
+    readonly_fields = ('fecha_pedido',)  # Campo de solo lectura
+
+admin.site.register(PedidoCliente, PedidoClienteAdmin)
+
+

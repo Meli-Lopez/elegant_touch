@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import PerfilUsuario, Contacto, Subcategoria, Categoria, GestionCategoria,Marca, Proveedor, Producto, ImagenProducto, Reseña, Inventario, Venta, Pedido
+from .models import PerfilUsuario, Contacto, Subcategoria, Categoria, GestionCategoria,Marca, Proveedor, Producto, ImagenProducto, Reseña, Inventario,PedidoCliente
  # O la ruta correcta de importación
 
 
@@ -117,41 +117,45 @@ class InventarioForm(forms.ModelForm):
 
 
 
-class VentaForm(forms.ModelForm):
+class PedidoClienteForm(forms.ModelForm):
     class Meta:
-        model = Venta  # Modelo al que se asocia el formulario
+        model = PedidoCliente
         fields = [
-            'guia_pedido',
-            'fecha_venta',
-            'total_venta',
-            'estado_venta',
-            'cliente',
-            'metodo_de_pago',
+            'nombre', 
+            'apellido', 
+            'celular',
+            'correo',
+            'direccion_envio', 
+            'ciudad', 
+            'codigo_postal', 
+            'metodo_pago', 
+            'comprobante_pago', 
+            
         ]
         widgets = {
-            'fecha_venta': forms.DateInput(attrs={'type': 'date'}),  # Selector de fecha
-            'total_venta': forms.NumberInput(attrs={'step': '0.01'}),  # Input numérico con paso decimal
-            'estado_venta': forms.Select(choices=Venta.OPCIONES_ESTADO_VENTA),  # Selector de opciones
+            'metodo_pago': forms.Select(attrs={'class': 'form-select'}),
+            'comprobante_pago': forms.FileInput(attrs={'class': 'form-control'}),
+            'correo': forms.EmailInput(attrs={'class': 'form-control'})  # Widget para el correo
         }
 
+    def clean_celular(self):
+        celular = self.cleaned_data.get('celular')
+        if not celular:
+            raise forms.ValidationError("Este campo es obligatorio.")
+        return celular
 
-class PedidoForm(forms.ModelForm):
-    class Meta:
-        model = Pedido
-        fields = ['cliente', 'estado', 'total', 'direccion_envio', 'detalles_adicionales']  # Incluye el campo 'cliente'
-
-        # Personaliza los campos del formulario
-        widgets = {
-            'cliente': forms.Select(attrs={'class': 'form-control'}),  # Selector para elegir el cliente
-            'estado': forms.Select(attrs={'class': 'form-control'}),
-            'total': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total del pedido'}),
-            'direccion_envio': forms.Textarea(attrs={'rows': 3, 'class': 'form-control', 'placeholder': 'Escribe la dirección de envío'}),
-            'detalles_adicionales': forms.Textarea(attrs={'rows': 4, 'class': 'form-control', 'placeholder': 'Detalles adicionales del pedido'}),
-        }
-        labels = {
-            'cliente': 'Cliente',
-            'estado': 'Estado del Pedido',
-            'total': 'Total',
-            'direccion_envio': 'Dirección de Envío',
-            'detalles_adicionales': 'Detalles Adicionales',
-        }
+    def clean_correo(self):
+        correo = self.cleaned_data.get('correo')
+        if not correo:
+            raise forms.ValidationError("El correo electrónico es obligatorio.")
+        # Puedes agregar más validaciones si es necesario (por ejemplo, verificar si es un correo válido)
+        return correo
+    # Validación para el campo comprobante_pago para asegurar que sea una imagen
+    def clean_comprobante_pago(self):
+        comprobante = self.cleaned_data.get('comprobante_pago')
+        if comprobante:
+            # Comprobar que el archivo sea una imagen
+            if not comprobante.name.endswith(('.png', '.jpg', '.jpeg')):
+                raise ValidationError("El comprobante de pago debe ser una imagen (JPG, JPEG, PNG).")
+        return comprobante
+    
